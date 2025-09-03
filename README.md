@@ -3,4 +3,4 @@
 
 This is a portfolio for the major projects I have completed in different forms of Electrical and Computer hardware
 
-The link to the portfolio is here: <a href="/index.html"/> Portfolio <a>
+The link to the portfolio is here: <a href="https://mattyl37.github.io" target="_blank"> Portfolio </a>
