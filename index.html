@@ -66,13 +66,59 @@
       padding: 1.5rem;
       font-size: 0.9rem;
       color: #666;
+
+      .bio {
+  background: #fff;
+  padding: 3rem 2rem;
+  max-width: 900px;
+  margin: 3rem auto;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.bio-content {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2rem;
+}
+
+.bio-pic {
+  width: 180px;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 50%;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+.bio-text {
+  flex: 1;
+}
+
+.resume-btn {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.6rem 1.2rem;
+  background: #007bff;
+  color: white;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background 0.2s;
+}
+
+.resume-btn:hover {
+  background: #0056b3;
+}
+
     }
   </style>
 </head>
 <body>
   <header>
     <h1> Matthew Lee's Hardware Portfolio</h1>
-    <p>Showcasing electronics, embedded systems, and builds</p>
+    <h2> EECS @ UC Berkeley | Mixed-Signal Design | Hardware Design & Validation </h2>
+    <p></p>
   </header>
 
   <main class="container">
@@ -104,8 +150,30 @@
     </div>
   </main>
 
+  <section class="bio">
+  <div class="bio-content">
+    <img src="images/profile.jpg" alt="Matthew Lee portrait" class="bio-pic">
+    <div class="bio-text">
+      <h2>About Me</h2>
+      <p>
+        I’m Matthew Lee, an EECS student at UC Berkeley passionate about hardware design,
+        embedded systems, and PCB bring-up. I’ve led multi-person engineering teams, designed
+        mixed-signal circuits, and validated complex systems like solar vehicles and custom PCBs.
+      </p>
+      <p>
+        Outside of school, I enjoy building guitar pedals, working on robotics, and experimenting
+        with analog audio design.
+      </p>
+      <a href="assets/Matthew_HW_Resume_9_20_25.pdf" class="resume-btn" download>
+        Download Resume
+      </a>
+    </div>
+  </div>
+</section>
+
+
   <footer>
-    <p>© 2025 Your Name | <a href="https://github.com/username">GitHub</a></p>
+    <p>© 2025 Matthew Lee | <a href="https://github.com/username">GitHub</a></p>
   </footer>
 </body>
 </html>
