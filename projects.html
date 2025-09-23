@@ -1,1 +1,273 @@
+<!-- Save as projects.html and place in the same folder as index.html -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Projects — Matthew Lee</title>
+  <style>
+    :root{
+      --bg:#f8f9fa;
+      --card:#fff;
+      --accent:#007bff;
+      --muted:#666;
+      --shadow: 0 6px 18px rgba(15, 23, 42, 0.08);
+      --radius:12px;
+      --max-w:1100px;
+    }
 
+    body{
+      font-family: Arial, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue";
+      margin:0;
+      background:var(--bg);
+      color:#222;
+      line-height:1.5;
+    }
+
+    header {
+      background:#111;
+      color:white;
+      padding:2.25rem 1rem;
+      text-align:center;
+    }
+    header h1{ margin:0; font-size:1.5rem; }
+    header p{ margin:.4rem 0 0; color:#dcdcdc; font-size:0.95rem; }
+
+    .wrap{
+      max-width:var(--max-w);
+      margin:2rem auto;
+      padding:0 1rem;
+    }
+
+    /* page title + back link */
+    .page-head{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:1rem;
+      margin-bottom:1rem;
+    }
+    .page-head h2{ margin:0; font-size:1.25rem; }
+    .btn {
+      display:inline-block;
+      background:var(--accent);
+      color:white;
+      padding:.5rem .9rem;
+      border-radius:8px;
+      text-decoration:none;
+      font-weight:600;
+    }
+    .btn-secondary {
+      background:transparent;
+      border:1px solid #e1e6ee;
+      color: #111;
+    }
+
+    /* project block */
+    .project {
+      background:var(--card);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:1.25rem;
+      margin:1.25rem 0;
+      overflow:hidden;
+    }
+
+    .project-head {
+      display:flex;
+      gap:1rem;
+      align-items:flex-start;
+      justify-content:space-between;
+      flex-wrap:wrap;
+    }
+    .project-meta {
+      flex:1 1 380px;
+    }
+    .project-meta h3{ margin:0 0 .25rem 0; }
+    .project-meta p.lead{ margin:0; color:var(--muted); }
+    .project-info {
+      text-align:right;
+      min-width:160px;
+      flex:0 0 auto;
+    }
+    .project-info small{ display:block; color:var(--muted); }
+
+    /* gallery */
+    .gallery {
+      display:grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px,1fr));
+      gap:.6rem;
+      margin-top:1rem;
+    }
+    .gallery a{
+      display:block;
+      overflow:hidden;
+      border-radius:8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      border:1px solid #eef3fb;
+    }
+    .gallery img{
+      width:100%;
+      height:110px;
+      object-fit:cover;
+      display:block;
+      transition: transform .18s ease;
+    }
+    .gallery a:hover img{ transform: scale(1.04); }
+
+    /* long description area */
+    .project-content {
+      margin-top:1rem;
+      color:#333;
+    }
+    .project-tags { margin-top:.6rem; color:var(--muted); font-size:0.95rem; }
+
+    /* simple lightbox modal */
+    .lightbox {
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,0.7);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      z-index:2000;
+      padding:2rem;
+    }
+    .lightbox.open { display:flex; }
+    .lightbox img {
+      max-width:100%;
+      max-height:100%;
+      border-radius:8px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.45);
+    }
+    .lightbox .close {
+      position:absolute;
+      right:18px;
+      top:18px;
+      background:rgba(255,255,255,0.9);
+      color:#111;
+      border-radius:6px;
+      padding:.3rem .5rem;
+      cursor:pointer;
+      font-weight:700;
+    }
+
+    /* responsive tweaks */
+    @media (max-width:720px){
+      header{ padding:1.25rem .75rem; }
+      .gallery img{ height:90px; }
+      .project-info { text-align:left; width:100%; margin-top:.5rem; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Matthew Lee — Hardware Projects</h1>
+    <p>Large project blocks with galleries — click thumbnails to view full images</p>
+  </header>
+
+  <main class="wrap">
+    <div class="page-head">
+      <h2>All Projects</h2>
+      <div>
+        <a class="btn" href="index.html">← Back to Home</a>
+        <a class="btn btn-secondary" href="assets/Matthew_HW_Resume_9_20_25.pdf" style="margin-left:.6rem">Download Resume</a>
+      </div>
+    </div>
+
+    <!-- =========================
+         Project: Car Horn PCB
+         Put images in: images/projects/car-horn/
+         Examples: images/projects/car-horn/pcb-top.jpg, /pcb-bottom.jpg, /scope.png, /photo-1.jpg
+         ========================= -->
+    <article class="project" id="car-horn">
+      <div class="project-head">
+        <div class="project-meta">
+          <h3>Car Horn PCB</h3>
+          <p class="lead">Mixed-signal audio PCB with custom ESP32 dev board, CAN integration, and I²C DAC chain.</p>
+          <div class="project-tags">Roles: PCB design • Firmware • Bring-up • Signal validation</div>
+        </div>
+
+        <div class="project-info">
+          <small>Oct 2024 – Apr 2025</small>
+          <a href="https://github.com/username/CalSolCarHorn" class="btn" style="margin-top:.6rem; display:inline-block;">View GitHub</a>
+        </div>
+      </div>
+
+      <div class="gallery" aria-label="Car horn images">
+        <!-- Thumbnails link to full images. Update filenames -->
+        <a href="images/projects/car-horn/pcb-top.jpg" data-full>
+          <img src="images/projects/car-horn/pcb-top-thumb.jpg" alt="Car horn PCB top view">
+        </a>
+        <a href="images/projects/car-horn/pcb-bottom.jpg" data-full>
+          <img src="images/projects/car-horn/pcb-bottom-thumb.jpg" alt="Car horn PCB bottom view">
+        </a>
+        <a href="images/projects/car-horn/schematic.png" data-full>
+          <img src="images/projects/car-horn/schematic-thumb.png" alt="Schematic">
+        </a>
+        <a href="images/projects/car-horn/scope.png" data-full>
+          <img src="images/projects/car-horn/scope-thumb.png" alt="Oscilloscope horn signal">
+        </a>
+        <a href="images/projects/car-horn/photo-1.jpg" data-full>
+          <img src="images/projects/car-horn/photo-1-thumb.jpg" alt="On-vehicle harnessing">
+        </a>
+      </div>
+
+      <div class="project-content">
+        <p>
+          Designed and validated a mixed-signal Car Horn PCB: schematic, layout, and full bring-up.
+          Implemented an ESP32 dev board with a CAN transceiver, I²C DAC plus bandpass filtering and high-gain amplification for a clean horn waveform.
+          Bench-verified with scope captures and signal chain tests.
+        </p>
+      </div>
+    </article>
+
+    <!-- =========================
+         Project: Solar Vehicle Power System
+         Place images in: images/projects/solar-vehicle/
+         ========================= -->
+    <article class="project" id="solar-vehicle">
+      <div class="project-head">
+        <div class="project-meta">
+          <h3>Solar Vehicle Power System</h3>
+          <p class="lead">High-voltage CAN-based architecture and distribution boards for a student solar car.</p>
+          <div class="project-tags">Roles: System architecture • PCB verification • Harness debugging</div>
+        </div>
+        <div class="project-info">
+          <small>Apr 2025 – Present</small>
+          <a href="https://github.com/username/solar-vehicle" class="btn" style="margin-top:.6rem; display:inline-block;">View GitHub</a>
+        </div>
+      </div>
+
+      <div class="gallery" aria-label="Solar vehicle images">
+        <a href="images/projects/solar-vehicle/block-diagram.png" data-full>
+          <img src="images/projects/solar-vehicle/block-diagram-thumb.png" alt="System block diagram">
+        </a>
+        <a href="images/projects/solar-vehicle/harness.jpg" data-full>
+          <img src="images/projects/solar-vehicle/harness-thumb.jpg" alt="On-vehicle harness">
+        </a>
+        <a href="images/projects/solar-vehicle/distribution-board.jpg" data-full>
+          <img src="images/projects/solar-vehicle/distribution-board-thumb.jpg" alt="Distribution board">
+        </a>
+        <a href="images/projects/solar-vehicle/can-trace.png" data-full>
+          <img src="images/projects/solar-vehicle/can-trace-thumb.png" alt="CAN waveform">
+        </a>
+      </div>
+
+      <div class="project-content">
+        <p>
+          Developed HV/LV distribution and CAN power architecture, integrated an LTC681x-based BMS, and validated signal integrity across harnesses and communication buses (CAN, SPI, isoSPI, I2C).
+        </p>
+      </div>
+    </article>
+
+    <!-- =========================
+         Project: Guitar Pedals
+         Place images in: images/projects/guitar-pedal/
+         ========================= -->
+    <article class="project" id="guitar-pedal">
+      <div class="project-head">
+        <div class="project-meta">
+          <h3>Analog Guitar Pedals</h3>
+          <p class="lead">Op-amp filters, MOSFET clipping, and LTspice-validated designs for custom tone.</p>
+          <div class="project-tags">Roles: Analog design • Sim
