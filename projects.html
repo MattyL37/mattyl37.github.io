@@ -191,7 +191,6 @@
 
         <div class="project-info">
           <small>Oct 2024 – Apr 2025</small>
-          <a href="https://github.com/username/CalSolCarHorn" class="btn" style="margin-top:.6rem; display:inline-block;">View GitHub</a>
         </div>
       </div>
 
@@ -203,8 +202,8 @@
         <a href="images/HornBringUp.jpg" data-full>
           <img src="images/HornBringUp.jpg" alt="Car Horn PCB Bring Up">
         </a>
-        <a href="images/HornScope.jpg" data-full>
-          <img src="images/HornScope.jpg" alt="Scope Picture">
+        <a href="images/HornLayout.png" data-full>
+          <img src="images/HornLayout.png" alt="Layout Picture">
         </a>
         <a href="images/SoundSchematic.png" data-full>
           <img src="images/SoundSchematic.png" alt="Sound Schematic">
@@ -261,6 +260,14 @@
           oscilloscopes to verify the digital and analog signals coming in and out of the DAC; and CAN snooping combined with Serial monitoring to debug 
           firmware. We however did have a shorted trace caused from a polygon and trace being too big, leading us to cut it with a knife. In the end, 
           the horn worked with a few microwire jumps and traces cut.
+        </p>
+        <h3> Firmware </h3>
+        <p>
+          The firmware for the most part is simple, relying heavily on datasheet reading and use of the I2C interface. The main interesting thing was
+          to figure out how to create a digital sound signal to output. We effectively took layered sine waves representing the signal we wanted to output
+          and summed the amplitude at sampled points. We then put it into an array and iterated through the array to output the value. Otherwise, we had
+          to interface into the CAN interface of the rest of the car. This includes reading data and looking for a signal from steering to power on the horn,
+          and sending a heartbeat on CAN to the rest of the car to signal the horn boards microcontroller is still operational.
         </p>
       </div>
     </article>
