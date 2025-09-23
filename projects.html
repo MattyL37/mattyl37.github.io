@@ -216,9 +216,37 @@
 
       <div class="project-content">
         <p>
-          Designed and validated a mixed-signal Car Horn PCB: schematic, layout, and full bring-up.
-          Implemented an ESP32 dev board with a CAN transceiver, I²C DAC plus bandpass filtering and high-gain amplification for a clean horn waveform.
-          Bench-verified with scope captures and signal chain tests.
+          "Solar cars shall be equipped with a horn that can be heard at a sound power level between 75 and 102 dBA
+          at a distance of 15 m in front of the solar car. The horn shall be permanently mounted, operated from the
+          steering wheel, and shall be able to operate for up to 5 minutes continuously at the required volume."
+        </p>
+        <h3> ESP32 Dev Board </h3>
+        <p>
+          The first major sub circuit is the ESP32 Dev Board. It is implemented with an ESP32 Wroom 1 and necessary peripherals
+          including boot and reset buttons, and a USB to UART IC. The design process came mainly from reading the ESP and UART IC
+          datasheets and picking correct passives around them. The layout was tricky due to needing differential routing for the UART
+          and USB differential lines. Effort was also taken to deal with large current draw from the horn by having large polygon power 
+          planes around the amplifier. 2nd Layer was also used as a ground plane for similar reasons. There was also a large effort by me
+          to make the boards layout modular and readable through verbose silkscreen and documentation of each sub circuit on confluence.
+        </p>
+        <h3> Power </h3>
+        <p>
+          The board has the challenge of using 12V CAN BUS power for most LV operations, but requiring an 18V aux pack for the higher current
+          draw amplifier. This is achieved through two diode OR circuits. There is one for LV between the 12V CAN line (that comes from a differential
+          five pin molex connector to the car) and the 5V USB power. This diode OR goes into a 3.3V buck converter, that was chosen to allow
+          flexibility with 12V and 24V CAN lines, as well as interfacing with the 5V USB. The other OR circuit is between the 18V and 12V circuit,
+          with a priority circuit using FETs that chooses the 18V power. This allows for a nominal 18V power on the amplifier, with a redundant
+          12V in case the aux pack dies. The biggest design problems were the general high power draw of the horn, that required a lot of thermal
+          considerations and IC choice.
+        </p>
+        <h3> Sound </h3>
+        <p>
+          The sound architecture goes: ESP digital IO pin -> I2C based DAC -> High gain amplifier -> Speaker. Between the digital pins and the DAC
+          there is open drain architecture for data and clock. The output of the DAC has heavy decoupling capacitors to smooth output, as well as a
+          LP filter to attenuate high frequencies. The amp only takes positive voltage, so the output sine wave must be biased to 1.65 volts before
+          going into the amp. After the amp, we chose a large capacitor in series with the speaker to cut the DC bias. The hardest design decisions
+          were finding a DAC, amplifier, and speaker setup that interfaced with each other and the given power constraints. This was solved with
+          hand calculations for gain as well as breadboarding and simulations with SPICE.
         </p>
       </div>
     </article>
@@ -256,39 +284,7 @@
       </div>
 
       <div class="project-content">
-        <p>
-          "Solar cars shall be equipped with a horn that can be heard at a sound power level between 75 and 102 dBA
-          at a distance of 15 m in front of the solar car. The horn shall be permanently mounted, operated from the
-          steering wheel, and shall be able to operate for up to 5 minutes continuously at the required volume."
-        </p>
-        <h3> ESP32 Dev Board </h3>
-        <p>
-          The first major sub circuit is the ESP32 Dev Board. It is implemented with an ESP32 Wroom 1 and necessary peripherals
-          including boot and reset buttons, and a USB to UART IC. The design process came mainly from reading the ESP and UART IC
-          datasheets and picking correct passives around them. The layout was tricky due to needing differential routing for the UART
-          and USB differential lines. Effort was also taken to deal with large current draw from the horn by having large polygon power 
-          planes around the amplifier. 2nd Layer was also used as a ground plane for similar reasons. There was also a large effort by me
-          to make the boards layout modular and readable through verbose silkscreen and documentation of each sub circuit on confluence.
-        </p>
-        <h3> Power </h3>
-        <p>
-          The board has the challenge of using 12V CAN BUS power for most LV operations, but requiring an 18V aux pack for the higher current
-          draw amplifier. This is achieved through two diode OR circuits. There is one for LV between the 12V CAN line (that comes from a differential
-          five pin molex connector to the car) and the 5V USB power. This diode OR goes into a 3.3V buck converter, that was chosen to allow
-          flexibility with 12V and 24V CAN lines, as well as interfacing with the 5V USB. The other OR circuit is between the 18V and 12V circuit,
-          with a priority circuit using FETs that chooses the 18V power. This allows for a nominal 18V power on the amplifier, with a redundant
-          12V in case the aux pack dies. The biggest design problems were the general high power draw of the horn, that required a lot of thermal
-          considerations and IC choice.
-        </p>
-        <h3> Sound </h3>
-        <p>
-          The sound architecture goes: ESP digital IO pin -> I2C based DAC -> High gain amplifier -> Speaker. Between the digital pins and the DAC
-          there is open drain architecture for data and clock. The output of the DAC has heavy decoupling capacitors to smooth output, as well as a
-          LP filter to attenuate high frequencies. The amp only takes positive voltage, so the output sine wave must be biased to 1.65 volts before
-          going into the amp. After the amp, we chose a large capacitor in series with the speaker to cut the DC bias. The hardest design decisions
-          were finding a DAC, amplifier, and speaker setup that interfaced with each other and the given power constraints. This was solved with
-          hand calculations for gain as well as breadboarding and simulations with SPICE.
-        </p>
+        
       </div>
     </article>
 
