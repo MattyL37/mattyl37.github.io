@@ -214,6 +214,10 @@
         </a>
       </div>
 
+      <!-- =========================
+         Project: Car Horn PCB
+         Place images in: images/
+         ========================= -->
       <div class="project-content">
         <p>
           "Solar cars shall be equipped with a horn that can be heard at a sound power level between 75 and 102 dBA
@@ -247,6 +251,16 @@
           going into the amp. After the amp, we chose a large capacitor in series with the speaker to cut the DC bias. The hardest design decisions
           were finding a DAC, amplifier, and speaker setup that interfaced with each other and the given power constraints. This was solved with
           hand calculations for gain as well as breadboarding and simulations with SPICE.
+        </p>
+        <h3> Bring Up + Verification </h3>
+        <p>
+          The board in the image is the 2nd iteration of the board. During the first bring up we noticed two things while bench testing. One, we greatly
+          underestimated the power draw of the amplifier relative to the trace width and heat sinks we had. Second, we found a data sheet misread
+          of the UART IC leading to us needing to jump D+ and D- with microwire. Both we fixed in the second iteration. The bring up process for the 
+          second draft was done mainly with: DC power supplies and multimeters to verify power circuitry; waveform generators to verify the amplifier;
+          oscilloscopes to verify the digital and analog signals coming in and out of the DAC; and CAN snooping combined with Serial monitoring to debug 
+          firmware. We however did have a shorted trace caused from a polygon and trace being too big, leading us to cut it with a knife. In the end, 
+          the horn worked with a few microwire jumps and traces cut.
         </p>
       </div>
     </article>
