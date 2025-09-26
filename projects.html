@@ -153,6 +153,23 @@
       font-weight:700;
     }
 
+    .blinky-led {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #0f0;          /* green */
+  box-shadow: 0 0 8px #0f0;  /* glow effect */
+  animation: blink 1s infinite;
+  vertical-align: middle;
+}
+
+@keyframes blink {
+  0%, 50%, 100% { opacity: 1; }
+  25%, 75% { opacity: 0.2; }
+}
+
+
     /* responsive tweaks */
     @media (max-width:720px){
       header{ padding:1.25rem .75rem; }
@@ -361,15 +378,8 @@
           <img src="images/projects/solar-vehicle/can-trace-thumb.png" alt="CAN waveform">
         </a>
       </div>
-
-      <div class="project-content">
 </article>
-        <p>
-          Developed HV/LV distribution and CAN power architecture, integrated an LTC681x-based BMS, and validated signal integrity across harnesses and communication buses (CAN, SPI, isoSPI, I2C).
-        </p>
-      </div>
-    </article>
-            <article class="project" id="wip">
+<article class="project" id="wip">
   <div class="project-head">
     <div class="project-meta">
       <h3>🚧 Work in Progress</h3>
@@ -392,18 +402,10 @@
         font-weight:bold;">
       ⚡ Coming Soon ⚡
     </div>
-    <div style="
-        display:flex; 
-        align-items:center; 
-        justify-content:center; 
-        background:#fffbe6; 
-        border:2px dashed #ffcc00; 
-        border-radius:8px; 
-        height:120px; 
-        color:#b58900; 
-        font-weight:bold;">
-      🛠️ Debugging...
-    </div>
+    <div class="blinky-led"></div>
+  <span style="margin-left: 0.5rem; font-weight: bold; color:#007bff;">
+    Debugging in Progress...
+  </span>
     <div style="
         display:flex; 
         align-items:center; 
