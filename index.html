@@ -115,6 +115,34 @@
 .resume-btn:hover {
   background: #0056b3;
 }
+
+/* Dark mode base */
+body.dark-mode {
+  background: #121212;
+  color: #e0e0e0;
+}
+
+body.dark-mode header {
+  background: #000;
+  color: #e0e0e0;
+}
+
+body.dark-mode .card,
+body.dark-mode .bio,
+body.dark-mode .project {
+  background: #1e1e1e;
+  color: #e0e0e0;
+  box-shadow: 0 2px 6px rgba(255,255,255,0.05);
+}
+
+body.dark-mode a {
+  color: #66b2ff;
+}
+
+body.dark-mode footer {
+  color: #aaa;
+}
+    
   </style>
 </head>
 <body>
@@ -123,6 +151,9 @@
     <h2> EECS @ UC Berkeley | Mixed-Signal Design | Hardware Design & Validation </h2>
     <p>matthewslee.2024@gmail.com | 310-562-3538 |  <a href="https://www.linkedin.com/in/matthew-sunjae-lee" target="_blank" style="color:#0A66C2; text-decoration:none; font-weight:bold;">
       matthew-sunjae-lee </a></p>
+    <button id="darkModeToggle" style="margin-top:1rem; padding:0.5rem 1rem; border:none; border-radius:6px; cursor:pointer;">
+      🌙 Dark Mode
+    </button>
   </header>
 
   <main class="container">
@@ -205,5 +236,18 @@
   <footer>
     <p>© 2025 Matthew Lee | <a href="https://github.com/username">GitHub</a></p>
   </footer>
+
+<script>
+  const toggleBtn = document.getElementById('darkModeToggle');
+  toggleBtn.addEventListener('click', () => {
+    document.body.classList.toggle('dark-mode');
+    if (document.body.classList.contains('dark-mode')) {
+      toggleBtn.textContent = "☀️ Light Mode";
+    } else {
+      toggleBtn.textContent = "🌙 Dark Mode";
+    }
+  });
+</script>
+
 </body>
 </html>
