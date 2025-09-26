@@ -170,6 +170,51 @@
   100% { background: red;   box-shadow: 0 0 8px red; }
 }
 
+    .sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 220px;
+  background: #222;
+  color: #fff;
+  padding: 2rem 1rem;
+  box-shadow: 2px 0 6px rgba(0,0,0,0.3);
+  overflow-y: auto;
+  z-index: 1000;
+}
+
+.sidebar h3 {
+  margin-top: 0;
+  color: #66b2ff;
+  font-size: 1.2rem;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar ul li {
+  margin: 1rem 0;
+}
+
+.sidebar ul li a {
+  color: #ddd;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.sidebar ul li a:hover {
+  color: #66b2ff;
+}
+
+/* Push main content over so it doesn’t hide under sidebar */
+body {
+  margin-left: 240px;
+}
+
 
 
     /* responsive tweaks */
@@ -181,6 +226,17 @@
   </style>
 </head>
 <body>
+  <nav class="sidebar">
+  <h3>Projects</h3>
+  <ul>
+    <li><a href="#horn-pcb">Car Horn PCB</a></li>
+    <li><a href="#guitar-pedal">Guitar Pedal</a></li>
+    <li><a href="#solar-vehicle">Solar Vehicle</a></li>
+    <li><a href="#calsol-onboarding">CalSol Onboarding</a></li>
+    <li><a href="#wip">Work in Progress</a></li>
+  </ul>
+</nav>
+
   <header>
     <h1>Matthew Lee — Project Portfolio</h1>
     <p> The various hardware and software projects I've created </p>
