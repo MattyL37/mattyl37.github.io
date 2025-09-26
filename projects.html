@@ -397,44 +397,53 @@
 
   <div class="gallery" aria-label="CalSol Electrical Onboarding images">
     <!-- Example thumbnails / images; replace names with real ones you have -->
-    <a href="images/projects/onboarding/overview.png" data-full>
-      <img src="images/projects/onboarding/overview-thumb.png" alt="Overview diagram">
+    <a href="images/githubmodule.png" data-full>
+      <img src="images/githubmodule.png" alt="Git Module Picture">
     </a>
-    <a href="images/projects/onboarding/pcb-tutorial.png" data-full>
-      <img src="images/projects/onboarding/pcb-tutorial-thumb.png" alt="PCB tutorial">
+    <a href="images/DemoBoard.png" data-full>
+      <img src="images/DemoBoard.png" alt="Demo PCB">
     </a>
-    <a href="images/projects/onboarding/circuit-example.png" data-full>
-      <img src="images/projects/onboarding/circuit-example-thumb.png" alt="Circuit example">
+    <a href="images/PWMPic.png" data-full>
+      <img src="images/PWMPic.png" alt="PWM Picture">
     </a>
   </div>
 
   <div class="project-content">
     <p>
       The CalSol Electrical Onboarding project is an open-source educational repository developed for the
-      CalSol team to onboard new members in PCB design and electrical systems. It guides learners through
-      schematic design, PCB layout, and board documentation, with hands-on exercises and annotated examples.
+      CalSol team to onboard new members in PCB design and basic Electrical Engineering. It guides learners through
+      schematic design, PCB layout, firmware writing, and practical Electrical Engineering skills, with a hands-on project 
+      that culminates in the design and bring up of a PWM Generator. It is also designed to be fast, being done in two weeks.
+      In turn, this onboarding gives a taste of Electrical Engineering before throwing members onto a project.
     </p>
 
     <h3>Curriculum & Pedagogy</h3>
     <p>
-      The onboarding curriculum is modular: learners first follow a guided tutorial on schematic capture, then
-      progressively tackle PCB layout, DRC checks, and revision control. Each module includes example files,
-      review checklists, and exercises to reinforce best practices.
+      The onboarding curriculum is modular: learners first learn about the components and concepts required to
+      understand a PWM generator (including various passives and ICs); then they learn about the KiCAD software
+      to perform PCB schematic and PCB layout; they then do physical board bring up and verification with an oscilloscope;
+      and capped off with a firmware primer. Each module includes dense tutorials, project guidelines, and exercises 
+      to reinforce best practices. The goal is to prime people illiterate in Electrical Engineering into a position
+      that they can put in valuable work on any PCB project. This is why the pedagogy is letting each person get there hands
+      on the full life cycle of a project, with the onboarding staff acting to purely assist the new members.
     </p>
 
-    <h3>Tools & Technologies</h3>
+    <h3> The Project</h3>
     <p>
-      This project uses KiCad for schematic and PCB design, Git for version control, and Markdown-based
-      tutorial pages. The repository is structured so that learners can clone, make edits, and submit
-      pull requests—promoting open-source collaboration early.
+      The project is a PWM motor generator. This project was selected as it hit a few major requirements. These include:
+      use of many components including passives, diodes and MOSFETs; existence of different waveform signals including a square
+      wave, sawtooth wave, and triangle wave; the need to read at least one IC datasheet; and enough components to make layout
+      interesting. This allows us to give a glimpse of Electrical Engineering to the person reading through the lab. The firmware
+      project is also very basic, being a button that triggers the ESP32 to output a similar PWM signal.
     </p>
 
     <h3>Outcomes & Impact</h3>
     <p>
-      New CalSol members are able to ramp up quickly, having completed a real PCB design exercise by the
-      end of the onboarding. The open-source nature also allows other solar car teams or student groups
-      to reuse or adapt the curriculum. Future work may include adding video walk-throughs, quizzes, or
-      interactive modules.
+      New CalSol members are able to join projects immediately, having completed a real PCB design exercise by the
+      end of the onboarding. The exposure to everything makes the job of project leads easier, leading to seamless
+      transition into projects. The open-source nature also allows other students and student groups
+      to use or adapt our project to further teach engineering. We have on many occasions referred interested students
+      to the project to make Berkeley more PCB literate.
     </p>
   </div>
 </article>
