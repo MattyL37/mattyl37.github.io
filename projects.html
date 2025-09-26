@@ -362,14 +362,14 @@ body {
 
   <div class="gallery" aria-label="CalSol Electrical Onboarding images">
     <!-- Example thumbnails / images; replace names with real ones you have -->
-    <a href="images/githubmodule.png" data-full>
-      <img src="images/githubmodule.png" alt="Git Module Picture">
+    <a href="images/OnboardingExample.png" data-full>
+      <img src="images/OnboardingExample.png" alt="Git Module Picture">
     </a>
-    <a href="images/DemoBoard.png" data-full>
-      <img src="images/DemoBoard.png" alt="Demo PCB">
+    <a href="images/OnboardingBoard.jpg" data-full>
+      <img src="images/OnboardingBoard.jpg" alt="Demo PCB">
     </a>
-    <a href="images/PWMPic.png" data-full>
-      <img src="images/PWMPic.png" alt="PWM Picture">
+    <a href="images/SquareWave.jpg" data-full>
+      <img src="images/SquareWave.jpg" alt="PWM Picture">
     </a>
   </div>
 
@@ -495,6 +495,38 @@ body {
     <p>
       🚧 <em>This project is actively being worked on. More documentation, images, and technical details will be added soon.</em>
     </p>
+     <h3> New Power Architecture </h3>
+        <p>
+          The main flaw in the 10th generations power architecture was in car shutoff edge cases. Mainly a chicken and the egg problem
+          where we needed the car to tell the car it shut off when it shuts off. To do this we reimplemented power distribution with a
+          LVPDB (Low Voltage Power Distribution Board). The board contains a switching converter to step HV battery to a 12V line and more
+          importantly logic on how to distribute the 12V. Our solution was to add an aux pack to power the car for a bit when the car is in
+          "shut down mode" instead of no power. This allows CAN to still have power and boards to still be able to communicate. The logic for
+          not draining the aux is a simple power priority IC that prioritizes battery 12V at all times if it exists. In general, this fixes 
+          the problem of boards like strobe not knowing to get triggered when the car is abruptly stopped from, for example, EStop.
+        </p>
+        <p>
+          We also had a reoccuring problems of our contactors to the solar array getting welded together. This was due to us having an RC
+          precharge circuit for the motors, but not the array. In turn, we revised the HVPDB to add another precharge circuit.
+        </p>
+    <h3> Current Progress </h3>
+        <p>
+          I am currently spending a lot of time researching motors and motor controllers, and trying to get past generation motors to spin with
+          various controllers. The process is mainly a lot of datasheet reading and documentation of motor and motor controller behaviour in different 
+          conditions. There has also been a lot of harnessing to create wire adaptors between different kinds of connectors. 
+        </p>
+        <p>
+          We are also redoing a few low voltage boards for either greater functionality or better ergonomics, and switching the MCU we are using
+          on all boards to the ESP32 Wroom. One board being redone is steering, as it has been notoriously not ergonomic as there was a rats nest
+          of wires in the steering wheel, and we needed to take apart the whole wheel to flash new code or snoop the serial monitor. I am also pushing
+          for a new sensors project to give more data to our strategy team. I am also working closely with the BMS project to push out a more reliable
+          battery protection system.
+        </p>
+        <p>
+          I have also done a lot of thinking and planning for enclosures and harnessing. We are planning to work with our composites team for 
+          custom composite boxes for each board. We are also working with our new sponsor EPlan that I helped get in order to plan harnessing
+          in a software before we implement it on an actual car.
+        </p>
   </div>
 </article>
   
