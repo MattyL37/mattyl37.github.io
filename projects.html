@@ -291,98 +291,7 @@
       </div>
     </article>
 
-    <!-- =========================
-         Project: Solar Vehicle Power System
-         Place images in: images/projects/solar-vehicle/
-         ========================= -->
-    <article class="project" id="solar-vehicle">
-      <div class="project-head">
-        <div class="project-meta">
-          <h3>Guitar Pedals</h3>
-          <p class="lead">Op-amp and MOS based guitar pedals for distortion and filtering</p>
-          <div class="project-tags">Skills: Bandpass Filter, Op Amp, MOSFET</div>
-        </div>
-        <div class="project-info">
-          <small>Mar 2025 – Present</small>
-          <a href="https://github.com/username/solar-vehicle" class="btn" style="margin-top:.6rem; display:inline-block;">View GitHub</a>
-        </div>
-      </div>
-
-      <div class="gallery" aria-label="Pedal Images">
-        <a href="images/TrebleBoostBreadboard.jpg" data-full>
-          <img src="images/TrebleBoostBreadboard.jpg" alt="Treble Breadboard">
-        </a>
-        <a href="images/TrebleBoostBode.png" data-full>
-          <img src="images/TrebleBoostBode.png" alt="Treble Boost Bandwidth">
-        </a>
-        <a href="images/projects/solar-vehicle/distribution-board.jpg" data-full>
-          <img src="images/projects/solar-vehicle/distribution-board-thumb.jpg" alt="Distribution board">
-        </a>
-        <a href="images/projects/solar-vehicle/can-trace.png" data-full>
-          <img src="images/projects/solar-vehicle/can-trace-thumb.png" alt="CAN waveform">
-        </a>
-      </div>
-
-      <div class="project-content">
-        <h3> Op-Amp Circuit </h3>
-        <p>
-          The pedal circuit is centered around a bandpass filter going through an op-amp in order to shape and amplify the guitar signal.
-          The op amp is in the non-inverting configuration with a varaible resistor to determine the feedback, therefore controlling the
-          gain. There is a HP filter before and after the op amp to attenutate DC signals and to boost treble frequencies. There is a LP
-          filter in parallel with the potentiometer to create a desired gain within the bandwidth. The result is a treble boosting circuit that
-          attenuates signals outside of the desired treble range.
-        </p>
-        <h3> Simulation & Testing </h3>
-        <p>
-          Each filter of the pedal was simulated in LTspice to validate frequency response, stability, and expected bode plot behavior.
-          Frequency analysis confirmed the bandpass characteristics and the correct cutoff frequencies. I observed the time domain plots 
-          as well to validate the phase didn't flip to -180 degrees. Both time and frequency domain analysis allowed me to verify that the
-          passives I chose were the correct values in order to achieve the correct bandwidth and gain. I further verified on a breadboard
-          using an oscilloscope and waveform generators to simulate different frequency signals, in order to find a frequency response. I
-          finalized the project by plugging in my guitar input into the circuit input, and the output into my amplifier to verify the
-          correct output sound.
-        </p>
-        <h3> MOSFET Circuit </h3>
-        <p>
-          TBD
-        </p>
-        <h3> Simulation & Testing </h3>
-        <p>
-          TBD
-        </p>
-      </div>
-    </article>
-
-      
-  <article class="project" id="new-project">
-    <div class="project-head">
-      <div class="project-meta">
-        <h3>Project Title</h3>
-        <p class="lead">Short one-line description</p>
-        <div class="project-tags">Tag1 • Tag2 • Tag3</div>
-      </div>
-    <div class="project-info">
-      <small>2025</small>
-      <a href="https://github.com/your-repo" class="btn" style="margin-top:0.6rem; display:inline-block;">GitHub</a>
-    </div>
-  </div>
-
-  <div class="gallery">
-    <!-- Replace with project images -->
-    <a href="images/projects/placeholder.png" data-full>
-      <img src="images/projects/placeholder-thumb.png" alt="Placeholder image">
-    </a>
-  </div>
-
-  <div class="project-content">
-    <p>
-      🚧 <em>This project is actively being worked on. More documentation, images, and technical details will be added soon.</em>
-    </p>
-  </div>
-</article>
-
-
-<article class="project" id="calsol-onboarding">
+    <article class="project" id="calsol-onboarding">
   <div class="project-head">
     <div class="project-meta">
       <h3>CalSol Electrical Onboarding</h3>
@@ -448,7 +357,91 @@
   </div>
 </article>
 
-    
+    <article class="project" id="guitar-pedal">
+      <div class="project-head">
+        <div class="project-meta">
+          <h3>Guitar Pedals</h3>
+          <p class="lead">Op-amp and MOS based guitar pedals for distortion and filtering</p>
+          <div class="project-tags">Skills: Bandpass Filter, Op Amp, MOSFET</div>
+        </div>
+        <div class="project-info">
+          <small>Mar 2025 – Present</small>
+          <a href="https://github.com/username/solar-vehicle" class="btn" style="margin-top:.6rem; display:inline-block;">View GitHub</a>
+        </div>
+      </div>
+
+      <div class="gallery" aria-label="Pedal Images">
+        <a href="images/TrebleBoostBreadboard.jpg" data-full>
+          <img src="images/TrebleBoostBreadboard.jpg" alt="Treble Breadboard">
+        </a>
+        <a href="images/TrebleBoostBode.png" data-full>
+          <img src="images/TrebleBoostBode.png" alt="Treble Boost Bandwidth">
+        </a>
+        <a href="images/projects/solar-vehicle/distribution-board.jpg" data-full>
+          <img src="images/projects/solar-vehicle/distribution-board-thumb.jpg" alt="Distribution board">
+        </a>
+        <a href="images/projects/solar-vehicle/can-trace.png" data-full>
+          <img src="images/projects/solar-vehicle/can-trace-thumb.png" alt="CAN waveform">
+        </a>
+      </div>
+
+      <div class="project-content">
+        <h3> Op-Amp Circuit </h3>
+        <p>
+          The pedal circuit is centered around a bandpass filter going through an op-amp in order to shape and amplify the guitar signal.
+          The op amp is in the non-inverting configuration with a varaible resistor to determine the feedback, therefore controlling the
+          gain. There is a HP filter before and after the op amp to attenutate DC signals and to boost treble frequencies. There is a LP
+          filter in parallel with the potentiometer to create a desired gain within the bandwidth. The result is a treble boosting circuit that
+          attenuates signals outside of the desired treble range.
+        </p>
+        <h3> Simulation & Testing </h3>
+        <p>
+          Each filter of the pedal was simulated in LTspice to validate frequency response, stability, and expected bode plot behavior.
+          Frequency analysis confirmed the bandpass characteristics and the correct cutoff frequencies. I observed the time domain plots 
+          as well to validate the phase didn't flip to -180 degrees. Both time and frequency domain analysis allowed me to verify that the
+          passives I chose were the correct values in order to achieve the correct bandwidth and gain. I further verified on a breadboard
+          using an oscilloscope and waveform generators to simulate different frequency signals, in order to find a frequency response. I
+          finalized the project by plugging in my guitar input into the circuit input, and the output into my amplifier to verify the
+          correct output sound.
+        </p>
+        <h3> MOSFET Circuit </h3>
+        <p>
+          TBD
+        </p>
+        <h3> Simulation & Testing </h3>
+        <p>
+          TBD
+        </p>
+      </div>
+    </article>
+
+      
+  <article class="project" id="new-project">
+    <div class="project-head">
+      <div class="project-meta">
+        <h3>Gen11 Solar Car Electrical System</h3>
+        <p class="lead"></p>
+        <div class="project-tags">Tag1 • Tag2 • Tag3</div>
+      </div>
+    <div class="project-info">
+      <small>2025-26</small>
+    </div>
+  </div>
+
+  <div class="gallery">
+    <!-- Replace with project images -->
+    <a href="images/projects/placeholder.png" data-full>
+      <img src="images/projects/placeholder-thumb.png" alt="Placeholder image">
+    </a>
+  </div>
+
+  <div class="project-content">
+    <p>
+      🚧 <em>This project is actively being worked on. More documentation, images, and technical details will be added soon.</em>
+    </p>
+  </div>
+</article>
+  
 <article class="project" id="wip">
   <div class="project-head">
     <div class="project-meta">
