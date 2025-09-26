@@ -153,21 +153,23 @@
       font-weight:700;
     }
 
-    .blinky-led {
+    .rgb-led {
   display: inline-block;
-  width: 32px;
-  height: 32px;
+  width: 16px;
+  height: 16px;
   border-radius: 50%;
-  background: #0f0;          /* green */
-  box-shadow: 0 0 8px #0f0;  /* glow effect */
-  animation: blink 1s infinite;
-  vertical-align: middle;
+  background: red;
+  box-shadow: 0 0 8px red;
+  animation: rgb-cycle 3s infinite;
 }
 
-@keyframes blink {
-  0%, 50%, 100% { opacity: 1; }
-  25%, 75% { opacity: 0.2; }
+@keyframes rgb-cycle {
+  0%   { background: red;   box-shadow: 0 0 8px red; }
+  33%  { background: green; box-shadow: 0 0 8px green; }
+  66%  { background: blue;  box-shadow: 0 0 8px blue; }
+  100% { background: red;   box-shadow: 0 0 8px red; }
 }
+
 
 
     /* responsive tweaks */
@@ -383,10 +385,10 @@
 <article class="project" id="wip">
   <div class="project-head">
     <div class="project-meta">
-      <h3>🚧 Work in Progress 🚧</h3>
+      <h3>🚧 Work in Progress</h3>
       <p class="lead">
-        <div class="blinky-led"></div>
-        <span style="margin-left:0.5rem;">Debugging in Progress...</span>
+        <div class="rgb-led"></div>
+        <span style="margin-left:0.5rem;"> Flashing Firmware...</span>
       </p>
       <div class="project-tags">EECS • Circuits • Build Zone</div>
     </div>
