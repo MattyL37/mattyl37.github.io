@@ -229,10 +229,11 @@ body {
   <nav class="sidebar">
   <h3>Projects</h3>
   <ul>
+    <li><a href="#solar-vehicle">Solar Vehicle</a></li>
     <li><a href="#car-horn">Car Horn PCB</a></li>
+    <li><a href="#calico-fa25">CALICO Fa25</a></li>
     <li><a href="#calsol-onboarding">CalSol Onboarding</a></li>
     <li><a href="#guitar-pedal">Guitar Pedal</a></li>
-    <li><a href="#solar-vehicle">Solar Vehicle</a></li>
     <li><a href="#wip">Work in Progress</a></li>
   </ul>
 </nav>
@@ -250,6 +251,10 @@ body {
         <a class="btn btn-secondary" href="assets/Matthew_HW_Resume_10_19_25.pdf" style="margin-left:.6rem">Download Resume</a>
       </div>
     </div>
+
+        <!-- =========================
+         Project: Gen11 Solar Vehicle
+         ========================= -->
 
       <article class="project" id="solar-vehicle">
     <div class="project-head">
@@ -311,11 +316,106 @@ body {
         </p>
   </div>
 </article>
+    
+       <!-- =========================
+         Project: CALICO Fa25
+         ========================= -->
+
+      <article class="project" id="calico-fa25">
+    <div class="project-head">
+      <div class="project-meta">
+        <h3>CALICO Informatics Competition Fa25</h3>
+        <p class="lead"></p>
+        <div class="project-tags">Software • Algorithms • Event Planning • Scripting • Data Pipelining </div>
+      </div>
+    <div class="project-info">
+      <small>Fall 2025</small>
+    </div>
+  </div>
+
+  <div class="gallery">
+    <!-- Replace with project images -->
+    <a href="images/calsol_fsgp2025.jpg" data-full>
+      <img src="images/calsol_fsgp2025.jpg" alt="Placeholder image">
+    </a>
+    <a href="images/MotorHarness.jpg" data-full>
+      <img src="images/MotorHarness.jpg" alt="Motor Harness">
+    </a>
+  </div>
+
+  <div class="project-content">
+     <h3> Contest Summary </h3>
+        <p>
+          CALICO Fall 2025 consisted of 12 problems and 17 total test sets. These problems are designed to range from Rank 1, easy enough for
+          anyone who has taken any programming lesson ever to code, to Rank 4, hard enough to stump even world class programmers. I personally
+          oversaw the creation of six of the problems, while onboarding members and editing the other problems.
+        </p>
+        <p>
+          The competition itself had 2000+ registrations total, with 60+ coming in person to compete, including the famous competitive programmer 
+          <a href="https://en.wikipedia.org/wiki/Gennady_Korotkevich"> tourist</a>. This continues our trend of the contest growing every semester.
+        </p>
+    <h3> The Problems I Wrote </h3>
+        <p>
+          The first problem I wrote was a cute beginner problem called gta6. The entire problem was given a date, return whether the event happens
+          before or after the release of gta6. This problem along with the second problem bizzfuzz (basically asking given the last two words said
+          in the game of bizzfuzz, output the next word to say), were used as tools for me to help onboard new
+          members into our problem writing process. This onboarding includes teaching how to interface with our problem statements on LaTeX, teaching
+          about our library calico_lib and how it eases the creation of test cases for problems, and teaching how our online problem judging on
+          CALICOJudge work. 
+        </p>
+        <p>
+          The next problem I wrote was up, which is given a X-Z plane projection of a 3D shape and each squares depth, find the minimal area of
+          the shapes projection in the X-Y plane. This problem in general was also on the easier side (being rank 1), so the only interesting note
+          is that we were strapped for time on this problem and finalized most of the problem at the last day before the contest.
+        </p>
+        <p>
+          The 4th problem of the contest and the first rank 2 is a problem called chess, where you are given the x, y location of chess pieces and
+          you must find the number of instances of pieces that are attacking other pieces. I thought this problem was cute, as we allowed for the problem
+          to have a bonus test set allowing naive solutions to pass through. More specifically, you could get less points with an O(N^2) algorithm that
+          naively pairwise compares pieces which is more suitable to beginners. However, you can get more points with an O(NlogN) solution that cleverly 
+          book keeps pieces as 4 unique intercepts for the 4 directions a piece can move (vertical, horizontal, and both diagonals) and lets you sort and
+          parse the values. We did find in practice it was a bit of an implementation hell problem, but it was still interesting for the more beginner
+          problem solvers.
+        </p>
+        <p>
+          The 5th problem of the contest and the second rank 2 is a problem called decibel, where you are given a string and a number of amplifications,
+          and you must output the score of amplifying the string k times. The score is a-z (1-26) and A-Z (27-52), with amplifications being a->A, A-Aa.
+          This problem also has two solutions, naive and smart. The naive is an exponential time simulation, that is simply there to teach solvers how
+          to do string manipulation. The reason this problem was pushed however is the smart solution which we thought was clever. If you watch the growth
+          of the amplification of each character, you can notice the string grows exponentially by the fibonacci recurrence relation. This means the solution
+          is to calculate fib in linear time (by whatever means, such as DP or just an array) and multiply each letter my that value smartly. Generally
+          contestants enjoyed it, and I think this was one of the smarter problems we designed.
+        </p>
+        <p>
+          The final problem I personally designed was a rank 2+3+4, meaning a lot of variation. The problem, with me simplifying the premise and loading
+          of the data structure, is that you are given a tree with different items at each node, find the number of items you can grab on your way to depth
+          K. The unique part however, is that certain nodes are portals that contain a copy of the entire tree, effectively creating an infinitely and
+          exponentially big tree. Because loading in the tree is a challenge in itself, we allow a naive BFS as our rank 2 solution. However, when playing
+          around with this idea we had the feeling there was a more close formed solution you can find once you reach the lowest portal. We then realized this
+          can be written as a linear recurrence relation, with each difference equation referring to the depth relative to the top layer. This allowed for
+          our rank 3 solution to be matrix exponentiation on this recurrence relation. The rank 4 solution funny enough was only discovered when we started
+          verifying the problem. We assumed that recurrence relations couldn't be solved faster, but someone on the team found this technique for linear
+          recurrence relations called the Kitamasa Method that uses FFT and polynomial multiplication to solve the relation faster. As a side note, I found
+          this solution very coincidentally funny as me and the other problem writer who wrote this problem are in a signals and systems class that teaches
+          very similar concepts to this problems solution.
+        </p>
+    <h3> The Infastructure </h3>
+        <p>
+          The bulk of our contestant data infastructure is managed by google sheets and python scripts. We effectively use an ETL pipeline which goes 
+          as follows: extract, we take data from google forms; transform, we parse the data and format it; load, we automatically generate things such
+          as certificates, login information, and raffle IDs. 
+        </p>
+        <p>
+          Our actual contest infastructure i haven't touched too much, but it runs on an API of DOMJudge, which we reformated and called CALICOJudge.
+          The main thing I interface with is the judge hosts and they work with problems. This is mainly just making sure uploading problems is elegant
+          so testing is more seamless.
+        </p>
+  </div>
+</article>
+
 
     <!-- =========================
          Project: Car Horn PCB
-         Put images in: images/projects/car-horn/
-         Examples: images/projects/car-horn/pcb-top.jpg, /pcb-bottom.jpg, /scope.png, /photo-1.jpg
          ========================= -->
     <article class="project" id="car-horn">
       <div class="project-head">
@@ -535,68 +635,6 @@ body {
         </p>
       </div>
     </article>
-
-      
-  <article class="project" id="solar-vehicle">
-    <div class="project-head">
-      <div class="project-meta">
-        <h3>Gen11 Solar Car Electrical System</h3>
-        <p class="lead"></p>
-        <div class="project-tags">Systems Engineering • Electrical Architecture • Verification and Integration</div>
-      </div>
-    <div class="project-info">
-      <small>2025-26</small>
-    </div>
-  </div>
-
-  <div class="gallery">
-    <!-- Replace with project images -->
-    <a href="images/calsol_fsgp2025.jpg" data-full>
-      <img src="images/calsol_fsgp2025.jpg" alt="Placeholder image">
-    </a>
-    <a href="images/MotorHarness.jpg" data-full>
-      <img src="images/MotorHarness.jpg" alt="Motor Harness">
-    </a>
-  </div>
-
-  <div class="project-content">
-    <p>
-      🚧 <em>This project is actively being worked on. More documentation, images, and technical details will be added soon.</em>
-    </p>
-     <h3> New Power Architecture </h3>
-        <p>
-          The main flaw in the 10th generations power architecture was in car shutoff edge cases. Mainly a chicken and the egg problem
-          where we needed the car to tell the car it shut off when it shuts off. To do this we reimplemented power distribution with a
-          LVPDB (Low Voltage Power Distribution Board). The board contains a switching converter to step HV battery to a 12V line and more
-          importantly logic on how to distribute the 12V. Our solution was to add an aux pack to power the car for a bit when the car is in
-          "shut down mode" instead of no power. This allows CAN to still have power and boards to still be able to communicate. The logic for
-          not draining the aux is a simple power priority IC that prioritizes battery 12V at all times if it exists. In general, this fixes 
-          the problem of boards like strobe not knowing to get triggered when the car is abruptly stopped from, for example, EStop.
-        </p>
-        <p>
-          We also had a reoccuring problems of our contactors to the solar array getting welded together. This was due to us having an RC
-          precharge circuit for the motors, but not the array. In turn, we revised the HVPDB to add another precharge circuit.
-        </p>
-    <h3> Current Progress </h3>
-        <p>
-          I am currently spending a lot of time researching motors and motor controllers, and trying to get past generation motors to spin with
-          various controllers. The process is mainly a lot of datasheet reading and documentation of motor and motor controller behaviour in different 
-          conditions. There has also been a lot of harnessing to create wire adaptors between different kinds of connectors. 
-        </p>
-        <p>
-          We are also redoing a few low voltage boards for either greater functionality or better ergonomics, and switching the MCU we are using
-          on all boards to the ESP32 Wroom. One board being redone is steering, as it has been notoriously not ergonomic as there was a rats nest
-          of wires in the steering wheel, and we needed to take apart the whole wheel to flash new code or snoop the serial monitor. I am also pushing
-          for a new sensors project to give more data to our strategy team. I am also working closely with the BMS project to push out a more reliable
-          battery protection system.
-        </p>
-        <p>
-          I have also done a lot of thinking and planning for enclosures and harnessing. We are planning to work with our composites team for 
-          custom composite boxes for each board. We are also working with our new sponsor EPlan that I helped get in order to plan harnessing
-          in a software before we implement it on an actual car.
-        </p>
-  </div>
-</article>
   
 <article class="project" id="wip">
   <div class="project-head">
