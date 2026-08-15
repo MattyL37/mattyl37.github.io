@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Me - Matthew Lee</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f8f9fa;
+      color: #333;
+    }
+    header {
+      background: #003262;
+      color: white;
+      text-align: center;
+      padding: 2rem 1rem;
+    }
+    header h1 {
+      margin: 0;
+    }
+    .nav-links {
+      margin-top: 1rem;
+    }
+    .nav-links a {
+      color: #ffffff;
+      text-decoration: none;
+      font-weight: bold;
+      margin: 0 10px;
+    }
+    .nav-links a:hover {
+      text-decoration: underline;
+    }
+    .container {
+      display: grid;
+      /* Forces 3 columns on wider screens, wraps on smaller screens */
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      padding: 2rem;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    /* Fallback responsive behavior for smaller screens */
+    @media (max-width: 900px) {
+      .container {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (max-width: 600px) {
+      .container {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+    }
+    .card-content {
+      padding: 1.5rem;
+      flex-grow: 1;
+    }
+    .card-content h3 {
+      margin-top: 0;
+      color: #003262;
+      border-bottom: 2px solid #007bff;
+      padding-bottom: 0.5rem;
+    }
+    .card-content ul {
+      margin: 0;
+      padding-left: 1.2rem;
+    }
+    .card-content li {
+      margin-bottom: 0.5rem;
+      line-height: 1.4;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1.5rem;
+      font-size: 0.9rem;
+      color: #666;
+    }
+
+    /* Dark mode styling */
+    body.dark-mode {
+      background: #121212;
+      color: #e0e0e0;
+    }
+    body.dark-mode header {
+      background: #000;
+      color: #e0e0e0;
+    }
+    body.dark-mode .card {
+      background: #1e1e1e;
+      color: #e0e0e0;
+      box-shadow: 0 2px 6px rgba(255,255,255,0.05);
+    }
+    body.dark-mode .card-content h3 {
+      color: #66b2ff;
+      border-bottom-color: #66b2ff;
+    }
+    body.dark-mode a {
+      color: #66b2ff;
+    }
+    body.dark-mode footer {
+      color: #aaa;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>About Matthew Lee</h1>
+    <h2>EECS @ UC Berkeley | What I'm Currently Doing</h2>
+    <div class="nav-links">
+      <a href="index.html">← Back to Home</a>
+    </div>
+    <button id="darkModeToggle" style="margin-top:1rem; padding:0.5rem 1rem; border:none; border-radius:6px; cursor:pointer;">
+      Dark Mode
+    </button>
+  </header>
+
+  <main class="container">
+
+    <!-- Row 1: Academics & Campus Leadership -->
+    <div class="card">
+      <div class="card-content">
+        <h3>📚 Current Coursework</h3>
+        <ul>
+          <li><b>Microelectronic Devices & Circuits:</b> Analog IC design & semiconductors.</li>
+          <li><b>Signals & Systems:</b> CT/DT analysis, communications & feedback systems.</li>
+          <li><b>Computer Architecture:</b> Full hardware stack, ISA, & CPU design.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-content">
+        <h3>⚡ CalSol Solar Vehicle</h3>
+        <ul>
+          <li><b>Electrical Subteam Lead:</b> Overseeing system integration.</li>
+          <li>Developing Gen11 power architecture & custom wiring harness.</li>
+          <li>Managing PCB design, board bring-up, and hardware testing.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-content">
+        <h3>💻 CALICO Competition</h3>
+        <ul>
+          <li><b>Director:</b> Organising Berkeley’s informatics competition.</li>
+          <li>Authoring & testing competitive programming problems.</li>
+          <li>Managing semesterly contest logistics and platform infrastructure.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Row 2: Labs, Organizations & Skills -->
+    <div class="card">
+      <div class="card-content">
+        <h3>🛠️ Supernode Makerspace</h3>
+        <ul>
+          <li><b>Electronics Admin:</b> Managing the student EE lab.</li>
+          <li>Leading safety & equipment usage trainings for students.</li>
+          <li>Maintaining lab tools, oscilloscopes, and soldering stations.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-content">
+        <h3>🤝 IEEE & HKN Berkeley</h3>
+        <ul>
+          <li><b>HKN:</b> Member of the service committee.</li>
+          <li><b>IEEE:</b> Active student branch participant.</li>
+          <li>Organizing tech workshops, tutoring, and community outreach.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-content">
+        <h3>🎛️ Analog Audio Hardware</h3>
+        <ul>
+          <li>Designing custom analog guitar pedals (op-amp filters, MOSFET clipping).</li>
+          <li>Simulating filter response using LTspice Bode plots.</li>
+          <li>Hands-on PCB layout and audio frequency testing.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Row 3: Technical Skills & Personal Interests -->
+    <div class="card">
+      <div class="card-content">
+        <h3>🔌 Embedded Systems</h3>
+        <ul>
+          <li>Microcontrollers: ESP32, STM32 integration.</li>
+          <li>Communication Protocols: CAN bus, SPI, I2C, UART.</li>
+          <li>Mixed-signal layout and power electronics design.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-content">
+        <h3>🛠️ Technical Toolkit</h3>
+        <ul>
+          <li><b>CAD / EDA:</b> KiCad, Altium Designer, LTspice.</li>
+          <li><b>Languages:</b> C, C++, Python, Verilog / RISC-V.</li>
+          <li><b>Lab Tools:</b> Logic analyzers, DMMs, Function generators.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-content">
+        <h3>🌌 Personal Interests</h3>
+        <ul>
+          <li>Playing electric guitar & custom audio gear building.</li>
+          <li>Amateur astronomy & telescope observation.</li>
+          <li>Reading philosophy & listening to alternative rock.</li>
+        </ul>
+      </div>
+    </div>
+
+  </main>
+
+  <footer>
+    <p>© 2025 Matthew Lee | <a href="https://github.com/username">GitHub</a> | <a href="index.html">Home</a></p>
+  </footer>
+
+  <script>
+    const toggleBtn = document.getElementById('darkModeToggle');
+    toggleBtn.addEventListener('click', () => {
+      document.body.classList.toggle('dark-mode');
+      if (document.body.classList.contains('dark-mode')) {
+        toggleBtn.textContent = "Light Mode";
+      } else {
+        toggleBtn.textContent = "Dark Mode";
+      }
+    });
+  </script>
+
+</body>
+</html>
