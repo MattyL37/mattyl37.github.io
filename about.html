@@ -3,140 +3,210 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>About Me - Matthew Lee</title>
+  <title>About — Matthew Lee</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background: #f8f9fa;
-      color: #333;
+    :root {
+      --bg: #f8f9fa;
+      --card: #ffffff;
+      --accent: #007bff;
+      --muted: #666;
+      --shadow: 0 6px 18px rgba(15, 23, 42, 0.08);
+      --radius: 12px;
+      --max-w: 1100px;
+      --text: #222;
     }
+
+    body {
+      font-family: Arial, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    /* Header styling (matches projects.html) */
     header {
       background: #003262;
       color: white;
       text-align: center;
       padding: 2rem 1rem;
     }
+
     header h1 {
       margin: 0;
-    }
-    .nav-links {
-      margin-top: 1rem;
-    }
-    .nav-links a {
-      color: #ffffff;
-      text-decoration: none;
-      font-weight: bold;
-      margin: 0 10px;
-    }
-    .nav-links a:hover {
-      text-decoration: underline;
-    }
-    .container {
-      display: grid;
-      /* Forces 3 columns on wider screens, wraps on smaller screens */
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.5rem;
-      padding: 2rem;
-      max-width: 1200px;
-      margin: auto;
+      font-size: 1.5rem;
     }
 
-    /* Fallback responsive behavior for smaller screens */
-    @media (max-width: 900px) {
-      .container {
-        grid-template-columns: repeat(2, 1fr);
-      }
+    header p {
+      margin: .4rem 0 0;
+      color: #dcdcdc;
+      font-size: 0.95rem;
     }
-    @media (max-width: 600px) {
-      .container {
-        grid-template-columns: 1fr;
-      }
+
+    .wrap {
+      max-width: var(--max-w);
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+
+    /* Sub-header navigation (matches projects.html) */
+    .page-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .page-head h2 {
+      margin: 0;
+      font-size: 1.25rem;
+    }
+
+    .head-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-block;
+      background: var(--accent);
+      color: white;
+      padding: .5rem .9rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn-secondary {
+      background: transparent;
+      border: 1px solid #cbd5e1;
+      color: var(--text);
+    }
+
+    /* 3x3 Card Grid */
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
     }
 
     .card {
-      background: white;
-      border-radius: 12px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-      overflow: hidden;
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 1.5rem;
       display: flex;
       flex-direction: column;
-      transition: transform 0.2s;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
+
     .card:hover {
       transform: translateY(-4px);
     }
-    .card-content {
-      padding: 1.5rem;
-      flex-grow: 1;
-    }
-    .card-content h3 {
+
+    .card h3 {
       margin-top: 0;
       color: #003262;
-      border-bottom: 2px solid #007bff;
+      border-bottom: 2px solid var(--accent);
       padding-bottom: 0.5rem;
+      font-size: 1.1rem;
     }
-    .card-content ul {
+
+    .card ul {
       margin: 0;
       padding-left: 1.2rem;
     }
-    .card-content li {
+
+    .card li {
       margin-bottom: 0.5rem;
-      line-height: 1.4;
+      font-size: 0.95rem;
     }
 
     footer {
       text-align: center;
-      padding: 1.5rem;
+      padding: 2rem 1.5rem;
       font-size: 0.9rem;
-      color: #666;
+      color: var(--muted);
     }
 
-    /* Dark mode styling */
-    body.dark-mode {
-      background: #121212;
-      color: #e0e0e0;
+    /* Responsive scaling */
+    @media (max-width: 900px) {
+      .grid-container {
+        grid-template-columns: repeat(2, 1fr);
+      }
     }
+
+    @media (max-width: 600px) {
+      .grid-container {
+        grid-template-columns: 1fr;
+      }
+      .page-head {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    /* Dark Mode */
+    body.dark-mode {
+      --bg: #121212;
+      --card: #1e1e1e;
+      --text: #e0e0e0;
+      --muted: #aaa;
+      --shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+    }
+
     body.dark-mode header {
       background: #000;
-      color: #e0e0e0;
     }
-    body.dark-mode .card {
-      background: #1e1e1e;
-      color: #e0e0e0;
-      box-shadow: 0 2px 6px rgba(255,255,255,0.05);
-    }
-    body.dark-mode .card-content h3 {
+
+    body.dark-mode .card h3 {
       color: #66b2ff;
       border-bottom-color: #66b2ff;
     }
+
+    body.dark-mode .btn-secondary {
+      border-color: #444;
+      color: #e0e0e0;
+    }
+
     body.dark-mode a {
       color: #66b2ff;
-    }
-    body.dark-mode footer {
-      color: #aaa;
     }
   </style>
 </head>
 <body>
 
+  <!-- Matching Main Header -->
   <header>
-    <h1>About Matthew Lee</h1>
-    <h2>EECS @ UC Berkeley | What I'm Currently Doing</h2>
-    <div class="nav-links">
-      <a href="index.html">← Back to Home</a>
-    </div>
-    <button id="darkModeToggle" style="margin-top:1rem; padding:0.5rem 1rem; border:none; border-radius:6px; cursor:pointer;">
-      Dark Mode
-    </button>
+    <h1>Matthew Lee — About Me</h1>
+    <p>EECS @ UC Berkeley | Hardware Design & Validation</p>
   </header>
 
-  <main class="container">
+  <main class="wrap">
+    
+    <!-- Matching Sub-Header Navigation -->
+    <div class="page-head">
+      <h2>Current Focus & Activities</h2>
+      <div class="head-actions">
+        <a class="btn" href="index.html">← Back to Home</a>
+        <a class="btn btn-secondary" href="assets/Matthew_HW_Resume_10_19_25.pdf">Download Resume</a>
+        <button id="darkModeToggle" class="btn btn-secondary">Dark Mode</button>
+      </div>
+    </div>
 
-    <!-- Row 1: Academics & Campus Leadership -->
-    <div class="card">
-      <div class="card-content">
+    <!-- 3 Column x 3 Row Grid -->
+    <div class="grid-container">
+
+      <!-- Row 1 -->
+      <div class="card">
         <h3>📚 Current Coursework</h3>
         <ul>
           <li><b>Microelectronic Devices & Circuits:</b> Analog IC design & semiconductors.</li>
@@ -144,10 +214,8 @@
           <li><b>Computer Architecture:</b> Full hardware stack, ISA, & CPU design.</li>
         </ul>
       </div>
-    </div>
 
-    <div class="card">
-      <div class="card-content">
+      <div class="card">
         <h3>⚡ CalSol Solar Vehicle</h3>
         <ul>
           <li><b>Electrical Subteam Lead:</b> Overseeing system integration.</li>
@@ -155,44 +223,36 @@
           <li>Managing PCB design, board bring-up, and hardware testing.</li>
         </ul>
       </div>
-    </div>
 
-    <div class="card">
-      <div class="card-content">
+      <div class="card">
         <h3>💻 CALICO Competition</h3>
         <ul>
-          <li><b>Director:</b> Organising Berkeley’s informatics competition.</li>
+          <li><b>Director:</b> Organizing Berkeley’s informatics competition.</li>
           <li>Authoring & testing competitive programming problems.</li>
-          <li>Managing semesterly contest logistics and platform infrastructure.</li>
+          <li>Managing semesterly contest logistics and data pipelines.</li>
         </ul>
       </div>
-    </div>
 
-    <!-- Row 2: Labs, Organizations & Skills -->
-    <div class="card">
-      <div class="card-content">
+      <!-- Row 2 -->
+      <div class="card">
         <h3>🛠️ Supernode Makerspace</h3>
         <ul>
-          <li><b>Electronics Admin:</b> Managing the student EE lab.</li>
+          <li><b>Electronics Admin:</b> Managing student EE lab space.</li>
           <li>Leading safety & equipment usage trainings for students.</li>
-          <li>Maintaining lab tools, oscilloscopes, and soldering stations.</li>
+          <li>Maintaining lab tools, oscilloscopes, and soldering gear.</li>
         </ul>
       </div>
-    </div>
 
-    <div class="card">
-      <div class="card-content">
+      <div class="card">
         <h3>🤝 IEEE & HKN Berkeley</h3>
         <ul>
-          <li><b>HKN:</b> Member of the service committee.</li>
+          <li><b>HKN:</b> Active member of the service committee.</li>
           <li><b>IEEE:</b> Active student branch participant.</li>
           <li>Organizing tech workshops, tutoring, and community outreach.</li>
         </ul>
       </div>
-    </div>
 
-    <div class="card">
-      <div class="card-content">
+      <div class="card">
         <h3>🎛️ Analog Audio Hardware</h3>
         <ul>
           <li>Designing custom analog guitar pedals (op-amp filters, MOSFET clipping).</li>
@@ -200,11 +260,9 @@
           <li>Hands-on PCB layout and audio frequency testing.</li>
         </ul>
       </div>
-    </div>
 
-    <!-- Row 3: Technical Skills & Personal Interests -->
-    <div class="card">
-      <div class="card-content">
+      <!-- Row 3 -->
+      <div class="card">
         <h3>🔌 Embedded Systems</h3>
         <ul>
           <li>Microcontrollers: ESP32, STM32 integration.</li>
@@ -212,10 +270,8 @@
           <li>Mixed-signal layout and power electronics design.</li>
         </ul>
       </div>
-    </div>
 
-    <div class="card">
-      <div class="card-content">
+      <div class="card">
         <h3>🛠️ Technical Toolkit</h3>
         <ul>
           <li><b>CAD / EDA:</b> KiCad, Altium Designer, LTspice.</li>
@@ -223,10 +279,8 @@
           <li><b>Lab Tools:</b> Logic analyzers, DMMs, Function generators.</li>
         </ul>
       </div>
-    </div>
 
-    <div class="card">
-      <div class="card-content">
+      <div class="card">
         <h3>🌌 Personal Interests</h3>
         <ul>
           <li>Playing electric guitar & custom audio gear building.</li>
@@ -234,6 +288,7 @@
           <li>Reading philosophy & listening to alternative rock.</li>
         </ul>
       </div>
+
     </div>
 
   </main>
