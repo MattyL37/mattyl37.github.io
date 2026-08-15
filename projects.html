@@ -22,12 +22,6 @@
       background:var(--bg);
       color:#222;
       line-height:1.5;
-      margin-left: 240px;
-      transition: margin-left 0.3s ease;
-    }
-
-    body.sidebar-collapsed {
-      margin-left: 1rem;
     }
 
     header {
@@ -46,6 +40,7 @@
       padding:0 1rem;
     }
 
+    /* page title + back link */
     .page-head{
       display:flex;
       justify-content:space-between;
@@ -69,6 +64,7 @@
       color: #111;
     }
 
+    /* project block */
     .project {
       background:var(--card);
       border-radius:var(--radius);
@@ -78,7 +74,102 @@
       overflow:hidden;
     }
 
-    /* Fixed Sidebar & Outer Toggle Styling */
+    .project-head {
+      display:flex;
+      gap:1rem;
+      align-items:flex-start;
+      justify-content:space-between;
+      flex-wrap:wrap;
+    }
+    .project-meta {
+      flex:1 1 380px;
+    }
+    .project-meta h3{ margin:0 0 .25rem 0; }
+    .project-meta p.lead{ margin:0; color:var(--muted); }
+    .project-info {
+      text-align:right;
+      min-width:160px;
+      flex:0 0 auto;
+    }
+    .project-info small{ display:block; color:var(--muted); }
+
+    /* gallery */
+    .gallery {
+      display:grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px,1fr));
+      gap:.6rem;
+      margin-top:1rem;
+    }
+    .gallery a{
+      display:block;
+      overflow:hidden;
+      border-radius:8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      border:1px solid #eef3fb;
+    }
+    .gallery img{
+      width:100%;
+      height:200px;
+      object-fit:cover;
+      display:block;
+      transition: transform .18s ease;
+    }
+    .gallery a:hover img{ transform: scale(1.04); }
+
+    /* long description area */
+    .project-content {
+      margin-top:1rem;
+      color:#333;
+    }
+    .project-tags { margin-top:.6rem; color:var(--muted); font-size:0.95rem; }
+
+    /* simple lightbox modal */
+    .lightbox {
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,0.7);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      z-index:2000;
+      padding:2rem;
+    }
+    .lightbox.open { display:flex; }
+    .lightbox img {
+      max-width:100%;
+      max-height:100%;
+      border-radius:8px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.45);
+    }
+    .lightbox .close {
+      position:absolute;
+      right:18px;
+      top:18px;
+      background:rgba(255,255,255,0.9);
+      color:#111;
+      border-radius:6px;
+      padding:.3rem .5rem;
+      cursor:pointer;
+      font-weight:700;
+    }
+
+    .rgb-led {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: red;
+      box-shadow: 0 0 8px red;
+      animation: rgb-cycle 3s infinite;
+    }
+
+    @keyframes rgb-cycle {
+      0%   { background: red;   box-shadow: 0 0 8px red; }
+      33%  { background: green; box-shadow: 0 0 8px green; }
+      66%  { background: blue;  box-shadow: 0 0 8px blue; }
+      100% { background: red;   box-shadow: 0 0 8px red; }
+    }
+
     .sidebar {
       position: fixed;
       top: 0;
@@ -87,9 +178,11 @@
       width: 220px;
       background: #222;
       color: #fff;
+      padding: 2rem 1rem;
       box-shadow: 2px 0 6px rgba(0,0,0,0.3);
       z-index: 1000;
       transition: transform 0.3s ease;
+      box-sizing: border-box;
     }
 
     .sidebar.collapsed {
@@ -98,9 +191,7 @@
 
     .sidebar-inner {
       height: 100%;
-      padding: 2rem 1rem;
       overflow-y: auto;
-      box-sizing: border-box;
     }
 
     .sidebar h3 {
@@ -129,7 +220,17 @@
       color: #66b2ff;
     }
 
-    /* Attached Arrow Button */
+    /* Push main content over so it doesn’t hide under sidebar */
+    body {
+      margin-left: 240px;
+      transition: margin-left 0.3s ease;
+    }
+
+    body.sidebar-collapsed {
+      margin-left: 0;
+    }
+
+    /* Toggle Arrow Button */
     .sidebar-toggle {
       position: absolute;
       top: 1rem;
@@ -148,14 +249,15 @@
       justify-content: center;
     }
 
+    /* responsive tweaks */
     @media (max-width:720px){
       header{ padding:1.25rem .75rem; }
+      .gallery img{ height:90px; }
       .project-info { text-align:left; width:100%; margin-top:.5rem; }
     }
   </style>
 </head>
 <body>
-
   <nav class="sidebar" id="sidebar">
     <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle navigation">◀</button>
     <div class="sidebar-inner">
@@ -170,8 +272,8 @@
       </ul>
     </div>
   </nav>
-
   <header>
+    
     <h1>Matthew Lee — Project Portfolio</h1>
     <p> The various hardware and software projects I've created </p>
   </header>
