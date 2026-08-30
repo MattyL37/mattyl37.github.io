@@ -351,6 +351,78 @@
         </p>
   </div>
 </article>
+
+        <!-- =========================
+         Project: EE140 Final Project
+         ========================= -->
+
+<article class="project" id="ee140">
+    <div class="project-head">
+      <div class="project-meta">
+        <h3>Two Stage Op-amp LCD Driver</h3>
+        <p class="lead"></p>
+        <div class="project-tags">Hardware • ICs • Analog Design • Course Project </div>
+      </div>
+    <div class="project-info">
+      <small>Spring 2026</small>
+      <a href="https://github.com/calico-team/calico-fa25-public" class="btn" style="margin-top:0.6rem; display:inline-block;">Full Write Up</a>
+    </div>
+  </div>
+
+  <div class="gallery">
+    <!-- Replace with project images -->
+    <a href="images/CALICOFa25.jpg" data-full>
+      <img src="images/CALICOFa25.jpg" alt="Team Picture">
+    </a>
+    <a href="images/CALICOFa25Leaderboard.png" data-full>
+      <img src="images/CALICOFa25Leaderboard.png" alt="Leaderboard">
+    </a>
+    <a href="images/ChessTestCase.png" data-full>
+      <img src="images/ChessTestCase.png" alt="ChessTestCase">
+    </a>
+  </div>
+
+  <div class="project-content">
+     <h3> Overview </h3>
+        <p>
+          The design project was to design and verify through simulation a two stage op-amp LCD driver in Cadence Virtuoso. The
+          specifications were to get high CMRR and PSRR, while making sure we had a fast settling time. The challenge was to
+          meet specifications with as minimized power as possible. For the project, I designed a folded cascode first stage and 
+          class AB Monticelli second stage with ahuja compensation between to get within specifications. I also completed a write-up
+          of the project in detail, which is linked here. This portfolio entry will be brief due to the bulk of everything being
+          readable in that write-up.
+        </p>
+    <h3> General Design Process </h3>
+        <p>
+          I started the project through doing two-port modeling and feedback analysis to decide on general gain and impedances
+          I wanted one each stage. It also allowed me to do pole placement to try and get a 65 degree phase margin. This allowed
+          me to define goal values when I ran look up table scripts later. It also allowed me to generally pick the topology I wanted,
+          which landed me on either a telescopic or folded cascode, with a class AB output, and some form of pole splitting with a
+          compensation capacitor.
+        </p>
+        <p>
+          I then created look up table scripts in a Jupyter notebook to do gm/Id calculations for each transistor. Using
+          the intitial values and biasing for different gm/Id values, I was able to create baseline sizings for each transistor.
+        </p>
+        <p>
+          I then would take those values and create the circuit in Cadence Virtuoso. I would then simulate in a custom test bench
+          in Cadence Maestro. Generally there would be slight differences from my scripts (or mistakes in the script), which led to
+          me iteratively going back and forth between the Cadence simulations and look up table calculations. I would also tune slightly
+          up or down in Cadence based on known relations.
+        </p>
+        <p>
+          The final iterations were made by utilizing current mirror ratios. I did a lot of halving currents on branches and subsequently
+          halving widths as well on those branches. I also at the end switched from a source follower biasing scheme for my class AB and
+          swithced to a monticelli for a challenge in getting a more PVT insensitive design. The final parts of the project were just
+          optimizing power down.
+        </p>
+    <h3> Reflection </h3>
+        <p>
+          The design was good enough to pass specifications and ended up being a cool design. The exact specifications are in the
+          image above. I also in general just had a lot of fun learning analog design through this!
+        </p>
+  </div>
+</article>
     
        <!-- =========================
          Project: CALICO Fa25
