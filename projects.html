@@ -330,26 +330,30 @@
           the problem of boards like strobe not knowing to get triggered when the car is abruptly stopped from, for example, EStop.
         </p>
         <p>
+          Another change added along the same vein is to have the car be able to work purely on LV mode. Like in a standard EV, the
+          electronics of a car can be on without the main HV battery being on. In turn, we are using our Aux on setup to allow for this.
+          This along with the aux scheme impacts a few boards. These include strobe (which is simplified heavily) and telemetry, which
+          now is able to transmit after the car turns off.
+        </p>
+        <p>
           We also had a reoccuring problems of our contactors to the solar array getting welded together. This was due to us having an RC
           precharge circuit for the motors, but not the array. In turn, we revised the HVPDB to add another precharge circuit.
         </p>
-    <h3> Current Progress </h3>
+    <h3> 25-26 School Year Progress </h3>
         <p>
-          I am currently spending a lot of time researching motors and motor controllers, and trying to get past generation motors to spin with
+          A lot of time was spent researching motors and motor controllers, and trying to get past generation motors to spin with
           various controllers. The process is mainly a lot of datasheet reading and documentation of motor and motor controller behaviour in different 
-          conditions. There has also been a lot of harnessing to create wire adaptors between different kinds of connectors. 
+          conditions. There has also been a lot of harnessing to create wire adaptors between different kinds of connectors. There was a large
+          roadblock in the project due to misunderstanding of firmware on both sides of the motor controller. We then ran into the fundamental
+          differnce of phase differences between the motor and motor controller (expecting 60 vs 120 degree phase offset). At the end,
+          the motors spun, and the club was saved ~90k for it.
         </p>
         <p>
-          We are also redoing a few low voltage boards for either greater functionality or better ergonomics, and switching the MCU we are using
-          on all boards to the ESP32 Wroom. One board being redone is steering, as it has been notoriously not ergonomic as there was a rats nest
+          We also redid over half of the low voltage boards for either greater functionality or better ergonomics, and switching the MCU we are using
+          on all boards to the ESP32. One board being redone is steering, as it has been notoriously not ergonomic as there was a rats nest
           of wires in the steering wheel, and we needed to take apart the whole wheel to flash new code or snoop the serial monitor. I am also pushing
           for a new sensors project to give more data to our strategy team. I am also working closely with the BMS project to push out a more reliable
           battery protection system.
-        </p>
-        <p>
-          I have also done a lot of thinking and planning for enclosures and harnessing. We are planning to work with our composites team for 
-          custom composite boxes for each board. We are also working with our new sponsor EPlan that I helped get in order to plan harnessing
-          in a software before we implement it on an actual car.
         </p>
   </div>
 </article>
