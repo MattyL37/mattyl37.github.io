@@ -1,0 +1,271 @@
+/* Shared theme for the sub-pages (about, projects, blog).
+   Matches the look of index.html: fixed background image with a tint,
+   Berkeley blue/gold header with stars and PCB traces, dark mode default. */
+
+:root {
+  --bg: #f5f7fa;
+  --surface: #ffffff;
+  --text: #1f2933;
+  --muted: #52606d;
+  --border: #e4e7eb;
+  --accent: #003262;      /* Berkeley Blue */
+  --accent-2: #fdb515;    /* California Gold */
+  --link: #0b5cad;
+  --link-hover: #003262;
+  --shadow: 0 1px 2px rgba(16, 24, 40, 0.05), 0 4px 12px rgba(16, 24, 40, 0.06);
+  --shadow-hover: 0 2px 4px rgba(16, 24, 40, 0.06), 0 12px 28px rgba(16, 24, 40, 0.12);
+  --radius: 14px;
+  --max: 1100px;
+  --gutter: 1.5rem;
+}
+
+body.dark-mode {
+  --bg: #0f1419;
+  --surface: #1a2028;
+  --text: #e4e7eb;
+  --muted: #9aa5b1;
+  --border: #2a323c;
+  --link: #6cb4ff;
+  --link-hover: #a8d4ff;
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 4px 12px rgba(0, 0, 0, 0.25);
+  --shadow-hover: 0 2px 4px rgba(0, 0, 0, 0.35), 0 12px 28px rgba(0, 0, 0, 0.4);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: var(--link);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+a:hover { color: var(--link-hover); }
+
+/* ---------- Page background ---------- */
+.page-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  background: #2a1f3d;
+}
+.page-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("images/background.png") center / cover no-repeat;
+}
+.page-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(20, 12, 40, 0.35) 0%, rgba(20, 12, 40, 0.55) 100%);
+}
+body.dark-mode .page-bg::after {
+  background: linear-gradient(180deg, rgba(5, 5, 15, 0.6) 0%, rgba(5, 5, 15, 0.8) 100%);
+}
+
+/* ---------- Header ---------- */
+header {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background: linear-gradient(160deg, rgba(0, 50, 98, 0.88) 0%, rgba(30, 22, 70, 0.88) 100%);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  color: #fff;
+  text-align: center;
+  padding: 2.75rem var(--gutter) 2.25rem;
+}
+body.dark-mode header {
+  background: linear-gradient(160deg, rgba(8, 14, 32, 0.9) 0%, rgba(24, 12, 44, 0.9) 100%);
+}
+header::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent-2) 30%, #f7a8d8 70%, transparent);
+  box-shadow: 0 0 12px rgba(253, 181, 21, 0.6);
+}
+header h1 {
+  margin: 0;
+  font-size: clamp(1.6rem, 3.6vw, 2.4rem);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.2;
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.35);
+}
+header > p {
+  margin: 0.6rem 0 0;
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+.title-accent {
+  background: linear-gradient(90deg, #fdb515, #ffe29a, #f7a8d8);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: none;
+}
+.header-actions {
+  margin-top: 1.25rem;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+/* Decorative layer */
+.header-deco {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+.header-deco svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  border-radius: 50%;
+  background: #fff;
+  opacity: 0.35;
+}
+.star.big { width: 3px; height: 3px; box-shadow: 0 0 4px rgba(255, 255, 255, 0.5); }
+.trace {
+  fill: none;
+  stroke: rgba(253, 181, 21, 0.2);
+  stroke-width: 2;
+  stroke-linejoin: round;
+}
+.via {
+  fill: rgba(15, 20, 40, 0.6);
+  stroke: rgba(253, 181, 21, 0.55);
+  stroke-width: 2;
+}
+
+#darkModeToggle {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  padding: 0.4rem 1rem;
+  font: inherit;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+#darkModeToggle:hover {
+  background: rgba(255, 255, 255, 0.18);
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
+/* ---------- Buttons ---------- */
+.btn {
+  display: inline-block;
+  padding: 0.55rem 1.1rem;
+  background: var(--accent);
+  color: #fff;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+.btn:hover { background: #00478a; color: #fff; }
+body.dark-mode .btn { background: #0b5cad; }
+body.dark-mode .btn:hover { background: #1670cc; }
+
+/* Secondary buttons always sit on dark glass (header or background image) */
+.btn.btn-secondary,
+body.dark-mode .btn.btn-secondary {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.35);
+  color: #fff;
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+}
+.btn.btn-secondary:hover,
+body.dark-mode .btn.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.18);
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
+/* ---------- Content width + section heading on the background ---------- */
+.wrap {
+  max-width: var(--max);
+  margin: 2.5rem auto 0;
+  padding: 0 var(--gutter);
+}
+.page-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+.page-head h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #fff;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
+}
+.page-head h2::after {
+  content: "";
+  display: block;
+  width: 40px;
+  height: 3px;
+  margin-top: 0.45rem;
+  background: var(--accent-2);
+  border-radius: 2px;
+}
+.head-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+/* ---------- Footer ---------- */
+footer {
+  text-align: center;
+  padding: 3rem var(--gutter) 2.5rem;
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.8);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+footer p { margin: 0; }
+footer a { color: #fff; font-weight: 600; }
+footer a:hover { color: var(--accent-2); }
+
+@media (max-width: 640px) {
+  :root { --gutter: 1rem; }
+  header { padding: 3.5rem var(--gutter) 2rem; }
+  .header-deco svg { opacity: 0.45; }
+  .page-head { flex-direction: column; align-items: flex-start; }
+}

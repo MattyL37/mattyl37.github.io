@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>School — Matthew Lee</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="theme.css">
+  <style>
+    /* Jump links under the page heading */
+    .jump {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin: -0.5rem 0 2rem;
+    }
+    .jump a {
+      padding: 0.35rem 0.9rem;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.08);
+      -webkit-backdrop-filter: blur(4px);
+      backdrop-filter: blur(4px);
+      color: #fff;
+      font-size: 0.875rem;
+      font-weight: 600;
+    }
+    .jump a:hover {
+      border-color: var(--accent-2);
+      color: var(--accent-2);
+    }
+
+    /* Section + semester headings sit on the background image */
+    .section { scroll-margin-top: 1.5rem; margin-bottom: 3rem; }
+    .section-title {
+      display: flex;
+      align-items: baseline;
+      gap: 0.75rem;
+      margin: 0 0 1.25rem;
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: #fff;
+      text-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
+    }
+    .section-title .count {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.7);
+    }
+    .term-title {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin: 2rem 0 1rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--accent-2);
+      text-shadow: 0 1px 6px rgba(0, 0, 0, 0.6);
+    }
+    .term-title::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(253, 181, 21, 0.5), transparent);
+    }
+    .term-title:first-of-type { margin-top: 0; }
+    .now {
+      padding: 0.15rem 0.55rem;
+      border-radius: 999px;
+      background: var(--accent-2);
+      color: #1f2933;
+      font-size: 0.7rem;
+      letter-spacing: 0.06em;
+      text-shadow: none;
+    }
+
+    /* Card grid */
+    .item-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: var(--gutter);
+    }
+    .item {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      transition: box-shadow 0.2s ease;
+    }
+    .item:hover { box-shadow: var(--shadow-hover); }
+
+    /* Image slot: shows the image, or a dashed placeholder naming the file to add */
+    .media {
+      position: relative;
+      aspect-ratio: 16 / 10;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+    }
+    .media img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .media .hint { display: none; }
+    .media.empty img { display: none; }
+    .media.empty .hint {
+      position: absolute;
+      inset: 0.75rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.35rem;
+      border: 2px dashed var(--border);
+      border-radius: 10px;
+      color: var(--muted);
+      font-size: 0.8rem;
+      text-align: center;
+      padding: 0.5rem;
+    }
+    .media.empty .hint svg {
+      width: 26px;
+      height: 26px;
+      fill: none;
+      stroke: var(--accent-2);
+      stroke-width: 1.75;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .media.empty .hint code {
+      font-size: 0.75rem;
+      color: var(--text);
+      word-break: break-all;
+    }
+
+    .item-body {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      padding: 1.25rem;
+    }
+    .item-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+    .code {
+      padding: 0.15rem 0.6rem;
+      border: 1px solid rgba(253, 181, 21, 0.5);
+      border-radius: 6px;
+      background: rgba(253, 181, 21, 0.1);
+      color: #9a7300;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+    body.dark-mode .code { color: var(--accent-2); }
+    .rating {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--muted);
+    }
+    .rating:hover { color: var(--link); }
+    .item h4 {
+      margin: 0 0 0.6rem;
+      font-size: 1.02rem;
+      font-weight: 600;
+      line-height: 1.35;
+      letter-spacing: -0.01em;
+    }
+
+    /* The little text box */
+    .note {
+      flex: 1;
+      margin: 0;
+      padding: 0.75rem 0.9rem;
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent-2);
+      border-radius: 8px;
+      background: var(--bg);
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.55;
+    }
+    .note.todo { font-style: italic; opacity: 0.8; }
+  </style>
+</head>
+<body class="dark-mode">
+  <div class="page-bg" aria-hidden="true"></div>
+
+  <header>
+    <div class="header-deco" aria-hidden="true">
+      <div class="stars"></div>
+      <svg viewBox="0 0 1200 220" preserveAspectRatio="xMidYMid slice">
+        <g>
+          <path class="trace" d="M0 50 H110 L150 90 H240"/>
+          <circle class="via" cx="240" cy="90" r="5"/>
+          <path class="trace" d="M0 90 H80 L120 130 H180 L210 160"/>
+          <circle class="via" cx="210" cy="160" r="5"/>
+          <path class="trace" d="M0 190 H130 L160 160 H230"/>
+          <circle class="via" cx="230" cy="160" r="5"/>
+        </g>
+        <g transform="translate(1200 0) scale(-1 1)">
+          <path class="trace" d="M0 50 H110 L150 90 H240"/>
+          <circle class="via" cx="240" cy="90" r="5"/>
+          <path class="trace" d="M0 90 H80 L120 130 H180 L210 160"/>
+          <circle class="via" cx="210" cy="160" r="5"/>
+          <path class="trace" d="M0 190 H130 L160 160 H230"/>
+          <circle class="via" cx="230" cy="160" r="5"/>
+        </g>
+      </svg>
+    </div>
+
+    <h1>Matthew Lee — <span class="title-accent">School</span></h1>
+    <p>Classes I've taken and clubs I'm part of at UC Berkeley</p>
+    <button id="darkModeToggle">Light Mode</button>
+  </header>
+
+  <main class="wrap">
+    <div class="page-head">
+      <h2>Classes &amp; Clubs</h2>
+      <div class="head-actions">
+        <a class="btn" href="index.html">← Back to Home</a>
+      </div>
+    </div>
+
+    <nav class="jump" aria-label="Jump to section">
+      <a href="#classes">Classes</a>
+      <a href="#clubs">Clubs</a>
+    </nav>
+
+    <!--
+      HOW TO EDIT
+      - Text: change the words inside each "note" paragraph. Remove class "todo" once you've written your own.
+      - Image: drop a file into the images folder with the name shown in the <img src="...">,
+        or change the src to any image you already have. Until the file exists, the card shows
+        a dashed placeholder with the file name it is looking for.
+      - New class/club: copy one <article class="item"> ... </article> block and edit it.
+    -->
+
+    <!-- ===================== CLASSES ===================== -->
+    <section class="section" id="classes">
+      <h2 class="section-title">Classes <span class="count">10 courses</span></h2>
+
+      <h3 class="term-title">Fall 2026 <span class="now">Current</span></h3>
+      <div class="item-grid">
+        <article class="item">
+          <div class="media"><img src="images/school/ee117b.jpg" alt="EE117B"></div>
+          <div class="item-body">
+            <div class="item-top"><span class="code">EE117B</span></div>
+            <h4>Microwave and Wireless Measurements</h4>
+            <p class="note todo">Add a short note.</p>
+          </div>
+        </article>
+
+        <article class="item">
+          <div class="media"><img src="images/school/cs170.jpg" alt="CS170"></div>
+          <div class="item-body">
+            <div class="item-top"><span class="code">CS170</span></div>
+            <h4>Efficient Algorithms and Intractable Problems</h4>
+            <p class="note todo">Add a short note.</p>
+          </div>
+        </article>
+
+        <article class="item">
+          <div class="media"><img src="images/school/cs162.jpg" alt="CS162"></div>
+          <div class="item-body">
+            <div class="item-top"><span class="code">CS162</span></div>
+            <h4>Operating Systems and System Programming</h4>
+            <p class="note todo">Add a short note.</p>
+          </div>
+        </article>
+
+        <article class="item">
+          <div class="media"><img src="images/school/history100b.jpg" alt="History 100B"></div>
+          <div class="item-body">
+            <div class="item-top"><span class="code">HISTORY 100B</span></div>
+            <h4>Add course title</h4>
+            <p class="note todo">Add a short note.</p>
+          </div>
+        </article>
+      </div>
+
+      <h3 class="term-title">Spring 2026</h3>
+      <div class="item-grid">
+        <article class="item">
+          <div class="media"><img src="images/school/ee140.jpg" alt="EE140 project results"></div>
+          <div class="item-body">
+            <div class="item-top"><span class="code">EE140</span><a class="rating" href="blog.html">Blog rating 10/10</a></div>
+            <h4>Linear Integrated Circuits</h4>
+            <p class="note todo">Add a short note.</p>
+          </div>
+        </article>
+
+        <article class="item">
+          <div class="media"><img src="images/school/ee117.jpg" alt="EE117"></div>
+          <div class="item-body">
+            <div class="item-top"><span class="code">EE117</span><a class="rating" href="blog.html">Blog rating 7/10</a></div>
+            <h4>Electromagnetic Fields and Waves</h4>
+            <p class="note todo">Add a short note.</p>
+          </div>
+        </article>
+
+        <article class="item">
+          <div class="media"><img src="images/school/math113.jpg" alt="Math 113"></div>
+          <div class="item-body">
+            <div class="item-top"><span class="code">MATH 113</span><a class="rating" href="blog.html">Blog rating 3/10</a></div>
+            <h4>Introduction to Abstract Algebra</h4>
+            <p class="note todo">Add a short note.</p>
+          </div>
+        </article>
+      </div>
+
+      <h3 class="term-title">Fall 2025</h3>
+      <div class="item-grid">
+        <article class="item">
+          <div class="media"><img src="images/school/ee105.jpg" alt="BJT distortion pedal breadboard"></div>
+          <div class="item-body">
+            <div class="item-top"><span class="code">EE105</span><a class="rating" href="blog.html">Blog rating 9/10</a></div>
+            <h4>Microelectronic Devices and Circuits</h4>
+            <p class="note todo">Add a short note.</p>
+          </div>
+        </article>
+
+        <article class="item">
+          <div class="media"><img src="images/school/ee120.jpg" alt="EE120"></div>
+          <div class="item-body">
+            <div class="item-top"><span class="code">EE120</span><a class="rating" href="blog.html">Blog rating 6/10</a></div>
+            <h4>Signals and Systems</h4>
+            <p class="note todo">Add a short note.</p>
+          </div>
+        </article>
+
+        <article class="item">
+          <div class="media"><img src="images/school/cs61c.jpg" alt="CS61C"></div>
+          <div class="item-body">
+            <div class="item-top"><span class="code">CS61C</span><a class="rating" href="blog.html">Blog rating 5/10</a></div>
+            <h4>Great Ideas of Computer Architecture</h4>
+            <p class="note todo">Add a short note.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ===================== CLUBS ===================== -->
+    <section class="section" id="clubs">
+      <h2 class="section-title">Clubs &amp; Involvement <span class="count">6 groups</span></h2>
+      <div class="item-grid">
+        <article class="item">
+          <div class="media"><img src="images/school/calsol.jpg" alt="CalSol team with the solar car"></div>
+          <div class="item-body">
+            <div class="item-top"><span class="code">CalSol</span></div>
+            <h4>Board Design, Integration, and Advisory Work</h4>
+            <p class="note todo">Add a short note.</p>
+          </div>
+        </article>
+
+        <article class="item">
+          <div class="media"><img src="images/school/calico.jpg" alt="CALICO Fall 2025"></div>
+          <div class="item-body">
+            <div class="item-top"><span class="code">CALICO</span></div>
+            <h4>Logistics and Problem Writing</h4>
+            <p class="note todo">Add a short note.</p>
+          </div>
+        </article>
+
+        <article class="item">
+          <div class="media"><img src="images/school/ieee.jpg" alt="IEEE"></div>
+          <div class="item-body">
+            <div class="item-top"><span class="code">IEEE</span></div>
+            <h4>Add your role</h4>
+            <p class="note todo">Add a short note.</p>
+          </div>
+        </article>
+
+        <article class="item">
+          <div class="media"><img src="images/school/supernode.jpg" alt="Supernode"></div>
+          <div class="item-body">
+            <div class="item-top"><span class="code">Supernode</span></div>
+            <h4>Admin</h4>
+            <p class="note todo">Add a short note.</p>
+          </div>
+        </article>
+
+        <article class="item">
+          <div class="media"><img src="images/school/hope.jpg" alt="HOPE"></div>
+          <div class="item-body">
+            <div class="item-top"><span class="code">HOPE</span></div>
+            <h4>Teaching and Mentoring Board Design</h4>
+            <p class="note todo">Add a short note.</p>
+          </div>
+        </article>
+
+        <article class="item">
+          <div class="media"><img src="images/school/ee64.jpg" alt="EE64 course staff"></div>
+          <div class="item-body">
+            <div class="item-top"><span class="code">EE64</span></div>
+            <h4>Course Staff — Lab TA</h4>
+            <p class="note todo">Add a short note.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 Matthew Lee | <a href="https://github.com/mattyl37" target="_blank">GitHub</a> | <a href="index.html">Home</a></p>
+  </footer>
+
+  <script src="theme.js"></script>
+  <script>
+    // Swap any missing image for a dashed placeholder that names the file to add
+    const ICON = '<svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-9 9"/></svg>';
+    document.querySelectorAll('.media').forEach(media => {
+      const img = media.querySelector('img');
+      const hint = document.createElement('div');
+      hint.className = 'hint';
+      hint.innerHTML = ICON + '<span>Add image</span>';
+      const code = document.createElement('code');
+      code.textContent = img.getAttribute('src');
+      hint.appendChild(code);
+      media.appendChild(hint);
+
+      const markEmpty = () => media.classList.add('empty');
+      if (img.complete && img.naturalWidth === 0) markEmpty();
+      img.addEventListener('error', markEmpty);
+    });
+  </script>
+</body>
+</html>

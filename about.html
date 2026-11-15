@@ -4,190 +4,100 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>About — Matthew Lee</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="theme.css">
   <style>
-    :root {
-      --bg: #f8f9fa;
-      --card: #ffffff;
-      --accent: #007bff;
-      --muted: #666;
-      --shadow: 0 6px 18px rgba(15, 23, 42, 0.08);
-      --radius: 12px;
-      --max-w: 1100px;
-      --text: #222;
-    }
-
-    body {
-      font-family: Arial, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
-      margin: 0;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.5;
-    }
-
-    /* Header styling (matches projects.html) */
-    header {
-      background: #003262;
-      color: white;
-      text-align: center;
-      padding: 2rem 1rem;
-    }
-
-    header h1 {
-      margin: 0;
-      font-size: 1.5rem;
-    }
-
-    header p {
-      margin: .4rem 0 0;
-      color: #dcdcdc;
-      font-size: 0.95rem;
-    }
-
-    .wrap {
-      max-width: var(--max-w);
-      margin: 2rem auto;
-      padding: 0 1rem;
-    }
-
-    /* Sub-header navigation (matches projects.html) */
-    .page-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 1rem;
-      margin-bottom: 1.5rem;
-      flex-wrap: wrap;
-    }
-
-    .page-head h2 {
-      margin: 0;
-      font-size: 1.25rem;
-    }
-
-    .head-actions {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      flex-wrap: wrap;
-    }
-
-    /* Buttons */
-    .btn {
-      display: inline-block;
-      background: var(--accent);
-      color: white;
-      padding: .5rem .9rem;
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 0.9rem;
-      border: none;
-      cursor: pointer;
-    }
-
-    .btn-secondary {
-      background: transparent;
-      border: 1px solid #cbd5e1;
-      color: var(--text);
-    }
-
-    /* 3x3 Card Grid */
+    /* 3x3 card grid */
     .grid-container {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 1.5rem;
+      gap: var(--gutter);
     }
 
     .card {
-      background: var(--card);
+      background: var(--surface);
+      border: 1px solid var(--border);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
       padding: 1.5rem;
       display: flex;
       flex-direction: column;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      transition: box-shadow 0.2s ease;
     }
-
-    .card:hover {
-      transform: translateY(-4px);
-    }
+    .card:hover { box-shadow: var(--shadow-hover); }
 
     .card h3 {
-      margin-top: 0;
-      color: #003262;
-      border-bottom: 2px solid var(--accent);
-      padding-bottom: 0.5rem;
-      font-size: 1.1rem;
+      position: relative;
+      margin: 0 0 1rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border);
+      font-size: 1.05rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      line-height: 1.35;
+    }
+    .card h3::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -1px;
+      width: 40px;
+      height: 2px;
+      background: var(--accent-2);
     }
 
     .card ul {
       margin: 0;
-      padding-left: 1.2rem;
+      padding-left: 1.1rem;
     }
-
     .card li {
       margin-bottom: 0.5rem;
-      font-size: 0.95rem;
-    }
-
-    footer {
-      text-align: center;
-      padding: 2rem 1.5rem;
-      font-size: 0.9rem;
+      font-size: 0.94rem;
       color: var(--muted);
     }
+    .card li::marker { color: var(--accent-2); }
+    .card li b { color: var(--text); font-weight: 600; }
 
-    /* Responsive scaling */
     @media (max-width: 900px) {
-      .grid-container {
-        grid-template-columns: repeat(2, 1fr);
-      }
+      .grid-container { grid-template-columns: repeat(2, 1fr); }
     }
-
     @media (max-width: 600px) {
-      .grid-container {
-        grid-template-columns: 1fr;
-      }
-      .page-head {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-    }
-
-    /* Dark Mode */
-    body.dark-mode {
-      --bg: #121212;
-      --card: #1e1e1e;
-      --text: #e0e0e0;
-      --muted: #aaa;
-      --shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
-    }
-
-    body.dark-mode header {
-      background: #000;
-    }
-
-    body.dark-mode .card h3 {
-      color: #66b2ff;
-      border-bottom-color: #66b2ff;
-    }
-
-    body.dark-mode .btn-secondary {
-      border-color: #444;
-      color: #e0e0e0;
-    }
-
-    body.dark-mode a {
-      color: #66b2ff;
+      .grid-container { grid-template-columns: 1fr; }
     }
   </style>
 </head>
-<body>
+<body class="dark-mode">
+  <div class="page-bg" aria-hidden="true"></div>
 
   <!-- Matching Main Header -->
   <header>
-    <h1>Matthew Lee — About Me</h1>
-    <p>EECS @ UC Berkeley | Hardware Design & Validation</p>
+    <div class="header-deco" aria-hidden="true">
+      <div class="stars"></div>
+      <svg viewBox="0 0 1200 220" preserveAspectRatio="xMidYMid slice">
+        <g>
+          <path class="trace" d="M0 50 H110 L150 90 H240"/>
+          <circle class="via" cx="240" cy="90" r="5"/>
+          <path class="trace" d="M0 90 H80 L120 130 H180 L210 160"/>
+          <circle class="via" cx="210" cy="160" r="5"/>
+          <path class="trace" d="M0 190 H130 L160 160 H230"/>
+          <circle class="via" cx="230" cy="160" r="5"/>
+        </g>
+        <g transform="translate(1200 0) scale(-1 1)">
+          <path class="trace" d="M0 50 H110 L150 90 H240"/>
+          <circle class="via" cx="240" cy="90" r="5"/>
+          <path class="trace" d="M0 90 H80 L120 130 H180 L210 160"/>
+          <circle class="via" cx="210" cy="160" r="5"/>
+          <path class="trace" d="M0 190 H130 L160 160 H230"/>
+          <circle class="via" cx="230" cy="160" r="5"/>
+        </g>
+      </svg>
+    </div>
+
+    <h1>Matthew Lee — <span class="title-accent">About Me</span></h1>
+    <p>EECS @ UC Berkeley | Hardware Design &amp; Validation</p>
+    <button id="darkModeToggle">Light Mode</button>
   </header>
 
   <main class="wrap">
@@ -197,7 +107,6 @@
       <h2>Current Focus & Activities</h2>
       <div class="head-actions">
         <a class="btn" href="index.html">← Back to Home</a>
-        <button id="darkModeToggle" class="btn btn-secondary">Dark Mode</button>
       </div>
     </div>
 
@@ -301,17 +210,7 @@
     <p>© 2025 Matthew Lee | <a href="https://github.com/username">GitHub</a> | <a href="index.html">Home</a></p>
   </footer>
 
-  <script>
-    const toggleBtn = document.getElementById('darkModeToggle');
-    toggleBtn.addEventListener('click', () => {
-      document.body.classList.toggle('dark-mode');
-      if (document.body.classList.contains('dark-mode')) {
-        toggleBtn.textContent = "Light Mode";
-      } else {
-        toggleBtn.textContent = "Dark Mode";
-      }
-    });
-  </script>
+  <script src="theme.js"></script>
 
 </body>
 </html>
