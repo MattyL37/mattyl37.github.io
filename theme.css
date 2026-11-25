@@ -134,10 +134,14 @@ header > p {
 }
 .header-deco svg {
   position: absolute;
-  inset: 0;
-  width: 100%;
+  top: 0;
   height: 100%;
+  width: auto;
+  aspect-ratio: 260 / 220;
+  max-width: 30%;
 }
+.header-deco svg.traces-left { left: 0; }
+.header-deco svg.traces-right { right: 0; }
 .star {
   position: absolute;
   width: 2px;
@@ -154,7 +158,7 @@ header > p {
   stroke-linejoin: round;
 }
 .via {
-  fill: rgba(15, 20, 40, 0.6);
+  fill: #10162a;
   stroke: rgba(253, 181, 21, 0.55);
   stroke-width: 2;
 }
@@ -168,14 +172,14 @@ header > p {
   font-size: 0.875rem;
   font-weight: 600;
   color: #fff;
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(16, 22, 42, 0.92);
   border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 999px;
   cursor: pointer;
   transition: background 0.15s, border-color 0.15s;
 }
 #darkModeToggle:hover {
-  background: rgba(255, 255, 255, 0.18);
+  background: rgba(40, 48, 74, 0.95);
   border-color: rgba(255, 255, 255, 0.6);
 }
 

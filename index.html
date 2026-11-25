@@ -118,10 +118,14 @@
     }
     .header-deco svg {
       position: absolute;
-      inset: 0;
-      width: 100%;
+      top: 0;
       height: 100%;
+      width: auto;
+      aspect-ratio: 260 / 220;
+      max-width: 30%;
     }
+    .header-deco svg.traces-left { left: 0; }
+    .header-deco svg.traces-right { right: 0; }
     .star {
       position: absolute;
       width: 2px;
@@ -139,14 +143,14 @@
       stroke-linejoin: round;
     }
     .via {
-      fill: rgba(15, 20, 40, 0.6);
+      fill: #10162a;
       stroke: rgba(253, 181, 21, 0.55);
       stroke-width: 2;
     }
 
     /* Title */
     header h1 {
-      margin: 0;
+      margin: 0 0 1.1rem;
       font-size: clamp(1.9rem, 4.5vw, 3rem);
       font-weight: 700;
       letter-spacing: -0.03em;
@@ -159,26 +163,6 @@
       background-clip: text;
       color: transparent;
       text-shadow: none;
-    }
-
-    /* Scrolling waveform under the title */
-    .wave {
-      display: block;
-      width: min(380px, 85%);
-      height: 48px;
-      margin: 0.6rem auto 0.9rem;
-      overflow: hidden;
-      -webkit-mask-image: linear-gradient(90deg, transparent, #000 20%, #000 80%, transparent);
-      mask-image: linear-gradient(90deg, transparent, #000 20%, #000 80%, transparent);
-    }
-    .wave svg { display: block; width: 100%; height: 100%; }
-    .wave path {
-      fill: none;
-      stroke: url(#waveGrad);
-      stroke-width: 1.4;
-      stroke-linejoin: round;
-      stroke-linecap: round;
-      filter: drop-shadow(0 0 3px rgba(253, 181, 21, 0.4));
     }
 
     /* Subtitle as tags */
@@ -254,14 +238,14 @@
       font-size: 0.875rem;
       font-weight: 600;
       color: #fff;
-      background: rgba(255, 255, 255, 0.08);
+      background: rgba(16, 22, 42, 0.92);
       border: 1px solid rgba(255, 255, 255, 0.3);
       border-radius: 999px;
       cursor: pointer;
       transition: background 0.15s, border-color 0.15s;
     }
     #darkModeToggle:hover {
-      background: rgba(255, 255, 255, 0.18);
+      background: rgba(40, 48, 74, 0.95);
       border-color: rgba(255, 255, 255, 0.6);
     }
 
@@ -272,6 +256,7 @@
     /* ---------- Shared width so every section lines up ---------- */
     .container,
     .bio,
+    .blog-teaser,
     footer {
       width: 100%;
       max-width: var(--max);
@@ -363,6 +348,72 @@
     }
     .wide-card:hover .card-content h3 {
       color: var(--link);
+    }
+
+    /* ---------- Latest blog post ---------- */
+    .blog-teaser {
+      padding: var(--gutter) var(--gutter) 0;
+    }
+    .teaser-card {
+      display: block;
+      padding: 2rem 2.5rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--accent-2);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      color: inherit;
+      transition: box-shadow 0.2s ease;
+    }
+    .teaser-card:hover {
+      color: inherit;
+      box-shadow: var(--shadow-hover);
+    }
+    .teaser-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 0.75rem;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #9a7300;
+    }
+    body.dark-mode .teaser-label { color: var(--accent-2); }
+    .teaser-all {
+      letter-spacing: 0.02em;
+      text-transform: none;
+      font-size: 0.9rem;
+      color: var(--link);
+    }
+    .teaser-card h3 {
+      margin: 0 0 0.25rem;
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.3;
+    }
+    .teaser-card:hover h3 { color: var(--link); }
+    .teaser-meta {
+      margin-bottom: 1rem;
+      color: var(--muted);
+      font-size: 0.875rem;
+    }
+    .teaser-snippet {
+      margin: 0 0 1rem;
+      color: var(--text);
+      line-height: 1.7;
+    }
+    .teaser-more {
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--link);
+    }
+    @media (max-width: 640px) {
+      .teaser-card { padding: 1.5rem; }
+      .teaser-label { flex-direction: column; align-items: flex-start; gap: 0.25rem; }
     }
 
     /* ---------- Bio ---------- */
@@ -460,6 +511,7 @@
       .bio-pic { width: 180px; height: 180px; }
     }
   </style>
+  <link rel="stylesheet" href="nav.css">
 </head>
 <body class="dark-mode">
   <div class="page-bg" aria-hidden="true"></div>
@@ -467,53 +519,57 @@
   <header>
     <div class="header-deco" aria-hidden="true">
       <div class="stars"></div>
-      <svg viewBox="0 0 1200 400" preserveAspectRatio="xMidYMid slice">
-        <g>
-        <path class="trace" d="M0 70 H150 L190 110 H320"/>
-        <circle class="via" cx="320" cy="110" r="5"/>
-        <path class="trace" d="M0 110 H110 L150 150 H250 L280 180"/>
-        <circle class="via" cx="280" cy="180" r="5"/>
-        <path class="trace" d="M0 330 H170 L200 300 H300"/>
-        <circle class="via" cx="300" cy="300" r="5"/>
-        </g>
-        <g transform="translate(1200 0) scale(-1 1)">
-        <path class="trace" d="M0 70 H150 L190 110 H320"/>
-        <circle class="via" cx="320" cy="110" r="5"/>
-        <path class="trace" d="M0 110 H110 L150 150 H250 L280 180"/>
-        <circle class="via" cx="280" cy="180" r="5"/>
-        <path class="trace" d="M0 330 H170 L200 300 H300"/>
-        <circle class="via" cx="300" cy="300" r="5"/>
-        </g>
+      <svg class="traces traces-left" viewBox="0 0 260 220" preserveAspectRatio="xMinYMid meet">
+          <g>
+            <path class="trace" d="M0 40 H108.2 L144.2 76 H250"/>
+            <circle class="via" cx="250" cy="76" r="5"/>
+            <path class="trace" d="M0 62 H99.1 L135.1 98 H225"/>
+            <circle class="via" cx="225" cy="98" r="5"/>
+            <path class="trace" d="M0 84 H90 L126 120 H200"/>
+            <circle class="via" cx="200" cy="120" r="5"/>
+            <path class="trace" d="M0 166 H70 L90 146 H170"/>
+            <circle class="via" cx="170" cy="146" r="5"/>
+            <path class="trace" d="M0 188 H79.1 L99.1 168 H145"/>
+            <circle class="via" cx="145" cy="168" r="5"/>
+          </g>
+      </svg>
+      <svg class="traces traces-right" viewBox="0 0 260 220" preserveAspectRatio="xMaxYMid meet">
+          <g transform="translate(260 0) scale(-1 1)">
+            <path class="trace" d="M0 40 H108.2 L144.2 76 H250"/>
+            <circle class="via" cx="250" cy="76" r="5"/>
+            <path class="trace" d="M0 62 H99.1 L135.1 98 H225"/>
+            <circle class="via" cx="225" cy="98" r="5"/>
+            <path class="trace" d="M0 84 H90 L126 120 H200"/>
+            <circle class="via" cx="200" cy="120" r="5"/>
+            <path class="trace" d="M0 166 H70 L90 146 H170"/>
+            <circle class="via" cx="170" cy="146" r="5"/>
+            <path class="trace" d="M0 188 H79.1 L99.1 168 H145"/>
+            <circle class="via" cx="145" cy="168" r="5"/>
+          </g>
       </svg>
     </div>
 
-    <h1>Matthew Lee's <span class="title-accent">Website/Portfolio</span></h1>
-
-    <div class="wave" aria-hidden="true">
-      <svg viewBox="0 0 320 40" preserveAspectRatio="none">
-        <defs>
-          <linearGradient id="waveGrad" x1="0" x2="1">
-            <stop offset="0" stop-color="#fdb515"/>
-            <stop offset="0.5" stop-color="#f7a8d8"/>
-            <stop offset="1" stop-color="#fdb515"/>
-          </linearGradient>
-        </defs>
-        <path d="M0 20.00 L0.5 15.06 L1 10.60 L1.5 7.07 L2 4.80 L2.5 4.03 L3 4.83 L3.5 7.11 L4 10.65 L4.5 15.09 L5 20.00 L5.5 24.90 L6 29.29 L6.5 32.76 L7 34.97 L7.5 35.70 L8 34.90 L8.5 32.64 L9 29.16 L9.5 24.80 L10 20.00 L10.5 15.23 L11 10.97 L11.5 7.61 L12 5.49 L12.5 4.81 L13 5.61 L13.5 7.82 L14 11.19 L14.5 15.39 L15 20.00 L15.5 24.56 L16 28.63 L16.5 31.82 L17 33.82 L17.5 34.44 L18 33.65 L18.5 31.54 L19 28.33 L19.5 24.35 L20 20.00 L20.5 15.71 L21 11.89 L21.5 8.92 L22 7.07 L22.5 6.51 L23 7.27 L23.5 9.26 L24 12.26 L24.5 15.96 L25 20.00 L25.5 23.97 L26 27.48 L26.5 30.20 L27 31.88 L27.5 32.38 L28 31.66 L28.5 29.82 L29 27.06 L29.5 23.67 L30 20.00 L30.5 16.40 L31 13.23 L31.5 10.79 L32 9.29 L32.5 8.87 L33 9.53 L33.5 11.20 L34 13.69 L34.5 16.72 L35 20.00 L35.5 23.20 L36 26.00 L36.5 28.16 L37 29.46 L37.5 29.81 L38 29.21 L38.5 27.72 L39 25.53 L39.5 22.87 L40 20.00 L40.5 17.22 L41 14.78 L41.5 12.93 L42 11.82 L42.5 11.53 L43 12.07 L43.5 13.36 L44 15.26 L44.5 17.55 L45 20.00 L45.5 22.37 L46 24.43 L46.5 26.00 L47 26.93 L47.5 27.15 L48 26.68 L48.5 25.58 L49 23.98 L49.5 22.05 L50 20.00 L50.5 18.02 L51 16.31 L51.5 15.02 L52 14.27 L52.5 14.09 L53 14.49 L53.5 15.41 L54 16.73 L54.5 18.32 L55 20.00 L55.5 21.61 L56 23.00 L56.5 24.05 L57 24.66 L57.5 24.79 L58 24.46 L58.5 23.71 L59 22.64 L59.5 21.36 L60 20.00 L60.5 18.70 L61 17.59 L61.5 16.75 L62 16.26 L62.5 16.16 L63 16.43 L63.5 17.03 L64 17.89 L64.5 18.91 L65 20.00 L65.5 21.04 L66 21.94 L66.5 22.61 L67 23.01 L67.5 23.10 L68 22.88 L68.5 22.41 L69 21.71 L69.5 20.88 L70 20.00 L70.5 19.15 L71 18.41 L71.5 17.84 L72 17.51 L72.5 17.42 L73 17.58 L73.5 17.97 L74 18.55 L74.5 19.24 L75 20.00 L75.5 20.74 L76 21.39 L76.5 21.90 L77 22.22 L77.5 22.32 L78 22.19 L78.5 21.86 L79 21.35 L79.5 20.71 L80 20.00 L80.5 19.29 L81 18.65 L81.5 18.14 L82 17.81 L82.5 17.68 L83 17.78 L83.5 18.10 L84 18.61 L84.5 19.26 L85 20.00 L85.5 20.76 L86 21.45 L86.5 22.03 L87 22.42 L87.5 22.58 L88 22.49 L88.5 22.16 L89 21.59 L89.5 20.85 L90 20.00 L90.5 19.12 L91 18.29 L91.5 17.59 L92 17.12 L92.5 16.90 L93 16.99 L93.5 17.39 L94 18.06 L94.5 18.96 L95 20.00 L95.5 21.09 L96 22.11 L96.5 22.97 L97 23.57 L97.5 23.84 L98 23.74 L98.5 23.25 L99 22.41 L99.5 21.30 L100 20.00 L100.5 18.64 L101 17.36 L101.5 16.29 L102 15.54 L102.5 15.21 L103 15.34 L103.5 15.95 L104 17.00 L104.5 18.39 L105 20.00 L105.5 21.68 L106 23.27 L106.5 24.59 L107 25.51 L107.5 25.91 L108 25.73 L108.5 24.98 L109 23.69 L109.5 21.98 L110 20.00 L110.5 17.95 L111 16.02 L111.5 14.42 L112 13.32 L112.5 12.85 L113 13.07 L113.5 14.00 L114 15.57 L114.5 17.63 L115 20.00 L115.5 22.45 L116 24.74 L116.5 26.64 L117 27.93 L117.5 28.47 L118 28.18 L118.5 27.07 L119 25.22 L119.5 22.78 L120 20.00 L120.5 17.13 L121 14.47 L121.5 12.28 L122 10.79 L122.5 10.19 L123 10.54 L123.5 11.84 L124 14.00 L124.5 16.80 L125 20.00 L125.5 23.28 L126 26.31 L126.5 28.80 L127 30.47 L127.5 31.13 L128 30.71 L128.5 29.21 L129 26.77 L129.5 23.60 L130 20.00 L130.5 16.33 L131 12.94 L131.5 10.18 L132 8.34 L132.5 7.62 L133 8.12 L133.5 9.80 L134 12.52 L134.5 16.03 L135 20.00 L135.5 24.04 L136 27.74 L136.5 30.74 L137 32.73 L137.5 33.49 L138 32.93 L138.5 31.08 L139 28.11 L139.5 24.29 L140 20.00 L140.5 15.65 L141 11.67 L141.5 8.46 L142 6.35 L142.5 5.56 L143 6.18 L143.5 8.18 L144 11.37 L144.5 15.44 L145 20.00 L145.5 24.61 L146 28.81 L146.5 32.18 L147 34.39 L147.5 35.19 L148 34.51 L148.5 32.39 L149 29.03 L149.5 24.77 L150 20.00 L150.5 15.20 L151 10.84 L151.5 7.36 L152 5.10 L152.5 4.30 L153 5.03 L153.5 7.24 L154 10.71 L154.5 15.10 L155 20.00 L155.5 24.91 L156 29.35 L156.5 32.89 L157 35.17 L157.5 35.97 L158 35.20 L158.5 32.93 L159 29.40 L159.5 24.94 L160 20.00 L160.5 15.06 L161 10.60 L161.5 7.07 L162 4.80 L162.5 4.03 L163 4.83 L163.5 7.11 L164 10.65 L164.5 15.09 L165 20.00 L165.5 24.90 L166 29.29 L166.5 32.76 L167 34.97 L167.5 35.70 L168 34.90 L168.5 32.64 L169 29.16 L169.5 24.80 L170 20.00 L170.5 15.23 L171 10.97 L171.5 7.61 L172 5.49 L172.5 4.81 L173 5.61 L173.5 7.82 L174 11.19 L174.5 15.39 L175 20.00 L175.5 24.56 L176 28.63 L176.5 31.82 L177 33.82 L177.5 34.44 L178 33.65 L178.5 31.54 L179 28.33 L179.5 24.35 L180 20.00 L180.5 15.71 L181 11.89 L181.5 8.92 L182 7.07 L182.5 6.51 L183 7.27 L183.5 9.26 L184 12.26 L184.5 15.96 L185 20.00 L185.5 23.97 L186 27.48 L186.5 30.20 L187 31.88 L187.5 32.38 L188 31.66 L188.5 29.82 L189 27.06 L189.5 23.67 L190 20.00 L190.5 16.40 L191 13.23 L191.5 10.79 L192 9.29 L192.5 8.87 L193 9.53 L193.5 11.20 L194 13.69 L194.5 16.72 L195 20.00 L195.5 23.20 L196 26.00 L196.5 28.16 L197 29.46 L197.5 29.81 L198 29.21 L198.5 27.72 L199 25.53 L199.5 22.87 L200 20.00 L200.5 17.22 L201 14.78 L201.5 12.93 L202 11.82 L202.5 11.53 L203 12.07 L203.5 13.36 L204 15.26 L204.5 17.55 L205 20.00 L205.5 22.37 L206 24.43 L206.5 26.00 L207 26.93 L207.5 27.15 L208 26.68 L208.5 25.58 L209 23.98 L209.5 22.05 L210 20.00 L210.5 18.02 L211 16.31 L211.5 15.02 L212 14.27 L212.5 14.09 L213 14.49 L213.5 15.41 L214 16.73 L214.5 18.32 L215 20.00 L215.5 21.61 L216 23.00 L216.5 24.05 L217 24.66 L217.5 24.79 L218 24.46 L218.5 23.71 L219 22.64 L219.5 21.36 L220 20.00 L220.5 18.70 L221 17.59 L221.5 16.75 L222 16.26 L222.5 16.16 L223 16.43 L223.5 17.03 L224 17.89 L224.5 18.91 L225 20.00 L225.5 21.04 L226 21.94 L226.5 22.61 L227 23.01 L227.5 23.10 L228 22.88 L228.5 22.41 L229 21.71 L229.5 20.88 L230 20.00 L230.5 19.15 L231 18.41 L231.5 17.84 L232 17.51 L232.5 17.42 L233 17.58 L233.5 17.97 L234 18.55 L234.5 19.24 L235 20.00 L235.5 20.74 L236 21.39 L236.5 21.90 L237 22.22 L237.5 22.32 L238 22.19 L238.5 21.86 L239 21.35 L239.5 20.71 L240 20.00 L240.5 19.29 L241 18.65 L241.5 18.14 L242 17.81 L242.5 17.68 L243 17.78 L243.5 18.10 L244 18.61 L244.5 19.26 L245 20.00 L245.5 20.76 L246 21.45 L246.5 22.03 L247 22.42 L247.5 22.58 L248 22.49 L248.5 22.16 L249 21.59 L249.5 20.85 L250 20.00 L250.5 19.12 L251 18.29 L251.5 17.59 L252 17.12 L252.5 16.90 L253 16.99 L253.5 17.39 L254 18.06 L254.5 18.96 L255 20.00 L255.5 21.09 L256 22.11 L256.5 22.97 L257 23.57 L257.5 23.84 L258 23.74 L258.5 23.25 L259 22.41 L259.5 21.30 L260 20.00 L260.5 18.64 L261 17.36 L261.5 16.29 L262 15.54 L262.5 15.21 L263 15.34 L263.5 15.95 L264 17.00 L264.5 18.39 L265 20.00 L265.5 21.68 L266 23.27 L266.5 24.59 L267 25.51 L267.5 25.91 L268 25.73 L268.5 24.98 L269 23.69 L269.5 21.98 L270 20.00 L270.5 17.95 L271 16.02 L271.5 14.42 L272 13.32 L272.5 12.85 L273 13.07 L273.5 14.00 L274 15.57 L274.5 17.63 L275 20.00 L275.5 22.45 L276 24.74 L276.5 26.64 L277 27.93 L277.5 28.47 L278 28.18 L278.5 27.07 L279 25.22 L279.5 22.78 L280 20.00 L280.5 17.13 L281 14.47 L281.5 12.28 L282 10.79 L282.5 10.19 L283 10.54 L283.5 11.84 L284 14.00 L284.5 16.80 L285 20.00 L285.5 23.28 L286 26.31 L286.5 28.80 L287 30.47 L287.5 31.13 L288 30.71 L288.5 29.21 L289 26.77 L289.5 23.60 L290 20.00 L290.5 16.33 L291 12.94 L291.5 10.18 L292 8.34 L292.5 7.62 L293 8.12 L293.5 9.80 L294 12.52 L294.5 16.03 L295 20.00 L295.5 24.04 L296 27.74 L296.5 30.74 L297 32.73 L297.5 33.49 L298 32.93 L298.5 31.08 L299 28.11 L299.5 24.29 L300 20.00 L300.5 15.65 L301 11.67 L301.5 8.46 L302 6.35 L302.5 5.56 L303 6.18 L303.5 8.18 L304 11.37 L304.5 15.44 L305 20.00 L305.5 24.61 L306 28.81 L306.5 32.18 L307 34.39 L307.5 35.19 L308 34.51 L308.5 32.39 L309 29.03 L309.5 24.77 L310 20.00 L310.5 15.20 L311 10.84 L311.5 7.36 L312 5.10 L312.5 4.30 L313 5.03 L313.5 7.24 L314 10.71 L314.5 15.10 L315 20.00 L315.5 24.91 L316 29.35 L316.5 32.89 L317 35.17 L317.5 35.97 L318 35.20 L318.5 32.93 L319 29.40 L319.5 24.94 L320 20.00"/>
-      </svg>
-    </div>
+    <h1>Matthew Lee</h1>
 
     <h2><span class="tag">EECS @ UC Berkeley</span><span class="sep"> | </span><span class="tag">Analog &amp; RF Engineering</span><span class="sep"> | </span><span class="tag">System and Board Level Design</span></h2>
 
     <p class="contact">
       <span><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>matthewslee1369@berkeley.edu</span>
       <span class="sep"> | </span>
-      <span><svg viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>310-562-3538</span>
-      <span class="sep"> | </span>
       <a href="https://www.linkedin.com/in/matthew-sunjae-lee" target="_blank"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 10v7M8 7v.01M12 17v-4a2 2 0 0 1 4 0v4M12 10v7"/></svg>matthew-sunjae-lee</a>
     </p>
 
     <button id="darkModeToggle">Light Mode</button>
   </header>
+
+  <nav class="site-nav" aria-label="Main">
+    <div class="site-nav-inner">
+      <a href="index.html" aria-current="page">Home</a>
+      <a href="projects.html">Projects</a>
+      <a href="blog.html">Blog</a>
+      <a href="about.html">About</a>
+    </div>
+  </nav>
 
   <main class="container">
     <div class="card">
@@ -555,15 +611,6 @@
         </div>
       </a>
     </div>
-
-    <div class="card wide-card">
-      <a href="blog.html">
-        <div class="card-content">
-          <h3>View Blog</h3>
-          <p>Here is my blog</p>
-        </div>
-      </a>
-    </div>
   </main>
 
   <section class="bio">
@@ -592,6 +639,19 @@
     </div>
   </section>
 
+  <section class="blog-teaser">
+    <a class="teaser-card" href="blog.html">
+      <div class="teaser-label">
+        <span>Latest from the blog</span>
+        <span class="teaser-all">View Blog →</span>
+      </div>
+      <h3 id="latest-title">Spring 2026 Class Review</h3>
+      <div class="teaser-meta" id="latest-meta">Posted on September 7, 2026 · Category: Academic</div>
+      <p class="teaser-snippet" id="latest-snippet">I love this class, the content, the staff, the professor, so many things. It is definitely brutal in terms of the project, but it is a really cool class (project in my portfolio).</p>
+      <span class="teaser-more">Read more →</span>
+    </a>
+  </section>
+
   <footer>
     <p>© 2025 Matthew Lee | <a href="https://github.com/username">GitHub</a></p>
   </footer>
@@ -606,6 +666,27 @@
     s.style.top = Math.random() * 100 + '%';
     s.style.opacity = (0.15 + Math.random() * 0.4).toFixed(2);
     stars.appendChild(s);
+  }
+
+  // Latest blog post preview: read the first post on blog.html.
+  // Works on the live site; when opened as a local file the text above stays as-is.
+  if (location.protocol.startsWith('http')) {
+    fetch('blog.html')
+      .then(r => r.ok ? r.text() : Promise.reject())
+      .then(html => {
+        const post = new DOMParser().parseFromString(html, 'text/html').querySelector('.post-card');
+        if (!post) return;
+        const title = post.querySelector('h2');
+        const meta = post.querySelector('.post-meta');
+        const para = post.querySelector('p');
+        const clean = el => el ? el.textContent.replace(/\s+/g, ' ').trim() : '';
+        let text = clean(para);
+        if (text.length > 320) text = text.slice(0, 320).replace(/\s+\S*$/, '') + '…';
+        if (title) document.getElementById('latest-title').textContent = clean(title);
+        if (meta) document.getElementById('latest-meta').textContent = clean(meta);
+        if (text) document.getElementById('latest-snippet').textContent = text;
+      })
+      .catch(() => {});
   }
 
   // Dark mode is the default; remember the visitor's choice

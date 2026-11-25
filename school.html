@@ -201,6 +201,7 @@
     }
     .note.todo { font-style: italic; opacity: 0.8; }
   </style>
+  <link rel="stylesheet" href="nav.css">
 </head>
 <body class="dark-mode">
   <div class="page-bg" aria-hidden="true"></div>
@@ -208,23 +209,33 @@
   <header>
     <div class="header-deco" aria-hidden="true">
       <div class="stars"></div>
-      <svg viewBox="0 0 1200 220" preserveAspectRatio="xMidYMid slice">
-        <g>
-          <path class="trace" d="M0 50 H110 L150 90 H240"/>
-          <circle class="via" cx="240" cy="90" r="5"/>
-          <path class="trace" d="M0 90 H80 L120 130 H180 L210 160"/>
-          <circle class="via" cx="210" cy="160" r="5"/>
-          <path class="trace" d="M0 190 H130 L160 160 H230"/>
-          <circle class="via" cx="230" cy="160" r="5"/>
-        </g>
-        <g transform="translate(1200 0) scale(-1 1)">
-          <path class="trace" d="M0 50 H110 L150 90 H240"/>
-          <circle class="via" cx="240" cy="90" r="5"/>
-          <path class="trace" d="M0 90 H80 L120 130 H180 L210 160"/>
-          <circle class="via" cx="210" cy="160" r="5"/>
-          <path class="trace" d="M0 190 H130 L160 160 H230"/>
-          <circle class="via" cx="230" cy="160" r="5"/>
-        </g>
+      <svg class="traces traces-left" viewBox="0 0 260 220" preserveAspectRatio="xMinYMid meet">
+          <g>
+            <path class="trace" d="M0 40 H108.2 L144.2 76 H250"/>
+            <circle class="via" cx="250" cy="76" r="5"/>
+            <path class="trace" d="M0 62 H99.1 L135.1 98 H225"/>
+            <circle class="via" cx="225" cy="98" r="5"/>
+            <path class="trace" d="M0 84 H90 L126 120 H200"/>
+            <circle class="via" cx="200" cy="120" r="5"/>
+            <path class="trace" d="M0 166 H70 L90 146 H170"/>
+            <circle class="via" cx="170" cy="146" r="5"/>
+            <path class="trace" d="M0 188 H79.1 L99.1 168 H145"/>
+            <circle class="via" cx="145" cy="168" r="5"/>
+          </g>
+      </svg>
+      <svg class="traces traces-right" viewBox="0 0 260 220" preserveAspectRatio="xMaxYMid meet">
+          <g transform="translate(260 0) scale(-1 1)">
+            <path class="trace" d="M0 40 H108.2 L144.2 76 H250"/>
+            <circle class="via" cx="250" cy="76" r="5"/>
+            <path class="trace" d="M0 62 H99.1 L135.1 98 H225"/>
+            <circle class="via" cx="225" cy="98" r="5"/>
+            <path class="trace" d="M0 84 H90 L126 120 H200"/>
+            <circle class="via" cx="200" cy="120" r="5"/>
+            <path class="trace" d="M0 166 H70 L90 146 H170"/>
+            <circle class="via" cx="170" cy="146" r="5"/>
+            <path class="trace" d="M0 188 H79.1 L99.1 168 H145"/>
+            <circle class="via" cx="145" cy="168" r="5"/>
+          </g>
       </svg>
     </div>
 
@@ -232,6 +243,15 @@
     <p>Classes I've taken and clubs I'm part of at UC Berkeley</p>
     <button id="darkModeToggle">Light Mode</button>
   </header>
+
+  <nav class="site-nav" aria-label="Main">
+    <div class="site-nav-inner">
+      <a href="index.html">Home</a>
+      <a href="projects.html">Projects</a>
+      <a href="blog.html">Blog</a>
+      <a href="about.html">About</a>
+    </div>
+  </nav>
 
   <main class="wrap">
     <div class="page-head">

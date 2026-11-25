@@ -89,6 +89,9 @@
       display: block;
     }
 
+    /* Show a whole diagram in the thumbnail instead of cropping it */
+    .gallery img.fit-whole { object-fit: contain; padding: 0.5rem; }
+
     /* Long description */
     .project-content {
       margin-top: 1.25rem;
@@ -133,40 +136,6 @@
       cursor: pointer;
       font-weight: 700;
     }
-
-    /* Work-in-progress */
-    .rgb-led {
-      display: inline-block;
-      width: 16px;
-      height: 16px;
-      border-radius: 50%;
-      background: red;
-      box-shadow: 0 0 8px red;
-      animation: rgb-cycle 3s infinite;
-    }
-    @keyframes rgb-cycle {
-      0%   { background: red;   box-shadow: 0 0 8px red; }
-      33%  { background: green; box-shadow: 0 0 8px green; }
-      66%  { background: blue;  box-shadow: 0 0 8px blue; }
-      100% { background: red;   box-shadow: 0 0 8px red; }
-    }
-    .wip-box {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 120px;
-      padding: 0.5rem;
-      border: 2px dashed;
-      border-radius: 10px;
-      font-weight: 600;
-      text-align: center;
-    }
-    .wip-blue { color: #0b5cad; border-color: #0b5cad; background: rgba(11, 92, 173, 0.06); }
-    .wip-gold { color: #9a7300; border-color: #fdb515; background: rgba(253, 181, 21, 0.08); }
-    .wip-sky  { color: #004080; border-color: #3399ff; background: rgba(51, 153, 255, 0.08); }
-    body.dark-mode .wip-blue { color: #6cb4ff; }
-    body.dark-mode .wip-gold { color: #fdb515; }
-    body.dark-mode .wip-sky  { color: #9fd0ff; }
 
     /* Sidebar */
     .sidebar {
@@ -251,6 +220,7 @@
       .project-info { text-align: left; width: 100%; margin-top: 0.25rem; }
     }
   </style>
+  <link rel="stylesheet" href="nav.css">
 </head>
 <body class="dark-mode">
   <div class="page-bg" aria-hidden="true"></div>
@@ -259,37 +229,49 @@
     <div class="sidebar-inner">
       <h3>Projects</h3>
       <ul>
+        <li><a href="#fmcw-radar">X-Band FMCW Radar</a></li>
         <li><a href="#gen11"> Gen11 (Solar Car) </a></li>
+        <li><a href="#fw-lab">CalSol Firmware Lab</a></li>
+        <li><a href="#anemometer">MEMS Anemometer PCB</a></li>
         <li><a href="#excalibur"> Excalibur (Solar Car) </a></li>
         <li><a href="#ee140"> Analog IC LCD Driver </a></li>
         <li><a href="#calico-fa25">CALICO Fa25</a></li>
         <li><a href="#car-horn">Car Horn PCB</a></li>
         <li><a href="#calsol-onboarding">CalSol Onboarding</a></li>
         <li><a href="#guitar-pedal">Guitar Pedal</a></li>
-        <li><a href="#wip">Work in Progress</a></li>
       </ul>
     </div>
   </nav>
   <header>
     <div class="header-deco" aria-hidden="true">
       <div class="stars"></div>
-      <svg viewBox="0 0 1200 220" preserveAspectRatio="xMidYMid slice">
-        <g>
-          <path class="trace" d="M0 50 H110 L150 90 H240"/>
-          <circle class="via" cx="240" cy="90" r="5"/>
-          <path class="trace" d="M0 90 H80 L120 130 H180 L210 160"/>
-          <circle class="via" cx="210" cy="160" r="5"/>
-          <path class="trace" d="M0 190 H130 L160 160 H230"/>
-          <circle class="via" cx="230" cy="160" r="5"/>
-        </g>
-        <g transform="translate(1200 0) scale(-1 1)">
-          <path class="trace" d="M0 50 H110 L150 90 H240"/>
-          <circle class="via" cx="240" cy="90" r="5"/>
-          <path class="trace" d="M0 90 H80 L120 130 H180 L210 160"/>
-          <circle class="via" cx="210" cy="160" r="5"/>
-          <path class="trace" d="M0 190 H130 L160 160 H230"/>
-          <circle class="via" cx="230" cy="160" r="5"/>
-        </g>
+      <svg class="traces traces-left" viewBox="0 0 260 220" preserveAspectRatio="xMinYMid meet">
+          <g>
+            <path class="trace" d="M0 40 H108.2 L144.2 76 H250"/>
+            <circle class="via" cx="250" cy="76" r="5"/>
+            <path class="trace" d="M0 62 H99.1 L135.1 98 H225"/>
+            <circle class="via" cx="225" cy="98" r="5"/>
+            <path class="trace" d="M0 84 H90 L126 120 H200"/>
+            <circle class="via" cx="200" cy="120" r="5"/>
+            <path class="trace" d="M0 166 H70 L90 146 H170"/>
+            <circle class="via" cx="170" cy="146" r="5"/>
+            <path class="trace" d="M0 188 H79.1 L99.1 168 H145"/>
+            <circle class="via" cx="145" cy="168" r="5"/>
+          </g>
+      </svg>
+      <svg class="traces traces-right" viewBox="0 0 260 220" preserveAspectRatio="xMaxYMid meet">
+          <g transform="translate(260 0) scale(-1 1)">
+            <path class="trace" d="M0 40 H108.2 L144.2 76 H250"/>
+            <circle class="via" cx="250" cy="76" r="5"/>
+            <path class="trace" d="M0 62 H99.1 L135.1 98 H225"/>
+            <circle class="via" cx="225" cy="98" r="5"/>
+            <path class="trace" d="M0 84 H90 L126 120 H200"/>
+            <circle class="via" cx="200" cy="120" r="5"/>
+            <path class="trace" d="M0 166 H70 L90 146 H170"/>
+            <circle class="via" cx="170" cy="146" r="5"/>
+            <path class="trace" d="M0 188 H79.1 L99.1 168 H145"/>
+            <circle class="via" cx="145" cy="168" r="5"/>
+          </g>
       </svg>
     </div>
 
@@ -298,14 +280,70 @@
     <button id="darkModeToggle">Light Mode</button>
   </header>
 
+  <nav class="site-nav" aria-label="Main">
+    <div class="site-nav-inner">
+      <a href="index.html">Home</a>
+      <a href="projects.html" aria-current="page">Projects</a>
+      <a href="blog.html">Blog</a>
+      <a href="about.html">About</a>
+    </div>
+  </nav>
+
   <main class="wrap">
     <div class="page-head">
       <h2>All Projects</h2>
       <div class="head-actions">
         <a class="btn" href="index.html">← Back to Home</a>
-        <a class="btn btn-secondary" href="assets/Matthew_HW_Resume_ICs.pdf">Download Resume</a>
+        <a class="btn btn-secondary" href="assets/Matthew_Lee_HW_Resume_RF.pdf" target="_blank">Download Resume</a>
       </div>
     </div>
+
+<!-- =========================
+     Project: X-Band FMCW Radar
+     ========================= -->
+<article class="project" id="fmcw-radar">
+  <div class="project-head">
+    <div class="project-meta">
+      <h3>X-Band FMCW Radar with Doppler and ISAR Imaging</h3>
+      <p class="lead"></p>
+      <div class="project-tags">RF • Radar • Signal Processing • Python • Course Project</div>
+    </div>
+    <div class="project-info">
+      <small>Oct. 2026 – Dec. 2026</small>
+      <small>UC Berkeley – EE117B</small>
+    </div>
+  </div>
+
+  <!-- Add images here, e.g.:
+  <div class="gallery">
+    <a href="images/RadarSetup.jpg" data-full>
+      <img src="images/RadarSetup.jpg" alt="Radar setup">
+    </a>
+  </div>
+  -->
+
+  <div class="project-content">
+    <p>
+      🚧 <em>This project is actively being worked on. More documentation, images, and technical details will be added soon.</em>
+    </p>
+    <h3> Overview </h3>
+    <p>
+      For my EE117B course project, I built an 11.8 GHz X-band FMCW radar from connectorized RF components. The radar measures
+      range and Doppler, and I am using it to develop ISAR imaging of rotating targets.
+    </p>
+    <h3> RF Front End </h3>
+    <p>
+      The front end is built from a PLL-driven chirp source, a power splitter, an LO-drive amplifier, a mixer, and an IF low-pass
+      filter, with separate TX and RX horn antennas.
+    </p>
+    <h3> Signal Processing </h3>
+    <p>
+      I wrote a Python acquisition and DSP pipeline that uses spectral averaging, background subtraction, and beat-frequency fitting
+      to pull clean measurements out of the IF signal. For ISAR imaging of rotating targets, the pipeline uses range-Doppler FFTs and
+      STFT analysis.
+    </p>
+  </div>
+</article>
 
         <!-- =========================
          Project: Gen11 Solar Vehicle
@@ -373,6 +411,99 @@
           for a new sensors project to give more data to our strategy team. I am also working closely with the BMS project to push out a more reliable
           battery protection system.
         </p>
+  </div>
+</article>
+
+<!-- =========================
+     Project: CalSol Firmware Training Lab
+     ========================= -->
+<article class="project" id="fw-lab">
+  <div class="project-head">
+    <div class="project-meta">
+      <h3>CalSol Firmware Training Lab</h3>
+      <p class="lead">Onboarding lab that teaches embedded C on the ESP32-S3, ending in a CAN-based brake lights project</p>
+      <div class="project-tags">Education • Firmware • Embedded C • ESP32 • CAN • Teaching</div>
+    </div>
+    <div class="project-info">
+      <small>Fall 2026</small>
+      <a href="https://github.com/CalSol/Fa26-CalSol-Firmware-Training" class="btn" style="margin-top:0.6rem; display:inline-block;">GitHub</a>
+    </div>
+  </div>
+
+  <div class="gallery">
+    <a href="images/FW_Lab_Structure.png" data-full>
+      <img class="fit-whole" src="images/FW_Lab_Structure.png" alt="Firmware structure diagram: main control loop and FreeRTOS tasks built on shared functions">
+    </a>
+    <a href="images/FW_Lab_HW.png" data-full>
+      <img src="images/FW_Lab_HW.png" alt="Pedals and brake lights ESP32 setup for the final project">
+    </a>
+  </div>
+
+  <div class="project-content">
+    <h3> Overview </h3>
+    <p>
+      I co-wrote CalSol's firmware training lab with seven other members of the team. The lab onboards new members to firmware
+      on the ESP32-S3 in C. The goal is not perfect code, but for members to walk out able to conceptually understand firmware
+      while getting real practice writing it.
+    </p>
+    <h3> Curriculum </h3>
+    <p>
+      The lab is split into short readings, most paired with a hands-on exercise. It starts with setup (command line, GitHub,
+      VS Code) and C basics, then moves to ESP32 fundamentals with ESP-IDF and CMake. A design section covers complexity,
+      modularity, firmware structure, main control loops, and RTOSes. The communication sections cover UART and CAN, then
+      I2C, SPI, and isoSPI. Additional readings go deeper into ADCs and DACs, telemetry, memory, and setting up the CAN testbench.
+      In total there are 10 exercises, from blinking an LED through interrupts, timers, and sending and reading over UART, CAN,
+      I2C, and SPI.
+    </p>
+    <h3> Final Project </h3>
+    <p>
+      For the final project, members program an ESP32 as a "brake lights" controller. It exchanges CAN messages with a
+      pre-programmed "pedals" ESP32, modeling the car's system without needing a whole car. Over about two weeks, each member
+      writes a design doc, goes through a code review, tests their code on hardware, and submits a report.
+    </p>
+  </div>
+</article>
+
+<!-- =========================
+     Project: Ultrasonic MEMS Anemometer
+     ========================= -->
+<article class="project" id="anemometer">
+  <div class="project-head">
+    <div class="project-meta">
+      <h3>Ultrasonic MEMS Anemometer Phase Tracking PCB</h3>
+      <p class="lead"></p>
+      <div class="project-tags">Hardware • PCB Design • Mixed-Signal • Research</div>
+    </div>
+    <div class="project-info">
+      <small>Feb. 2026 – May 2026</small>
+      <small>Center for the Built Environment</small>
+    </div>
+  </div>
+
+  <div class="gallery">
+    <a href="images/Anemometer_PCB.jpg" data-full>
+      <img src="images/Anemometer_PCB.jpg" alt="Assembled anemometer PCBs">
+    </a>
+    <a href="images/Anemometer_Schematic.png" data-full>
+      <img src="images/Anemometer_Schematic.png" alt="Anemometer PCB schematic">
+    </a>
+    <a href="images/Anemomter_Wind_Tunnel.jpg" data-full>
+      <img src="images/Anemomter_Wind_Tunnel.jpg" alt="Wind tunnel">
+    </a>
+  </div>
+
+  <div class="project-content">
+    <h3> Overview </h3>
+    <p>
+      For the Center for the Built Environment, I solo designed a 4-layer PCBA that uses ultrasonic MEMS sensors to map 3D wind
+      vectors. The board came in at roughly 100x lower cost than commercial solutions.
+    </p>
+    <h3> Layout for Timing Accuracy </h3>
+    <p>
+      The anemometer measures wind through the time of flight (TOF) of ultrasonic signals, so timing skew turns directly into
+      measurement error. To keep the TOF measurements accurate, I length-matched the 6 clock and interrupt lines on the board to
+      minimize skew.
+    </p>
   </div>
 </article>
 
@@ -834,37 +965,6 @@
       </div>
     </article>
   
-<article class="project" id="wip">
-  <div class="project-head">
-    <div class="project-meta">
-      <h3>🚧 Work in Progress</h3>
-      <p class="lead">
-        <div class="rgb-led"></div>
-        <span style="margin-left:0.5rem;"> Flashing Firmware...</span>
-      </p>
-      <div class="project-tags">EECS • Circuits • Build Zone</div>
-    </div>
-  </div>
-
-  <div class="gallery">
-    <div class="wip-box wip-blue">
-      ⚡ Routing Traces... ⚡
-    </div>
-    <div class="wip-box wip-gold">
-      🛠️ Debugging... 🛠️
-    </div>
-    <div class="wip-box wip-sky">
-      ⚙️ Validation in Progress… ⚙️
-    </div>
-  </div>
-
-  <div class="project-content">
-    <p>
-      This section is reserved for future projects. Check back soon once the 
-      signals are clean and it passes verification
-    </p>
-  </div>
-</article>
     
 </main>
 
