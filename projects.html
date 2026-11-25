@@ -1,4 +1,3 @@
-  <!-- Save as projects.html and place in the same folder as index.html -->
 <!doctype html>
 <html lang="en">
 <head>
@@ -9,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="theme.css">
+  <link rel="stylesheet" href="nav.css">
   <style>
     /* Page background (overrides theme.css) */
     .page-bg::before {
@@ -16,232 +16,266 @@
       background-position: center;
     }
 
-    /* Project block */
-    .project {
+    /* ---------- Two-column layout: contents + article ---------- */
+    .wiki {
+      display: grid;
+      grid-template-columns: 250px minmax(0, 1fr);
+      gap: 1.75rem;
+      align-items: start;
+      max-width: 1360px;
+      margin: 2rem auto 0;
+      padding: 0 var(--gutter);
+    }
+
+    /* ---------- Contents panel ---------- */
+    .wiki-toc {
+      position: sticky;
+      top: 4.25rem;
+      max-height: calc(100vh - 5.5rem);
+      overflow-y: auto;
+      padding: 1.1rem 1rem 1.25rem;
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
-      padding: 2rem;
-      margin: 0 0 var(--gutter);
-      scroll-margin-top: 1.5rem;
-    }
-
-    .project-head {
-      display: flex;
-      gap: 1rem;
-      align-items: flex-start;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      padding-bottom: 1rem;
-      border-bottom: 1px solid var(--border);
-    }
-    .project-meta { flex: 1 1 380px; }
-    .project-meta h3 {
-      margin: 0 0 0.35rem;
-      font-size: 1.35rem;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      line-height: 1.3;
-    }
-    .project-meta p.lead { margin: 0; color: var(--muted); }
-    .project-tags {
-      margin-top: 0.5rem;
-      color: var(--muted);
       font-size: 0.875rem;
-      font-weight: 500;
     }
-    .project-info {
-      text-align: right;
-      min-width: 160px;
-      flex: 0 0 auto;
-    }
-    .project-info small {
-      display: block;
-      color: var(--muted);
-      font-size: 0.85rem;
-      font-weight: 600;
-    }
-
-    /* Gallery */
-    .gallery {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      gap: 0.75rem;
-      margin-top: 1.25rem;
-    }
-    .gallery a {
-      display: block;
-      overflow: hidden;
-      border-radius: 10px;
-      border: 1px solid var(--border);
-      background: #fff;
-      transition: border-color 0.15s, box-shadow 0.15s;
-    }
-    .gallery a:hover {
-      border-color: var(--accent-2);
-      box-shadow: 0 0 0 1px var(--accent-2);
-    }
-    .gallery img {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-      display: block;
-    }
-
-    /* Show a whole diagram in the thumbnail instead of cropping it */
-    .gallery img.fit-whole { object-fit: contain; padding: 0.5rem; }
-
-    /* Long description */
-    .project-content {
-      margin-top: 1.25rem;
-      color: var(--text);
-    }
-    .project-content h3 {
-      margin: 1.75rem 0 0.5rem;
-      padding-left: 0.75rem;
-      border-left: 3px solid var(--accent-2);
-      font-size: 1.05rem;
-      font-weight: 600;
-      line-height: 1.4;
-    }
-    .project-content p { margin: 0 0 1rem; }
-
-    /* Simple lightbox modal */
-    .lightbox {
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.7);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 2000;
-      padding: 2rem;
-    }
-    .lightbox.open { display: flex; }
-    .lightbox img {
-      max-width: 100%;
-      max-height: 100%;
-      border-radius: 8px;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.45);
-    }
-    .lightbox .close {
-      position: absolute;
-      right: 18px;
-      top: 18px;
-      background: rgba(255, 255, 255, 0.9);
-      color: #111;
-      border-radius: 6px;
-      padding: 0.3rem 0.5rem;
-      cursor: pointer;
+    .wiki-toc summary {
+      list-style: none;
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 0.6rem;
       font-weight: 700;
+      font-size: 0.95rem;
     }
-
-    /* Sidebar */
-    .sidebar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      height: 100%;
-      width: 220px;
-      padding: 2rem 1.25rem;
-      background: rgba(12, 16, 28, 0.88);
-      -webkit-backdrop-filter: blur(8px);
-      backdrop-filter: blur(8px);
-      border-right: 1px solid rgba(255, 255, 255, 0.08);
-      box-shadow: 2px 0 12px rgba(0, 0, 0, 0.3);
-      color: #fff;
-      z-index: 1000;
-      transition: transform 0.3s ease;
-    }
-    .sidebar.collapsed { transform: translateX(-100%); }
-    .sidebar-inner {
-      height: 100%;
-      overflow-y: auto;
-    }
-    .sidebar h3 {
-      margin: 0 0 1rem;
-      font-size: 0.8rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: var(--accent-2);
-    }
-    .sidebar ul {
+    .wiki-toc summary::-webkit-details-marker { display: none; }
+    .wiki-toc summary a { font-weight: 500; font-size: 0.8rem; }
+    .wiki-toc ol {
       list-style: none;
       margin: 0;
       padding: 0;
+      counter-reset: toc;
     }
-    .sidebar ul li { margin: 0 0 0.15rem; }
-    .sidebar ul li a {
+    .wiki-toc li { counter-increment: toc; }
+    .wiki-toc a {
       display: block;
-      padding: 0.55rem 0.75rem;
+      padding: 0.3rem 0.5rem;
       border-left: 2px solid transparent;
-      border-radius: 0 8px 8px 0;
-      color: rgba(255, 255, 255, 0.75);
-      font-size: 0.92rem;
-      font-weight: 500;
-      transition: color 0.15s, background 0.15s, border-color 0.15s;
+      border-radius: 0 6px 6px 0;
+      color: var(--text);
+      line-height: 1.35;
     }
-    .sidebar ul li a:hover {
-      color: #fff;
-      background: rgba(255, 255, 255, 0.06);
+    .wiki-toc a:hover { background: var(--bg); color: var(--link); }
+    .toc-item > a::before {
+      content: counter(toc) "  ";
+      color: var(--muted);
+      font-variant-numeric: tabular-nums;
+    }
+    .toc-sub { display: none; margin: 0.1rem 0 0.35rem 1.1rem !important; }
+    .toc-sub a { font-size: 0.82rem; color: var(--muted); padding: 0.2rem 0.5rem; }
+    .toc-sub a::before { content: none; }
+    .toc-item.active > a {
       border-left-color: var(--accent-2);
+      background: var(--bg);
+      font-weight: 600;
     }
+    .toc-item.active > .toc-sub { display: block; }
 
-    /* Push main content over so it doesn't hide under the sidebar */
-    body {
-      margin-left: 220px;
-      transition: margin-left 0.3s ease;
+    /* ---------- Article ---------- */
+    .wiki-page {
+      padding: 2rem 2.5rem 2.5rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      color: var(--text);
     }
-    body.sidebar-collapsed { margin-left: 0; }
-
-    .sidebar-toggle {
-      position: absolute;
-      top: 1rem;
-      right: -36px;
-      width: 36px;
-      height: 36px;
+    .wiki-head {
       display: flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(12, 16, 28, 0.88);
-      color: var(--accent-2);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-left: none;
-      border-radius: 0 8px 8px 0;
-      cursor: pointer;
-      font-size: 0.9rem;
+      align-items: flex-end;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.5rem 1rem;
+      padding-bottom: 0.4rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .wiki-head h1 {
+      margin: 0;
+      font-family: Georgia, "Linux Libertine", "Times New Roman", serif;
+      font-size: 2.1rem;
+      font-weight: 400;
+      line-height: 1.2;
+    }
+    .wiki-head a { font-size: 0.875rem; font-weight: 600; }
+    .wiki-tagline {
+      margin: 0.4rem 0 0;
+      color: var(--muted);
+      font-size: 0.85rem;
     }
 
+    .wiki-section {
+      position: relative;
+      margin-top: 3.25rem;
+      padding-top: 2.75rem;
+      scroll-margin-top: 4.5rem;
+    }
+    .wiki-section::after { content: ""; display: block; clear: both; }
+    /* Divider between projects: full-width rule with a gold glow in the middle */
+    .wiki-section::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      border-radius: 2px;
+      background: linear-gradient(90deg, var(--border), var(--accent-2) 50%, var(--border));
+      opacity: 0.85;
+    }
+    .wiki-section:first-of-type { margin-top: 2rem; }
+
+    .wiki-section h2 {
+      margin: 0 0 0.25rem;
+      padding-bottom: 0.4rem;
+      border-bottom: 1px solid var(--border);
+      font-family: Georgia, "Linux Libertine", "Times New Roman", serif;
+      font-size: 2rem;
+      font-weight: 400;
+      line-height: 1.25;
+    }
+
+    .wiki-desc {
+      margin: 0.35rem 0 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+      font-style: italic;
+    }
+    .wiki-body { margin-top: 1rem; }
+    .wiki-body h3 {
+      margin: 1.4rem 0 0.4rem;
+      font-size: 1.05rem;
+      font-weight: 700;
+      scroll-margin-top: 4.5rem;
+    }
+    .wiki-body p { margin: 0 0 0.9rem; line-height: 1.7; }
+
+    /* ---------- Infobox ---------- */
+    .infobox {
+      float: right;
+      clear: right;
+      width: 300px;
+      margin: 1rem 0 1rem 1.75rem;
+      padding: 0.5rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 0.85rem;
+    }
+    .infobox-title {
+      padding: 0.35rem 0.5rem 0.6rem;
+      text-align: center;
+      font-weight: 700;
+      font-size: 0.98rem;
+      line-height: 1.3;
+    }
+    .infobox table { width: 100%; border-collapse: collapse; }
+    .infobox th, .infobox td {
+      padding: 0.45rem 0.5rem;
+      border-top: 1px solid var(--border);
+      vertical-align: top;
+      text-align: left;
+    }
+    .infobox th { width: 32%; font-weight: 600; color: var(--muted); }
+    .chip {
+      display: inline-block;
+      margin: 0 0.25rem 0.25rem 0;
+      padding: 0.05rem 0.45rem;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: var(--surface);
+      font-size: 0.78rem;
+      line-height: 1.5;
+    }
+
+    /* ---------- Figures ---------- */
+    figure { margin: 0; }
+    .infobox-image { margin-bottom: 0.5rem; }
+    .infobox-image img {
+      display: block;
+      width: 100%;
+      max-height: 300px;
+      object-fit: cover;
+      border-radius: 4px;
+      background: #fff;
+    }
+    .fig {
+      padding: 0.4rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+    }
+    .fig img {
+      display: block;
+      width: 100%;
+      object-fit: cover;
+      border-radius: 4px;
+      background: #fff;
+    }
+    img.fit { object-fit: contain !important; }
+    figcaption {
+      padding: 0.35rem 0.25rem 0.1rem;
+      color: var(--muted);
+      font-size: 0.78rem;
+      line-height: 1.4;
+      text-align: center;
+    }
+
+    /* Floated beside the text */
+    .fig-left, .fig-right { width: 250px; }
+    .fig-left  { float: left;  clear: left;  margin: 0.3rem 1.75rem 1rem 0; }
+    .fig-right { float: right; clear: right; margin: 0.3rem 0 1rem 1.75rem; }
+    .fig-left img, .fig-right img { max-height: 300px; }
+
+    /* In series with the text. Each one is its own block formatting context,
+       so it sits beside a float (like the infobox) instead of sliding under it. */
+    .fig-wide, .fig-medium { display: flow-root; margin: 0.5rem 0 1.5rem; }
+    .fig-wide img { max-height: 460px; }
+    .fig-medium { width: min(60%, 520px); margin-left: auto; margin-right: auto; }
+    .fig-medium img { max-height: 340px; }
+    .fig-row { display: grid; gap: 0.75rem; margin: 0.5rem 0 1.5rem; overflow: hidden; }
+    .fig-row-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .fig-row-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .fig-row img { height: 220px; }
+
+    /* Feature image under a project heading */
+    .fig-hero { margin: 1rem 0 0.5rem; }
+    .fig-hero img { max-height: 380px; }
+
+    /* ---------- Smaller screens ---------- */
+    @media (max-width: 1000px) {
+      .wiki { grid-template-columns: 1fr; }
+      .wiki-toc { position: static; max-height: none; }
+      .wiki-toc summary { cursor: pointer; margin-bottom: 0; }
+      .wiki-toc[open] summary { margin-bottom: 0.6rem; }
+      .toc-item > .toc-sub { display: none !important; }
+    }
+    @media (min-width: 1001px) {
+      .wiki-toc summary { pointer-events: none; }
+      .wiki-toc summary a { pointer-events: auto; }
+    }
     @media (max-width: 720px) {
-      .project { padding: 1.25rem; }
-      .gallery img { height: 120px; }
-      .project-info { text-align: left; width: 100%; margin-top: 0.25rem; }
+      .wiki-page { padding: 1.25rem; }
+      .wiki-section h2 { font-size: 1.6rem; }
+      .infobox, .fig-left, .fig-right, .fig-medium { float: none; width: 100%; margin: 1rem 0; }
+      .fig-row-2, .fig-row-3 { grid-template-columns: 1fr; }
+      .fig-row img { height: auto; max-height: 320px; }
     }
   </style>
-  <link rel="stylesheet" href="nav.css">
 </head>
 <body class="dark-mode">
   <div class="page-bg" aria-hidden="true"></div>
-  <nav class="sidebar" id="sidebar">
-    <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle navigation">◀</button>
-    <div class="sidebar-inner">
-      <h3>Projects</h3>
-      <ul>
-        <li><a href="#fmcw-radar">X-Band FMCW Radar</a></li>
-        <li><a href="#gen11"> Gen11 (Solar Car) </a></li>
-        <li><a href="#fw-lab">CalSol Firmware Lab</a></li>
-        <li><a href="#anemometer">MEMS Anemometer PCB</a></li>
-        <li><a href="#excalibur"> Excalibur (Solar Car) </a></li>
-        <li><a href="#ee140"> Analog IC LCD Driver </a></li>
-        <li><a href="#calico-fa25">CALICO Fa25</a></li>
-        <li><a href="#car-horn">Car Horn PCB</a></li>
-        <li><a href="#calsol-onboarding">CalSol Onboarding</a></li>
-        <li><a href="#guitar-pedal">Guitar Pedal</a></li>
-      </ul>
-    </div>
-  </nav>
+
   <header>
     <div class="header-deco" aria-hidden="true">
       <div class="stars"></div>
@@ -289,92 +323,147 @@
     </div>
   </nav>
 
-  <main class="wrap">
-    <div class="page-head">
-      <h2>All Projects</h2>
-      <div class="head-actions">
-        <a class="btn btn-secondary" href="assets/Matthew_Lee_HW_Resume_RF.pdf" target="_blank">Download Resume</a>
+  <div class="wiki">
+    <details class="wiki-toc" id="toc" open>
+      <summary>Contents <a href="#top">(top)</a></summary>
+      <ol>
+        <li class="toc-item" data-target="fmcw-radar">
+          <a href="#fmcw-radar">X-Band FMCW Radar with Doppler and ISAR Imaging</a>
+          <ol class="toc-sub">
+            <li><a href="#fmcw-radar-overview">Overview</a></li>
+            <li><a href="#fmcw-radar-rf-front-end">RF Front End</a></li>
+            <li><a href="#fmcw-radar-signal-processing">Signal Processing</a></li>
+          </ol>
+        </li>
+        <li class="toc-item" data-target="gen11">
+          <a href="#gen11">Gen11 Solar Car Electrical System</a>
+          <ol class="toc-sub">
+            <li><a href="#gen11-new-power-architecture">New Power Architecture</a></li>
+            <li><a href="#gen11-25-26-school-year-progress">25-26 School Year Progress</a></li>
+          </ol>
+        </li>
+        <li class="toc-item" data-target="fw-lab">
+          <a href="#fw-lab">CalSol Firmware Training Lab</a>
+          <ol class="toc-sub">
+            <li><a href="#fw-lab-overview">Overview</a></li>
+            <li><a href="#fw-lab-curriculum">Curriculum</a></li>
+            <li><a href="#fw-lab-final-project">Final Project</a></li>
+          </ol>
+        </li>
+        <li class="toc-item" data-target="anemometer">
+          <a href="#anemometer">Ultrasonic MEMS Anemometer Phase Tracking PCB</a>
+          <ol class="toc-sub">
+            <li><a href="#anemometer-overview">Overview</a></li>
+            <li><a href="#anemometer-layout-for-timing-accuracy">Layout for Timing Accuracy</a></li>
+          </ol>
+        </li>
+        <li class="toc-item" data-target="excalibur">
+          <a href="#excalibur">Excalibur (Gen 10 Solar Car)</a>
+          <ol class="toc-sub">
+            <li><a href="#excalibur-overview-of-the-project">Overview of the Project</a></li>
+            <li><a href="#excalibur-personal-design-involvement">Personal Design Involvement</a></li>
+            <li><a href="#excalibur-driving-road-operations">Driving / Road Operations</a></li>
+          </ol>
+        </li>
+        <li class="toc-item" data-target="ee140">
+          <a href="#ee140">Analog IC LCD Driver</a>
+          <ol class="toc-sub">
+            <li><a href="#ee140-overview">Overview</a></li>
+            <li><a href="#ee140-general-design-process">General Design Process</a></li>
+            <li><a href="#ee140-reflection">Reflection</a></li>
+          </ol>
+        </li>
+        <li class="toc-item" data-target="calico-fa25">
+          <a href="#calico-fa25">CALICO Informatics Competition Fa25</a>
+          <ol class="toc-sub">
+            <li><a href="#calico-fa25-contest-summary">Contest Summary</a></li>
+            <li><a href="#calico-fa25-the-problems-i-wrote">The Problems I Wrote</a></li>
+            <li><a href="#calico-fa25-the-infastructure">The Infastructure</a></li>
+          </ol>
+        </li>
+        <li class="toc-item" data-target="car-horn">
+          <a href="#car-horn">Car Horn PCB</a>
+          <ol class="toc-sub">
+            <li><a href="#car-horn-esp32-dev-board">ESP32 Dev Board</a></li>
+            <li><a href="#car-horn-power">Power</a></li>
+            <li><a href="#car-horn-sound">Sound</a></li>
+            <li><a href="#car-horn-bring-up-verification">Bring Up + Verification</a></li>
+            <li><a href="#car-horn-firmware">Firmware</a></li>
+          </ol>
+        </li>
+        <li class="toc-item" data-target="calsol-onboarding">
+          <a href="#calsol-onboarding">CalSol Electrical Onboarding</a>
+          <ol class="toc-sub">
+            <li><a href="#calsol-onboarding-curriculum-pedagogy">Curriculum &amp; Pedagogy</a></li>
+            <li><a href="#calsol-onboarding-the-project">The Project</a></li>
+            <li><a href="#calsol-onboarding-outcomes-impact">Outcomes &amp; Impact</a></li>
+          </ol>
+        </li>
+        <li class="toc-item" data-target="guitar-pedal">
+          <a href="#guitar-pedal">Guitar Pedals</a>
+          <ol class="toc-sub">
+            <li><a href="#guitar-pedal-op-amp-circuit">Op-Amp Circuit</a></li>
+            <li><a href="#guitar-pedal-simulation-testing">Simulation &amp; Testing</a></li>
+            <li><a href="#guitar-pedal-bjt-circuit">BJT Circuit</a></li>
+          </ol>
+        </li>
+      </ol>
+    </details>
+
+    <main class="wiki-page" id="top">
+      <div class="wiki-head">
+        <h1>Projects</h1>
+        <a href="assets/Matthew_Lee_HW_Resume_RF.pdf" target="_blank">Download resume (PDF)</a>
       </div>
-    </div>
+      <p class="wiki-tagline">The various hardware and software projects I've created</p>
 
-<!-- =========================
-     Project: X-Band FMCW Radar
-     ========================= -->
-<article class="project" id="fmcw-radar">
-  <div class="project-head">
-    <div class="project-meta">
-      <h3>X-Band FMCW Radar with Doppler and ISAR Imaging</h3>
-      <p class="lead"></p>
-      <div class="project-tags">RF • Radar • Signal Processing • Python • Course Project</div>
-    </div>
-    <div class="project-info">
-      <small>Oct. 2026 – Dec. 2026</small>
-      <small>UC Berkeley – EE117B</small>
-    </div>
-  </div>
-
-  <!-- Add images here, e.g.:
-  <div class="gallery">
-    <a href="images/RadarSetup.jpg" data-full>
-      <img src="images/RadarSetup.jpg" alt="Radar setup">
-    </a>
-  </div>
-  -->
-
-  <div class="project-content">
-    <p>
+    <section class="wiki-section" id="fmcw-radar">
+      <h2>X-Band FMCW Radar with Doppler and ISAR Imaging</h2>
+      <aside class="infobox" aria-label="X-Band FMCW Radar with Doppler and ISAR Imaging summary">
+        <div class="infobox-title">X-Band FMCW Radar with Doppler and ISAR Imaging</div>
+        <table>
+          <tr><th scope="row">Date</th><td>Oct. 2026 – Dec. 2026</td></tr>
+          <tr><th scope="row">Context</th><td>UC Berkeley – EE117B</td></tr>
+          <tr><th scope="row">Focus</th><td><span class="chip">RF</span><span class="chip">Radar</span><span class="chip">Signal Processing</span><span class="chip">Python</span><span class="chip">Course Project</span></td></tr>
+        </table>
+      </aside>
+      <div class="wiki-body">
+            <p>
       🚧 <em>This project is actively being worked on. More documentation, images, and technical details will be added soon.</em>
     </p>
-    <h3> Overview </h3>
+    <h3 id="fmcw-radar-overview"> Overview </h3>
     <p>
       For my EE117B course project, I built an 11.8 GHz X-band FMCW radar from connectorized RF components. The radar measures
       range and Doppler, and I am using it to develop ISAR imaging of rotating targets.
     </p>
-    <h3> RF Front End </h3>
+    <h3 id="fmcw-radar-rf-front-end"> RF Front End </h3>
     <p>
       The front end is built from a PLL-driven chirp source, a power splitter, an LO-drive amplifier, a mixer, and an IF low-pass
       filter, with separate TX and RX horn antennas.
     </p>
-    <h3> Signal Processing </h3>
+    <h3 id="fmcw-radar-signal-processing"> Signal Processing </h3>
     <p>
       I wrote a Python acquisition and DSP pipeline that uses spectral averaging, background subtraction, and beat-frequency fitting
       to pull clean measurements out of the IF signal. For ISAR imaging of rotating targets, the pipeline uses range-Doppler FFTs and
       STFT analysis.
     </p>
-  </div>
-</article>
-
-        <!-- =========================
-         Project: Gen11 Solar Vehicle
-         ========================= -->
-
-      <article class="project" id="gen11">
-    <div class="project-head">
-      <div class="project-meta">
-        <h3>Gen11 Solar Car Electrical System</h3>
-        <p class="lead"></p>
-        <div class="project-tags">Systems Engineering • Electrical Architecture </div>
       </div>
-    <div class="project-info">
-      <small>2025-27</small>
-    </div>
-  </div>
-
-  <div class="gallery">
-    <!-- Replace with project images -->
-    <a href="images/CalSol_Mold.jpg" data-full>
-      <img src="images/CalSol_Mold.jpg" alt="CalSol Mold">
-    </a>
-    <a href="images/MotorHarness.jpg" data-full>
-      <img src="images/MotorHarness.jpg" alt="Motor Harness">
-    </a>
-  </div>
-
-  <div class="project-content">
-    <p>
+    </section>
+    <section class="wiki-section" id="gen11">
+      <h2>Gen11 Solar Car Electrical System</h2>
+      <aside class="infobox" aria-label="Gen11 Solar Car Electrical System summary">
+        <div class="infobox-title">Gen11 Solar Car Electrical System</div>
+        <figure class="infobox-image"><a href="images/CalSol_Mold.jpg"><img src="images/CalSol_Mold.jpg" alt="CalSol Mold" loading="lazy"></a><figcaption>CalSol Mold</figcaption></figure>
+        <table>
+          <tr><th scope="row">Date</th><td>2025-27</td></tr>
+          <tr><th scope="row">Focus</th><td><span class="chip">Systems Engineering</span><span class="chip">Electrical Architecture</span></td></tr>
+        </table>
+      </aside>
+      <div class="wiki-body">
+            <p>
       🚧 <em>This project is actively being worked on. More documentation, images, and technical details will be added soon.</em>
     </p>
-     <h3> New Power Architecture </h3>
+     <h3 id="gen11-new-power-architecture"> New Power Architecture </h3>
         <p>
           The main flaw in the 10th generations power architecture was in car shutoff edge cases. Mainly a chicken and the egg problem
           where we needed the car to tell the car it shut off when it shuts off. To do this we reimplemented power distribution with a
@@ -394,7 +483,8 @@
           We also had a reoccuring problems of our contactors to the solar array getting welded together. This was due to us having an RC
           precharge circuit for the motors, but not the array. In turn, we revised the HVPDB to add another precharge circuit.
         </p>
-    <h3> 25-26 School Year Progress </h3>
+    <h3 id="gen11-25-26-school-year-progress"> 25-26 School Year Progress </h3>
+        <figure class="fig fig-left"><a href="images/MotorHarness.jpg"><img src="images/MotorHarness.jpg" alt="Motor Harness" loading="lazy"></a><figcaption>Motor Harness</figcaption></figure>
         <p>
           A lot of time was spent researching motors and motor controllers, and trying to get past generation motors to spin with
           various controllers. The process is mainly a lot of datasheet reading and documentation of motor and motor controller behaviour in different 
@@ -410,42 +500,28 @@
           for a new sensors project to give more data to our strategy team. I am also working closely with the BMS project to push out a more reliable
           battery protection system.
         </p>
-  </div>
-</article>
-
-<!-- =========================
-     Project: CalSol Firmware Training Lab
-     ========================= -->
-<article class="project" id="fw-lab">
-  <div class="project-head">
-    <div class="project-meta">
-      <h3>CalSol Firmware Training Lab</h3>
-      <p class="lead">Onboarding lab that teaches embedded C on the ESP32-S3, ending in a CAN-based brake lights project</p>
-      <div class="project-tags">Education • Firmware • Embedded C • ESP32 • CAN • Teaching</div>
-    </div>
-    <div class="project-info">
-      <small>Fall 2026</small>
-      <a href="https://github.com/CalSol/Fa26-CalSol-Firmware-Training" class="btn" style="margin-top:0.6rem; display:inline-block;">GitHub</a>
-    </div>
-  </div>
-
-  <div class="gallery">
-    <a href="images/FW_Lab_Structure.png" data-full>
-      <img class="fit-whole" src="images/FW_Lab_Structure.png" alt="Firmware structure diagram: main control loop and FreeRTOS tasks built on shared functions">
-    </a>
-    <a href="images/FW_Lab_HW.png" data-full>
-      <img src="images/FW_Lab_HW.png" alt="Pedals and brake lights ESP32 setup for the final project">
-    </a>
-  </div>
-
-  <div class="project-content">
-    <h3> Overview </h3>
+      </div>
+    </section>
+    <section class="wiki-section" id="fw-lab">
+      <h2>CalSol Firmware Training Lab</h2>
+      <p class="wiki-desc">Onboarding lab that teaches embedded C on the ESP32-S3, ending in a CAN-based brake lights project</p>
+      <aside class="infobox" aria-label="CalSol Firmware Training Lab summary">
+        <div class="infobox-title">CalSol Firmware Training Lab</div>
+        <figure class="infobox-image"><a href="images/FW_Lab_HW.png"><img class="fit" src="images/FW_Lab_HW.png" alt="Pedals and brake lights ESP32 setup for the final project" loading="lazy"></a><figcaption>Pedals and brake lights ESP32 setup for the final project</figcaption></figure>
+        <table>
+          <tr><th scope="row">Date</th><td>Fall 2026</td></tr>
+          <tr><th scope="row">Focus</th><td><span class="chip">Education</span><span class="chip">Firmware</span><span class="chip">Embedded C</span><span class="chip">ESP32</span><span class="chip">CAN</span><span class="chip">Teaching</span></td></tr>
+          <tr><th scope="row">Links</th><td><a href="https://github.com/CalSol/Fa26-CalSol-Firmware-Training" target="_blank">GitHub</a></td></tr>
+        </table>
+      </aside>
+      <div class="wiki-body">
+            <h3 id="fw-lab-overview"> Overview </h3>
     <p>
       I co-wrote CalSol's firmware training lab with seven other members of the team. The lab onboards new members to firmware
       on the ESP32-S3 in C. The goal is not perfect code, but for members to walk out able to conceptually understand firmware
       while getting real practice writing it.
     </p>
-    <h3> Curriculum </h3>
+    <h3 id="fw-lab-curriculum"> Curriculum </h3>
     <p>
       The lab is split into short readings, most paired with a hands-on exercise. It starts with setup (command line, GitHub,
       VS Code) and C basics, then moves to ESP32 fundamentals with ESP-IDF and CMake. A design section covers complexity,
@@ -454,92 +530,61 @@
       In total there are 10 exercises, from blinking an LED through interrupts, timers, and sending and reading over UART, CAN,
       I2C, and SPI.
     </p>
-    <h3> Final Project </h3>
+    <figure class="fig fig-medium"><a href="images/FW_Lab_Structure.png"><img class="fit" src="images/FW_Lab_Structure.png" alt="Firmware structure diagram: main control loop and FreeRTOS tasks built on shared functions" loading="lazy"></a><figcaption>Firmware structure diagram: main control loop and FreeRTOS tasks built on shared functions</figcaption></figure>
+        <h3 id="fw-lab-final-project"> Final Project </h3>
     <p>
       For the final project, members program an ESP32 as a "brake lights" controller. It exchanges CAN messages with a
       pre-programmed "pedals" ESP32, modeling the car's system without needing a whole car. Over about two weeks, each member
       writes a design doc, goes through a code review, tests their code on hardware, and submits a report.
     </p>
-  </div>
-</article>
-
-<!-- =========================
-     Project: Ultrasonic MEMS Anemometer
-     ========================= -->
-<article class="project" id="anemometer">
-  <div class="project-head">
-    <div class="project-meta">
-      <h3>Ultrasonic MEMS Anemometer Phase Tracking PCB</h3>
-      <p class="lead"></p>
-      <div class="project-tags">Hardware • PCB Design • Mixed-Signal • Research</div>
-    </div>
-    <div class="project-info">
-      <small>Feb. 2026 – May 2026</small>
-      <small>Center for the Built Environment</small>
-    </div>
-  </div>
-
-  <div class="gallery">
-    <a href="images/Anemometer_PCB.jpg" data-full>
-      <img src="images/Anemometer_PCB.jpg" alt="Assembled anemometer PCBs">
-    </a>
-    <a href="images/Anemometer_Schematic.png" data-full>
-      <img src="images/Anemometer_Schematic.png" alt="Anemometer PCB schematic">
-    </a>
-    <a href="images/Anemomter_Wind_Tunnel.jpg" data-full>
-      <img src="images/Anemomter_Wind_Tunnel.jpg" alt="Wind tunnel">
-    </a>
-  </div>
-
-  <div class="project-content">
-    <h3> Overview </h3>
+      </div>
+    </section>
+    <section class="wiki-section" id="anemometer">
+      <h2>Ultrasonic MEMS Anemometer Phase Tracking PCB</h2>
+      <aside class="infobox" aria-label="Ultrasonic MEMS Anemometer Phase Tracking PCB summary">
+        <div class="infobox-title">Ultrasonic MEMS Anemometer Phase Tracking PCB</div>
+        <figure class="infobox-image"><a href="images/Anemometer_PCB.jpg"><img src="images/Anemometer_PCB.jpg" alt="Assembled anemometer PCBs" loading="lazy"></a><figcaption>Assembled anemometer PCBs</figcaption></figure>
+        <table>
+          <tr><th scope="row">Date</th><td>Feb. 2026 – May 2026</td></tr>
+          <tr><th scope="row">Context</th><td>Center for the Built Environment</td></tr>
+          <tr><th scope="row">Focus</th><td><span class="chip">Hardware</span><span class="chip">PCB Design</span><span class="chip">Mixed-Signal</span><span class="chip">Research</span></td></tr>
+        </table>
+      </aside>
+      <div class="wiki-body">
+            <h3 id="anemometer-overview"> Overview </h3>
     <p>
       For the Center for the Built Environment, I solo designed a 4-layer PCBA that uses ultrasonic MEMS sensors to map 3D wind
       vectors. The board came in at roughly 100x lower cost than commercial solutions.
     </p>
-    <h3> Layout for Timing Accuracy </h3>
+    <h3 id="anemometer-layout-for-timing-accuracy"> Layout for Timing Accuracy </h3>
     <p>
       The anemometer measures wind through the time of flight (TOF) of ultrasonic signals, so timing skew turns directly into
       measurement error. To keep the TOF measurements accurate, I length-matched the 6 clock and interrupt lines on the board to
       minimize skew.
     </p>
-  </div>
-</article>
-
-    <!-- =========================
-         Project: Excalibur
-         ========================= -->
-  <article class="project" id="excalibur">
-    <div class="project-head">
-      <div class="project-meta">
-        <h3> Excalibur (Gen 10 Solar Car) </h3>
-        <p class="lead"></p>
-        <div class="project-tags">Systems Engineering • Electrical Architecture • Verification and Integration• Safety • Documentation </div>
+        <div class="fig-row fig-row-2"><figure class="fig"><a href="images/Anemometer_Schematic.png"><img class="fit" src="images/Anemometer_Schematic.png" alt="Anemometer PCB schematic" loading="lazy"></a><figcaption>Anemometer PCB schematic</figcaption></figure><figure class="fig"><a href="images/Anemomter_Wind_Tunnel.jpg"><img src="images/Anemomter_Wind_Tunnel.jpg" alt="Wind tunnel" loading="lazy"></a><figcaption>Wind tunnel</figcaption></figure></div>
       </div>
-    <div class="project-info">
-      <small>2024-26</small>
-    </div>
-  </div>
-
-<div class="gallery">
-    <!-- Replace with project images -->
-    <a href="images/calsol_fsgp2025.jpg" data-full>
-      <img src="images/calsol_fsgp2025.jpg" alt="Placeholder image">
-    </a>
-    <a href="images/CalSol_BMS_Bench.png" data-full>
-      <img src="images/CalSol_BMS_Bench.png" alt="CalSol BMS Bench">
-    </a>
-  </div>
-
-  <div class="project-content">
-     <h3> Overview of the Project </h3>
+    </section>
+    <section class="wiki-section" id="excalibur">
+      <h2>Excalibur (Gen 10 Solar Car)</h2>
+      <figure class="fig fig-hero"><a href="images/calsol_fsgp2025.jpg"><img src="images/calsol_fsgp2025.jpg" alt="CalSol team at FSGP 2025" loading="lazy"></a><figcaption>CalSol team at FSGP 2025</figcaption></figure>
+      <aside class="infobox" aria-label="Excalibur (Gen 10 Solar Car) summary">
+        <div class="infobox-title">Excalibur (Gen 10 Solar Car)</div>
+        <figure class="infobox-image"><a href="images/CalSol_BMS_Bench.png"><img class="fit" src="images/CalSol_BMS_Bench.png" alt="CalSol BMS Bench" loading="lazy"></a><figcaption>CalSol BMS Bench</figcaption></figure>
+        <table>
+          <tr><th scope="row">Date</th><td>2024-26</td></tr>
+          <tr><th scope="row">Focus</th><td><span class="chip">Systems Engineering</span><span class="chip">Electrical Architecture</span><span class="chip">Verification and Integration</span><span class="chip">Safety</span><span class="chip">Documentation</span></td></tr>
+        </table>
+      </aside>
+      <div class="wiki-body">
+             <h3 id="excalibur-overview-of-the-project"> Overview of the Project </h3>
         <p>
           The 10th gen solar car for the UC Berkeley Solar Vehicle team started development in 2020-2021. The car was eventually
           tested and integrated by 2024, succesfully racing in FSGP 2024. It would proceed to race in FSGP 2025, FSGP 2026, 
           and ASC 2026 doing well in all races. This includes lots of driving on the roadways, as the car is road legal.
           The design is a 4 wheel asymmetric catamaran with 3 square meters of array. The car features 2 ~1kW motors and a ~5kWh battery.
         </p>
-    <h3> Personal Design Involvement </h3>
+    <h3 id="excalibur-personal-design-involvement"> Personal Design Involvement </h3>
         <p>
           I joined the club after the car already drove, but I did a lot of design in terms of hardware and firmware to improve
           the car. These include but are not limited to: integration of a sensors board for GPS and IMU; revamp of telemetry stack
@@ -547,7 +592,7 @@
           and simpler car horn setup; fixing on the hardware and firmware side of the steering OLED screen; revamped vibration
           resistant harnessing in the battery box; etc. 
         </p>
-    <h3> Driving / Road Operations </h3>
+    <h3 id="excalibur-driving-road-operations"> Driving / Road Operations </h3>
         <p>
           The main function as lead of me and this car was upkeeping the car as it underwent lots of test driving on tracks
           and on the open road. As Electrical lead, I have overseen over 1500 miles of road driving, being in the lead
@@ -569,37 +614,18 @@
           TODO
         </p>
     -->
-  </div>
-</article>
-
-        <!-- =========================
-         Project: EE140 Final Project
-         ========================= -->
-
-<article class="project" id="ee140">
-    <div class="project-head">
-      <div class="project-meta">
-        <h3> Analog IC LCD Driver</h3>
-        <p class="lead"></p>
-        <div class="project-tags">Hardware • ICs • Analog Design • Course Project </div>
       </div>
-  </div>
-
-  <div class="gallery">
-    <!-- Replace with project images -->
-    <a href="images/EE140Full_Sizings_Final_2.svg" data-full>
-      <img src="images/EE140Full_Sizings_Final_2.svg" alt="Transistor Level">
-    </a>
-    <a href="images/EE140Ahuja_Compensation.svg" data-full>
-      <img src="images/EE140Ahuja_Compensation.svg" alt="Compensation">
-    </a>
-    <a href="images/EE140Results.png" data-full>
-      <img src="images/EE140Results.png" alt="Results">
-    </a>
-  </div>
-
-  <div class="project-content">
-     <h3> Overview </h3>
+    </section>
+    <section class="wiki-section" id="ee140">
+      <h2>Analog IC LCD Driver</h2>
+      <aside class="infobox" aria-label="Analog IC LCD Driver summary">
+        <div class="infobox-title">Analog IC LCD Driver</div>
+        <table>
+          <tr><th scope="row">Focus</th><td><span class="chip">Hardware</span><span class="chip">ICs</span><span class="chip">Analog Design</span><span class="chip">Course Project</span></td></tr>
+        </table>
+      </aside>
+      <div class="wiki-body">
+             <h3 id="ee140-overview"> Overview </h3>
         <p>
           The design project was to design and verify through simulation a two stage op-amp LCD driver in Cadence Virtuoso. The
           specifications were to get high CMRR and PSRR, while making sure we had a fast settling time. The challenge was to
@@ -608,7 +634,8 @@
           of the project in detail, which is linked here. This portfolio entry will be brief due to the bulk of everything being
           readable in that write-up.
         </p>
-    <h3> General Design Process </h3>
+    <figure class="fig fig-wide"><a href="images/EE140Full_Sizings_Final_2.svg"><img class="fit" src="images/EE140Full_Sizings_Final_2.svg" alt="Transistor Level" loading="lazy"></a><figcaption>Transistor Level</figcaption></figure>
+        <h3 id="ee140-general-design-process"> General Design Process </h3>
         <p>
           I started the project through doing two-port modeling and feedback analysis to decide on general gain and impedances
           I wanted one each stage. It also allowed me to do pole placement to try and get a 65 degree phase margin. This allowed
@@ -632,46 +659,27 @@
           swithced to a monticelli for a challenge in getting a more PVT insensitive design. The final parts of the project were just
           optimizing power down.
         </p>
-    <h3> Reflection </h3>
+    <div class="fig-row fig-row-2"><figure class="fig"><a href="images/EE140Ahuja_Compensation.svg"><img class="fit" src="images/EE140Ahuja_Compensation.svg" alt="Compensation" loading="lazy"></a><figcaption>Compensation</figcaption></figure><figure class="fig"><a href="images/EE140Results.png"><img class="fit" src="images/EE140Results.png" alt="Results" loading="lazy"></a><figcaption>Results</figcaption></figure></div>
+        <h3 id="ee140-reflection"> Reflection </h3>
         <p>
           The design was good enough to pass specifications and ended up being a cool design. The exact specifications are in the
           image above. I also in general just had a lot of fun learning analog design through this!
         </p>
-  </div>
-</article>
-    
-       <!-- =========================
-         Project: CALICO Fa25
-         ========================= -->
-
-      <article class="project" id="calico-fa25">
-    <div class="project-head">
-      <div class="project-meta">
-        <h3>CALICO Informatics Competition Fa25</h3>
-        <p class="lead"></p>
-        <div class="project-tags">Software • Algorithms • Event Planning • Scripting • Data Pipelining </div>
       </div>
-    <div class="project-info">
-      <small>Fall 2025</small>
-      <a href="https://github.com/calico-team/calico-fa25-public" class="btn" style="margin-top:0.6rem; display:inline-block;">GitHub</a>
-    </div>
-  </div>
-
-  <div class="gallery">
-    <!-- Replace with project images -->
-    <a href="images/CALICOFa25.jpg" data-full>
-      <img src="images/CALICOFa25.jpg" alt="Team Picture">
-    </a>
-    <a href="images/CALICOFa25Leaderboard.png" data-full>
-      <img src="images/CALICOFa25Leaderboard.png" alt="Leaderboard">
-    </a>
-    <a href="images/ChessTestCase.png" data-full>
-      <img src="images/ChessTestCase.png" alt="ChessTestCase">
-    </a>
-  </div>
-
-  <div class="project-content">
-     <h3> Contest Summary </h3>
+    </section>
+    <section class="wiki-section" id="calico-fa25">
+      <h2>CALICO Informatics Competition Fa25</h2>
+      <aside class="infobox" aria-label="CALICO Informatics Competition Fa25 summary">
+        <div class="infobox-title">CALICO Informatics Competition Fa25</div>
+        <figure class="infobox-image"><a href="images/CALICOFa25.jpg"><img src="images/CALICOFa25.jpg" alt="Team Picture" loading="lazy"></a><figcaption>Team Picture</figcaption></figure>
+        <table>
+          <tr><th scope="row">Date</th><td>Fall 2025</td></tr>
+          <tr><th scope="row">Focus</th><td><span class="chip">Software</span><span class="chip">Algorithms</span><span class="chip">Event Planning</span><span class="chip">Scripting</span><span class="chip">Data Pipelining</span></td></tr>
+          <tr><th scope="row">Links</th><td><a href="https://github.com/calico-team/calico-fa25-public" target="_blank">GitHub</a></td></tr>
+        </table>
+      </aside>
+      <div class="wiki-body">
+             <h3 id="calico-fa25-contest-summary"> Contest Summary </h3>
         <p>
           <a href="https://calico.cs.berkeley.edu/"> CALICO </a> Fall 2025 consisted of 12 problems and 17 total test sets. These problems are 
           designed to range from Rank 1, easy enough for anyone who has taken any programming lesson ever to code, to Rank 4, hard enough to 
@@ -682,7 +690,9 @@
           The competition itself had 2000+ registrations total, with 60+ coming in person to compete, including the famous competitive programmer 
           <a href="https://en.wikipedia.org/wiki/Gennady_Korotkevich"> tourist</a>. This continues our trend of the contest growing every semester.
         </p>
-    <h3> The Problems I Wrote </h3>
+    <figure class="fig fig-wide"><a href="images/CALICOFa25Leaderboard.png"><img class="fit" src="images/CALICOFa25Leaderboard.png" alt="Leaderboard" loading="lazy"></a><figcaption>Leaderboard</figcaption></figure>
+        <h3 id="calico-fa25-the-problems-i-wrote"> The Problems I Wrote </h3>
+        <figure class="fig fig-right"><a href="images/ChessTestCase.png"><img class="fit" src="images/ChessTestCase.png" alt="Chess test case" loading="lazy"></a><figcaption>Chess test case</figcaption></figure>
         <p>
           The first problem I wrote was a cute beginner problem called gta6. The entire problem was given a date, return whether the event happens
           before or after the release of gta6. This problem along with the second problem bizzfuzz (basically asking given the last two words said
@@ -727,7 +737,7 @@
           this solution very coincidentally funny as me and the other problem writer who wrote this problem are in a signals and systems class that teaches
           very similar concepts to this problems solution.
         </p>
-    <h3> The Infastructure </h3>
+    <h3 id="calico-fa25-the-infastructure"> The Infastructure </h3>
         <p>
           The bulk of our contestant data infastructure is managed by google sheets and python scripts. We effectively use an ETL pipeline which goes 
           as follows: extract, we take data from google forms; transform, we parse the data and format it; load, we automatically generate things such
@@ -738,56 +748,27 @@
           The main thing I interface with is the judge hosts and they work with problems. This is mainly just making sure uploading problems is elegant
           so testing is more seamless.
         </p>
-  </div>
-</article>
-
-
-    <!-- =========================
-         Project: Car Horn PCB
-         ========================= -->
-    <article class="project" id="car-horn">
-      <div class="project-head">
-        <div class="project-meta">
-          <h3>Car Horn PCB</h3>
-          <p class="lead">Mixed-signal audio PCB with custom ESP32 dev board, CAN integration, and I²C DAC chain.</p>
-          <div class="project-tags">Roles: PCB design • Firmware • Bring-up • Signal validation</div>
-        </div>
-
-        <div class="project-info">
-          <small>Oct 2024 – Apr 2025</small>
-        </div>
       </div>
-
-      <div class="gallery" aria-label="Car horn images">
-        <!-- Thumbnails link to full images. Update filenames -->
-        <a href="images/HornBenchPicture.jpg" data-full>
-          <img src="images/HornBenchPicture.jpg" alt="Car Horn Bench Testing">
-        </a>
-        <a href="images/HornBringUp.jpg" data-full>
-          <img src="images/HornBringUp.jpg" alt="Car Horn PCB Bring Up">
-        </a>
-        <a href="images/HornLayout.png" data-full>
-          <img src="images/HornLayout.png" alt="Layout Picture">
-        </a>
-        <a href="images/SoundSchematic.png" data-full>
-          <img src="images/SoundSchematic.png" alt="Sound Schematic">
-        </a>
-        <a href="images/ESPSchematic.png" data-full>
-          <img src="images/ESPSchematic.png" alt="ESP Schematic">
-        </a>
-      </div>
-
-      <!-- =========================
-         Project: Car Horn PCB
-         Place images in: images/
-         ========================= -->
-      <div class="project-content">
-        <p>
+    </section>
+    <section class="wiki-section" id="car-horn">
+      <h2>Car Horn PCB</h2>
+      <p class="wiki-desc">Mixed-signal audio PCB with custom ESP32 dev board, CAN integration, and I²C DAC chain.</p>
+      <aside class="infobox" aria-label="Car Horn PCB summary">
+        <div class="infobox-title">Car Horn PCB</div>
+        <figure class="infobox-image"><a href="images/HornBenchPicture.jpg"><img src="images/HornBenchPicture.jpg" alt="Car Horn Bench Testing" loading="lazy"></a><figcaption>Car Horn Bench Testing</figcaption></figure>
+        <table>
+          <tr><th scope="row">Date</th><td>Oct 2024 – Apr 2025</td></tr>
+          <tr><th scope="row">Roles</th><td><span class="chip">PCB design</span><span class="chip">Firmware</span><span class="chip">Bring-up</span><span class="chip">Signal validation</span></td></tr>
+        </table>
+      </aside>
+      <div class="wiki-body">
+                <p>
           "Solar cars shall be equipped with a horn that can be heard at a sound power level between 75 and 102 dBA
           at a distance of 15 m in front of the solar car. The horn shall be permanently mounted, operated from the
           steering wheel, and shall be able to operate for up to 5 minutes continuously at the required volume."
         </p>
-        <h3> ESP32 Dev Board </h3>
+        <h3 id="car-horn-esp32-dev-board"> ESP32 Dev Board </h3>
+        <figure class="fig fig-left"><a href="images/HornLayout.png"><img class="fit" src="images/HornLayout.png" alt="Layout Picture" loading="lazy"></a><figcaption>Layout Picture</figcaption></figure>
         <p>
           The first major sub circuit is the ESP32 Dev Board. It is implemented with an ESP32 Wroom 1 and necessary peripherals
           including boot and reset buttons, and a USB to UART IC. The design process came mainly from reading the ESP and UART IC
@@ -796,7 +777,8 @@
           planes around the amplifier. 2nd Layer was also used as a ground plane for similar reasons. There was also a large effort by me
           to make the boards layout modular and readable through verbose silkscreen and documentation of each sub circuit on confluence.
         </p>
-        <h3> Power </h3>
+        <figure class="fig fig-wide"><a href="images/ESPSchematic.png"><img class="fit" src="images/ESPSchematic.png" alt="ESP Schematic" loading="lazy"></a><figcaption>ESP Schematic</figcaption></figure>
+        <h3 id="car-horn-power"> Power </h3>
         <p>
           The board has the challenge of using 12V CAN BUS power for most LV operations, but requiring an 18V aux pack for the higher current
           draw amplifier. This is achieved through two diode OR circuits. There is one for LV between the 12V CAN line (that comes from a differential
@@ -806,7 +788,7 @@
           12V in case the aux pack dies. The biggest design problems were the general high power draw of the horn, that required a lot of thermal
           considerations and IC choice.
         </p>
-        <h3> Sound </h3>
+        <h3 id="car-horn-sound"> Sound </h3>
         <p>
           The sound architecture goes: ESP digital IO pin -> I2C based DAC -> High gain amplifier -> Speaker. Between the digital pins and the DAC
           there is open drain architecture for data and clock. The output of the DAC has heavy decoupling capacitors to smooth output, as well as a
@@ -815,7 +797,9 @@
           were finding a DAC, amplifier, and speaker setup that interfaced with each other and the given power constraints. This was solved with
           hand calculations for gain as well as breadboarding and simulations with SPICE.
         </p>
-        <h3> Bring Up + Verification </h3>
+        <figure class="fig fig-wide"><a href="images/SoundSchematic.png"><img class="fit" src="images/SoundSchematic.png" alt="Sound Schematic" loading="lazy"></a><figcaption>Sound Schematic</figcaption></figure>
+        <h3 id="car-horn-bring-up-verification"> Bring Up + Verification </h3>
+        <figure class="fig fig-right"><a href="images/HornBringUp.jpg"><img src="images/HornBringUp.jpg" alt="Car Horn PCB Bring Up" loading="lazy"></a><figcaption>Car Horn PCB Bring Up</figcaption></figure>
         <p>
           The board in the image is the 2nd iteration of the board. During the first bring up we noticed two things while bench testing. One, we greatly
           underestimated the power draw of the amplifier relative to the trace width and heat sinks we had. Second, we found a data sheet misread
@@ -825,7 +809,7 @@
           firmware. We however did have a shorted trace caused from a polygon and trace being too big, leading us to cut it with a knife. In the end, 
           the horn worked with a few microwire jumps and traces cut.
         </p>
-        <h3> Firmware </h3>
+        <h3 id="car-horn-firmware"> Firmware </h3>
         <p>
           The firmware for the most part is simple, relying heavily on datasheet reading and use of the I2C interface. The main interesting thing was
           to figure out how to create a digital sound signal to output. We effectively took layered sine waves representing the signal we wanted to output
@@ -834,36 +818,21 @@
           and sending a heartbeat on CAN to the rest of the car to signal the horn boards microcontroller is still operational.
         </p>
       </div>
-    </article>
-
-    <article class="project" id="calsol-onboarding">
-  <div class="project-head">
-    <div class="project-meta">
-      <h3>CalSol Electrical Onboarding</h3>
-      <p class="lead">Open-source onboarding curriculum to teach PCB design & electrical fundamentals</p>
-      <div class="project-tags">Education • PCB Design • Open Source • Teaching</div>
-    </div>
-    <div class="project-info">
-      <small>2025</small>
-      <a href="https://github.com/CalSol/CalSol-Electrical-Onboarding" class="btn" style="margin-top:0.6rem; display:inline-block;">GitHub</a>
-    </div>
-  </div>
-
-  <div class="gallery" aria-label="CalSol Electrical Onboarding images">
-    <!-- Example thumbnails / images; replace names with real ones you have -->
-    <a href="images/OnboardingExample.png" data-full>
-      <img src="images/OnboardingExample.png" alt="Git Module Picture">
-    </a>
-    <a href="images/OnboardingBoard.jpg" data-full>
-      <img src="images/OnboardingBoard.jpg" alt="Demo PCB">
-    </a>
-    <a href="images/SquareWave.jpg" data-full>
-      <img src="images/SquareWave.jpg" alt="PWM Picture">
-    </a>
-  </div>
-
-  <div class="project-content">
-    <p>
+    </section>
+    <section class="wiki-section" id="calsol-onboarding">
+      <h2>CalSol Electrical Onboarding</h2>
+      <p class="wiki-desc">Open-source onboarding curriculum to teach PCB design & electrical fundamentals</p>
+      <aside class="infobox" aria-label="CalSol Electrical Onboarding summary">
+        <div class="infobox-title">CalSol Electrical Onboarding</div>
+        <figure class="infobox-image"><a href="images/OnboardingBoard.jpg"><img src="images/OnboardingBoard.jpg" alt="Demo PCB" loading="lazy"></a><figcaption>Demo PCB</figcaption></figure>
+        <table>
+          <tr><th scope="row">Date</th><td>2025</td></tr>
+          <tr><th scope="row">Focus</th><td><span class="chip">Education</span><span class="chip">PCB Design</span><span class="chip">Open Source</span><span class="chip">Teaching</span></td></tr>
+          <tr><th scope="row">Links</th><td><a href="https://github.com/CalSol/CalSol-Electrical-Onboarding" target="_blank">GitHub</a></td></tr>
+        </table>
+      </aside>
+      <div class="wiki-body">
+            <p>
       The CalSol Electrical Onboarding project is an open-source educational repository developed for the
       CalSol team to onboard new members in PCB design and basic Electrical Engineering. It guides learners through
       schematic design, PCB layout, firmware writing, and practical Electrical Engineering skills, with a hands-on project 
@@ -871,7 +840,7 @@
       In turn, this onboarding gives a taste of Electrical Engineering before throwing members onto a project.
     </p>
 
-    <h3>Curriculum & Pedagogy</h3>
+    <h3 id="calsol-onboarding-curriculum-pedagogy">Curriculum & Pedagogy</h3>
     <p>
       The onboarding curriculum is modular: learners first learn about the components and concepts required to
       understand a PWM generator (including various passives and ICs); then they learn about the KiCAD software
@@ -882,7 +851,9 @@
       on the full life cycle of a project, with the onboarding staff acting to purely assist the new members.
     </p>
 
-    <h3> The Project</h3>
+    <figure class="fig fig-wide"><a href="images/OnboardingExample.png"><img class="fit" src="images/OnboardingExample.png" alt="Git Module Picture" loading="lazy"></a><figcaption>Git Module Picture</figcaption></figure>
+        <h3 id="calsol-onboarding-the-project"> The Project</h3>
+        <figure class="fig fig-left"><a href="images/SquareWave.jpg"><img src="images/SquareWave.jpg" alt="PWM Picture" loading="lazy"></a><figcaption>PWM Picture</figcaption></figure>
     <p>
       The project is a PWM motor generator. This project was selected as it hit a few major requirements. These include:
       use of many components including passives, diodes and MOSFETs; existence of different waveform signals including a square
@@ -891,7 +862,7 @@
       project is also very basic, being a button that triggers the ESP32 to output a similar PWM signal.
     </p>
 
-    <h3>Outcomes & Impact</h3>
+    <h3 id="calsol-onboarding-outcomes-impact">Outcomes & Impact</h3>
     <p>
       New CalSol members are able to join projects immediately, having completed a real PCB design exercise by the
       end of the onboarding. The exposure to everything makes the job of project leads easier, leading to seamless
@@ -899,41 +870,21 @@
       to use or adapt our project to further teach engineering. We have on many occasions referred interested students
       to the project to make Berkeley more PCB literate.
     </p>
-  </div>
-</article>
-
-    <article class="project" id="guitar-pedal">
-      <div class="project-head">
-        <div class="project-meta">
-          <h3>Guitar Pedals</h3>
-          <p class="lead">Op-amp and BJT based guitar pedals for distortion and filtering</p>
-          <div class="project-tags">Skills: Bandpass Filter, Op Amp, BJT</div>
-        </div>
-        <div class="project-info">
-          <small>Mar 2025 – Present</small>
-        </div>
       </div>
-
-      <div class="gallery" aria-label="Pedal Images">
-        <a href="images/TrebleBoostBreadboard.jpg" data-full>
-          <img src="images/TrebleBoostBreadboard.jpg" alt="Treble Breadboard">
-        </a>
-        <a href="images/TrebleBoostBode.png" data-full>
-          <img src="images/TrebleBoostBode.png" alt="Treble Boost Bandwidth">
-        </a>
-        <a href="images/DistortionBoard.jpg" data-full>
-          <img src="images/DistortionBoard.jpg" alt="Distortion board">
-        </a>
-        <a href="images/DistortionTransient.png" data-full>
-          <img src="images/DistortionTransient.png" alt="Distortion Transient">
-        </a>
-        <a href="images/DistortionBode.png" data-full>
-          <img src="images/DistortionBode.png" alt="Distortion Bode">
-        </a>
-      </div>
-
-      <div class="project-content">
-        <h3> Op-Amp Circuit </h3>
+    </section>
+    <section class="wiki-section" id="guitar-pedal">
+      <h2>Guitar Pedals</h2>
+      <p class="wiki-desc">Op-amp and BJT based guitar pedals for distortion and filtering</p>
+      <aside class="infobox" aria-label="Guitar Pedals summary">
+        <div class="infobox-title">Guitar Pedals</div>
+        <figure class="infobox-image"><a href="images/TrebleBoostBreadboard.jpg"><img src="images/TrebleBoostBreadboard.jpg" alt="Treble Breadboard" loading="lazy"></a><figcaption>Treble Breadboard</figcaption></figure>
+        <table>
+          <tr><th scope="row">Date</th><td>Mar 2025 – Present</td></tr>
+          <tr><th scope="row">Skills</th><td><span class="chip">Bandpass Filter</span><span class="chip">Op Amp</span><span class="chip">BJT</span></td></tr>
+        </table>
+      </aside>
+      <div class="wiki-body">
+                <h3 id="guitar-pedal-op-amp-circuit"> Op-Amp Circuit </h3>
         <p>
           The pedal circuit is centered around a bandpass filter going through an op-amp in order to shape and amplify the guitar signal.
           The op amp is in the non-inverting configuration with a varaible resistor to determine the feedback, therefore controlling the
@@ -941,7 +892,7 @@
           filter in parallel with the potentiometer to create a desired gain within the bandwidth. The result is a treble boosting circuit that
           attenuates signals outside of the desired treble range.
         </p>
-        <h3> Simulation & Testing </h3>
+        <h3 id="guitar-pedal-simulation-testing"> Simulation & Testing </h3>
         <p>
           Each filter of the pedal was simulated in LTspice to validate frequency response, stability, and expected bode plot behavior.
           Frequency analysis confirmed the bandpass characteristics and the correct cutoff frequencies. I observed the time domain plots 
@@ -954,32 +905,39 @@
         <p>
           🚧 <em>This project is actively being worked on. More documentation, images, and technical details will be added soon.</em>
         </p>
-        <h3> BJT Circuit </h3>
+        <figure class="fig fig-wide"><a href="images/TrebleBoostBode.png"><img class="fit" src="images/TrebleBoostBode.png" alt="Treble Boost Bandwidth" loading="lazy"></a><figcaption>Treble Boost Bandwidth</figcaption></figure>
+        <h3 id="guitar-pedal-bjt-circuit"> BJT Circuit </h3>
         <p>
           I am currently applying what I've learned about BJT linear amplifiers from EE105 to design a guitar pedal that implements a distortion
           sound effect. I am trying to abuse the physical sagging of the gain caused by the BJT to create a clipped sound. I am currently trying to
           tweak different resistor and capacitor values through simulation (LTSpice) and through physical testing (breadboard), in order to get a
           desired tone (through signal clipping), and bandwidth (through the surrounding passives).
         </p>
+        <div class="fig-row fig-row-3"><figure class="fig"><a href="images/DistortionBoard.jpg"><img src="images/DistortionBoard.jpg" alt="Distortion board" loading="lazy"></a><figcaption>Distortion board</figcaption></figure><figure class="fig"><a href="images/DistortionTransient.png"><img class="fit" src="images/DistortionTransient.png" alt="Distortion Transient" loading="lazy"></a><figcaption>Distortion Transient</figcaption></figure><figure class="fig"><a href="images/DistortionBode.png"><img class="fit" src="images/DistortionBode.png" alt="Distortion Bode" loading="lazy"></a><figcaption>Distortion Bode</figcaption></figure></div>
       </div>
-    </article>
-  
-    
-</main>
+    </section>
+    </main>
+  </div>
 
   <script src="theme.js"></script>
   <script>
-    const sidebar = document.getElementById('sidebar');
-    const toggleBtn = document.getElementById('sidebar-toggle');
+    // Contents panel: collapsed by default on small screens
+    const toc = document.getElementById('toc');
+    if (window.matchMedia('(max-width: 1000px)').matches) toc.removeAttribute('open');
 
-    toggleBtn.addEventListener('click', () => {
-      sidebar.classList.toggle('collapsed');
-      document.body.classList.toggle('sidebar-collapsed');
-      toggleBtn.textContent = sidebar.classList.contains('collapsed') ? '▶' : '◀';
-    });
+    // Highlight the project currently being read and show its sub-sections
+    const items = new Map([...document.querySelectorAll('.toc-item')].map(li => [li.dataset.target, li]));
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        items.forEach(li => li.classList.remove('active'));
+        const li = items.get(e.target.id);
+        if (li) li.classList.add('active');
+      });
+    }, { rootMargin: '-25% 0px -70% 0px' });
+    document.querySelectorAll('.wiki-section').forEach(s => observer.observe(s));
+    const first = document.querySelector('.toc-item');
+    if (first) first.classList.add('active');
   </script>
-  
 </body>
-  
 </html>
-
