@@ -63,18 +63,18 @@
       content: "";
       position: absolute;
       inset: 0;
-      background: url("images/background.png") center / cover no-repeat;
+      background: url("images/wallpapers/home.jpg") center 60% / cover no-repeat;
     }
     /* Tint over the image so cards and text stay readable */
     .page-bg::after {
       content: "";
       position: absolute;
       inset: 0;
-      background: linear-gradient(180deg, rgba(20, 12, 40, 0.35) 0%, rgba(20, 12, 40, 0.55) 100%);
+      background: linear-gradient(180deg, rgba(0, 22, 48, 0.45) 0%, rgba(0, 22, 48, 0.68) 100%);
       transition: background 0.2s;
     }
     body.dark-mode .page-bg::after {
-      background: linear-gradient(180deg, rgba(5, 5, 15, 0.6) 0%, rgba(5, 5, 15, 0.8) 100%);
+      background: linear-gradient(180deg, rgba(3, 8, 20, 0.66) 0%, rgba(3, 8, 20, 0.84) 100%);
     }
 
     a {
